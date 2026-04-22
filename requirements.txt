@@ -1,0 +1,47 @@
+# === Core Backend ===
+fastapi
+uvicorn[standard]
+python-multipart
+python-dotenv
+
+# === Database ===
+sqlalchemy
+aiosqlite
+alembic
+
+# === Auth ===
+python-jose[cryptography]
+passlib[bcrypt]
+
+# === LLM - Ollama Only (local, no API key needed) ===
+langchain
+langchain-core
+langchain-community
+langchain-ollama
+langchain-huggingface
+langchain-text-splitters
+langchain-chroma
+
+# === Vector Store (local) ===
+chromadb
+
+# === Document Processing ===
+pypdf
+sentence-transformers
+docx2txt
+
+# === Frontend ===
+streamlit
+plotly
+
+# === Pydantic ===
+pydantic
+pydantic-settings
+
+# === HTTP ===
+httpx
+requests
+
+# === Dev & Test ===
+pytest
+pytest-asyncio

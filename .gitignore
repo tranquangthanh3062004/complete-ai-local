@@ -1,0 +1,22 @@
+# Environments
+venv/
+.env
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Database
+completeai.db
+chroma_db/
+
+# Uploads & Data
+data/uploads/
+uploads/
+*.pdf
+*.docx
+
+# OS specific
+.DS_Store
+Thumbs.db
