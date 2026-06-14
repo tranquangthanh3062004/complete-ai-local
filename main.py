@@ -95,7 +95,7 @@ async def health():
         "ollama_online" : h["online"],   # backward compat
         "ollama_models" : h.get("models", []),
         "ollama_latency": f"{h.get('latency_ms', 0)}ms",
-        "active_model"  : settings.ollama_model if settings.llm_engine == 'ollama' else settings.llm_model_name,
+        "active_model"  : settings.llm_model_name,
         "fallback_mode" : not h["online"],
         "error"         : h.get("error"),
     }

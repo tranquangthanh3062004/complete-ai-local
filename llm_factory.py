@@ -53,7 +53,7 @@ def get_llm(model_name: str = None, temperature: float = 0.05) -> BaseLanguageMo
         from langchain_ollama import OllamaLLM
         llm = OllamaLLM(
             base_url    = settings.ollama_base_url,
-            model       = settings.ollama_model if not model_name else model_name,
+            model       = settings.llm_model_name if not model_name else model_name,
             temperature = temperature,
             system      = GTCC_SYSTEM_PROMPT,
         )
@@ -117,7 +117,7 @@ def check_health() -> dict:
                 return {
                     "online"    : True,
                     "engine"    : "Ollama",
-                    "models"    : models or [settings.ollama_model],
+                    "models"    : models or [settings.llm_model_name],
                     "latency_ms": latency,
                     "error"     : None,
                 }

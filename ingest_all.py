@@ -8,7 +8,8 @@ import sys
 # ── Thư mục chứa file cần nạp ─────────────────────────────────────────────────
 DATA_DIR         = "./data"
 CHROMA_DIR       = "./chroma_db"
-EMBED_MODEL      = "keepitreal/vietnamese-sbert"
+from config import settings
+EMBED_MODEL      = settings.embedding_model
 CHUNK_SIZE       = 1000
 CHUNK_OVERLAP    = 200
 
