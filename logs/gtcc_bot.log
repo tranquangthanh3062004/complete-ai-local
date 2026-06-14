@@ -1,0 +1,202 @@
+2026-06-14 11:46:24 | WARNING  | gtcc_bot.sanitizer | [Sanitizer] Prompt injection detected: 'ignore all previous instructions...'
+2026-06-14 11:49:40 | INFO     | gtcc_bot.main | 🚌 Dang khoi dong GTCC Bot v4.0...
+2026-06-14 11:49:40 | INFO     | gtcc_bot.main | ✅ Groq Engine online
+2026-06-14 11:49:40 | INFO     | gtcc_bot.main | ✅ GTCC Bot san sang phuc vu!
+2026-06-14 11:50:01 | INFO     | gtcc_bot.main | Incoming request: POST /agents/direct (ID: 3ba1368c)
+2026-06-14 11:50:02 | INFO     | gtcc_bot.agents | [Direct Chat] Off-topic detected (lang=vi): 'tôi muốn đi từ hà đông đến cát linh có những cách na'
+2026-06-14 11:50:02 | INFO     | gtcc_bot.rag | Loading embedding model: sentence-transformers/all-MiniLM-L6-v2
+2026-06-14 11:50:09 | INFO     | gtcc_bot.rag | Initializing ChromaDB (Local)...
+2026-06-14 11:50:14 | ERROR    | gtcc_bot.agents | Error in direct_chat: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\routers\agents.py", line 190, in direct_chat
+    answer = chain.invoke({
+        "history" : history_text,
+        "context" : rag_context,
+        "question": clean_query,
+    })
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3444, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 476, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1849, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1656, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1994, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_groq\chat_models.py", line 627, in _generate
+    response = self.client.create(messages=message_dicts, **params)
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\groq\resources\chat\completions.py", line 461, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/openai/v1/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<45 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\groq\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\groq\_base_client.py", line 1044, in request
+    raise self._make_status_error_from_response(err.response) from None
+groq.AuthenticationError: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-06-14 11:50:14 | INFO     | gtcc_bot.main | Completed request: POST /agents/direct - Status: 500 - Time: 13108.95ms (ID: 3ba1368c)
+2026-06-14 11:51:42 | INFO     | gtcc_bot.main | Incoming request: POST /agents/direct (ID: dfcfa6e7)
+2026-06-14 11:51:47 | ERROR    | gtcc_bot.agents | Error in direct_chat: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\routers\agents.py", line 190, in direct_chat
+    answer = chain.invoke({
+        "history" : history_text,
+        "context" : rag_context,
+        "question": clean_query,
+    })
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3444, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 476, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1849, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1656, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1994, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_groq\chat_models.py", line 627, in _generate
+    response = self.client.create(messages=message_dicts, **params)
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\groq\resources\chat\completions.py", line 461, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/openai/v1/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<45 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\groq\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\groq\_base_client.py", line 1044, in request
+    raise self._make_status_error_from_response(err.response) from None
+groq.AuthenticationError: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-06-14 11:51:47 | INFO     | gtcc_bot.main | Completed request: POST /agents/direct - Status: 500 - Time: 4874.49ms (ID: dfcfa6e7)
+2026-06-14 11:51:47 | INFO     | gtcc_bot.main | Incoming request: POST /agents/direct (ID: e87efe4a)
+2026-06-14 11:51:51 | ERROR    | gtcc_bot.agents | Error in direct_chat: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\routers\agents.py", line 190, in direct_chat
+    answer = chain.invoke({
+        "history" : history_text,
+        "context" : rag_context,
+        "question": clean_query,
+    })
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3444, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 476, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1849, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1656, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1994, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\langchain_groq\chat_models.py", line 627, in _generate
+    response = self.client.create(messages=message_dicts, **params)
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\groq\resources\chat\completions.py", line 461, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/openai/v1/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<45 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\groq\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ADMIN 88\OneDrive\Desktop\my_open_llm\venv\Lib\site-packages\groq\_base_client.py", line 1044, in request
+    raise self._make_status_error_from_response(err.response) from None
+groq.AuthenticationError: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-06-14 11:51:51 | INFO     | gtcc_bot.main | Completed request: POST /agents/direct - Status: 500 - Time: 4616.92ms (ID: e87efe4a)
+2026-06-14 11:52:26 | INFO     | gtcc_bot.main | 👋 Dang tat GTCC Bot...
+2026-06-14 11:52:46 | INFO     | gtcc_bot.main | 🚌 Dang khoi dong GTCC Bot v4.0...
+2026-06-14 11:52:46 | INFO     | gtcc_bot.main | ✅ Groq Engine online
+2026-06-14 11:52:46 | INFO     | gtcc_bot.main | ✅ GTCC Bot san sang phuc vu!
+2026-06-14 11:53:03 | INFO     | gtcc_bot.main | 👋 Dang tat GTCC Bot...
+2026-06-14 11:53:21 | INFO     | gtcc_bot.main | 🚌 Dang khoi dong GTCC Bot v4.0...
+2026-06-14 11:53:21 | WARNING  | gtcc_bot.main | ⚠️  Groq offline / Lỗi API: Missing or invalid GROQ_API_KEY in .env
+2026-06-14 11:53:21 | WARNING  | gtcc_bot.main |    Bot van hoat dong voi fallback GTCC co ban.
+2026-06-14 11:53:21 | INFO     | gtcc_bot.main | ✅ GTCC Bot san sang phuc vu!
+2026-06-14 11:55:53 | INFO     | gtcc_bot.main | 👋 Dang tat GTCC Bot...
+2026-06-14 11:56:11 | INFO     | gtcc_bot.main | 🚌 Dang khoi dong GTCC Bot v4.0...
+2026-06-14 11:56:11 | WARNING  | gtcc_bot.main | ⚠️  Groq offline / Lỗi API: Missing or invalid GROQ_API_KEY in .env
+2026-06-14 11:56:11 | WARNING  | gtcc_bot.main |    Bot van hoat dong voi fallback GTCC co ban.
+2026-06-14 11:56:11 | INFO     | gtcc_bot.main | ✅ GTCC Bot san sang phuc vu!
+2026-06-14 12:00:17 | INFO     | gtcc_bot.main | 👋 Dang tat GTCC Bot...
+2026-06-14 12:00:35 | INFO     | gtcc_bot.main | 🚌 Dang khoi dong GTCC Bot v4.0...
+2026-06-14 12:00:36 | WARNING  | gtcc_bot.main | ⚠️  Groq offline / Lỗi API: Missing or invalid GROQ_API_KEY in .env
+2026-06-14 12:00:36 | WARNING  | gtcc_bot.main |    Bot van hoat dong voi fallback GTCC co ban.
+2026-06-14 12:00:36 | INFO     | gtcc_bot.main | ✅ GTCC Bot san sang phuc vu!
+2026-06-14 12:00:45 | INFO     | gtcc_bot.main | 👋 Dang tat GTCC Bot...
+2026-06-14 12:01:04 | INFO     | gtcc_bot.main | 🚌 Dang khoi dong GTCC Bot v4.0...
+2026-06-14 12:01:04 | WARNING  | gtcc_bot.main | ⚠️  Groq offline / Lỗi API: Missing or invalid GROQ_API_KEY in .env
+2026-06-14 12:01:04 | WARNING  | gtcc_bot.main |    Bot van hoat dong voi fallback GTCC co ban.
+2026-06-14 12:01:04 | INFO     | gtcc_bot.main | ✅ GTCC Bot san sang phuc vu!

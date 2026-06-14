@@ -1,0 +1,92 @@
+=== XE BUÝT HÀ NỘI ===
+XE BUÝT HÀ NỘI (CHI TIẾT CÁC TUYẾN QUAN TRỌNG)
+================================================================================
+
+TỔNG QUAN:
+- Đơn vị quản lý chính: Tổng công ty Vận tải Hà Nội (Transerco)
+- Website: transerco.com.vn | timbus.vn
+- App: Tìm Buýt (iOS & Android) | Hotline: 1900 1296
+- Giá vé từ 01/11/2024: 8.000đ (<15km) đến 20.000đ (>40km)
+- Thẻ vé điện tử liên thông đang thí điểm
+
+=== NHÓM 1: TUYẾN SÂN BAY NỘI BÀI ===
+
+TUYẾN 07 (Nội Bài – Bến xe Mỹ Đình):
+- Lộ trình: Sân bay Nội Bài → QL2 → Cầu Thăng Long → Trần Duy Hưng → Bến xe Mỹ Đình
+- Giờ: 05:30 – 22:00 | Tần suất: 15–20 phút | Giá: 9.000 đồng
+- Thời gian: 45–50 phút | Đây là tuyến phổ biến nhất từ Nội Bài
+
+TUYẾN 17 (Nội Bài – Long Biên):
+- Lộ trình: Sân bay Nội Bài → QL5 → Cầu Đuống → Long Biên
+- Giờ: 05:30 – 22:00 | Tần suất: 20–30 phút | Giá: 9.000 đồng
+
+TUYẾN 86 (Nội Bài – Bến xe Gia Lâm):
+- Lộ trình: Sân bay Nội Bài → QL5 → Cầu Đuống → Gia Lâm → Bến xe Gia Lâm
+- Giờ: 05:05 – 22:05 | Tần suất: 30–40 phút | Giá: 9.000 đồng
+- Thời gian: 45–60 phút
+
+=== NHÓM 2: TUYẾN TRỤC CHÍNH ===
+
+TUYẾN 01 (Bến xe Yên Nghĩa – Bến xe Gia Lâm):
+- Lộ trình: Bến xe Yên Nghĩa → QL1A → Nguyễn Trãi → Kim Mã → Đinh Tiên Hoàng → Cầu Long Biên → Bến xe Gia Lâm
+- Giờ: 05:05 – 21:35 | Tần suất: 10–15 phút | Giá: 9.000 đồng
+- Thời gian: 70–90 phút | Qua hầu hết khu trung tâm Hà Nội
+
+TUYẾN 22A (Kim Mã – Bến xe Nước Ngầm):
+- Lộ trình: Bến xe Kim Mã → Nguyễn Thái Học → Lê Duẩn → Giải Phóng → Bến xe Nước Ngầm
+- Giờ: 05:30 – 21:30 | Tần suất: 15 phút | Giá: 9.000 đồng
+
+TUYẾN 32 (Bến xe Mỹ Đình – ĐH Quốc gia HN):
+- Lộ trình: Bến xe Mỹ Đình → Phạm Hùng → Nhổn → Hoài Đức → ĐH Quốc gia HN
+- Giờ: 05:30 – 21:30 | Tần suất: 20–25 phút | Giá: 9.000 đồng
+
+TUYẾN 34 (Trần Khánh Dư – Nhổn):
+- Lộ trình: Trần Khánh Dư → Hoàn Kiếm → Kim Mã → Cầu Giấy → Nhổn
+- Giờ: 05:30 – 21:30 | Tần suất: 15–20 phút | Giá: 9.000 đồng
+- Kết nối Metro tuyến 3 tại ga Nhổn và Cầu Giấy
+
+TUYẾN 38 (Bến xe Giáp Bát – Nội Bài):
+- Lộ trình: Bến xe Giáp Bát → Giải Phóng → Hoàng Quốc Việt → QL5 → Sân bay Nội Bài
+- Giờ: 05:30 – 21:30 | Tần suất: 30 phút | Giá: 9.000–20.000 đồng
+
+GIÁ VÉ XE BUÝT HÀ NỘI (Cập nhật từ 01/11/2024):
+- Dưới 15 km: 8.000 đồng
+- 15–25 km: 10.000 đồng
+- 25–40 km: 15.000 đồng
+- Trên 40 km: 20.000 đồng
+- Vé tháng 1 tuyến: 100.000 đồng
+- Vé tháng toàn mạng: 200.000 đồng
+- Học sinh/sinh viên 1 tuyến: 50.000 đồng/tháng
+- Người cao tuổi ≥60: MIỄN PHÍ (hầu hết tuyến)
+- Người khuyết tật, thương binh: MIỄN PHÍ
+
+
+=== BRT HÀ NỘI ===
+XE BUÝT NHANH BRT
+================================================================================
+
+=== BRT HÀ NỘI (KIM MÃ – YÊN NGHĨA) – ĐANG HOẠT ĐỘNG ===
+- Chiều dài: 14,7 km | Số trạm: 21 trạm
+- Lộ trình: Kim Mã → Giảng Võ → Láng Hạ → Lê Văn Lương → Tố Hữu → Yên Nghĩa
+- Giờ: 05:00 – 22:00 | Tần suất: 5–10 phút (cao điểm), 15 phút (thường)
+- Giá: 9.000 đồng (như xe buýt thường)
+- Đặc điểm: Làn đường riêng, nhanh hơn buýt thường 30–40%
+- Kết nối: Ga Yên Nghĩa (Metro 2A), Kim Mã (Metro 3 S9 tương lai)
+
+- Các tuyến đang trong giai đoạn quy hoạch và chuẩn bị đầu tư
+
+
+=== GỢI Ý LỘ TRÌNH HÀ NỘI ===
+TỪ SÂN BAY NỘI BÀI → TRUNG TÂM HÀ NỘI (Hoàn Kiếm):
+Cách 1 – Buýt 7: Nội Bài → Bến xe Mỹ Đình → Buýt 45/49 → Hoàn Kiếm | ~18.000đ | 70–90 phút
+Cách 2 – Buýt 86: Nội Bài → Bến xe Gia Lâm → Buýt 01 → Hoàn Kiếm | ~18.000đ | 80–100 phút
+Cách 1 – Metro 2A: Ga Cát Linh → Ga Yên Nghĩa (~23 phút, 15.000đ)
+TỪ NHỔN → TRUNG TÂM HÀ NỘI:
+Metro 3 (trên cao): Ga Nhổn → Ga Cầu Giấy (~15 phút) + chờ đoạn ngầm 2027
+Q: Đi từ sân bay Nội Bài vào Hà Nội bằng gì?
+Q: Metro Cát Linh – Hà Đông chạy mấy giờ?
+Q: Metro tuyến 3 Hà Nội (Nhổn – Ga Hà Nội) hiện đang chạy đến đâu?
+A: Đang chạy đoạn trên cao từ ga Nhổn đến ga Cầu Giấy (8 ga, từ 08/08/2024). Đoạn ngầm Cầu Giấy – Ga Hà Nội đang xây, dự kiến 2027.
+A: Có. Xe buýt: giảm 50% hoặc vé tháng ưu đãi. Metro TP.HCM: vé tháng SV 150.000đ (thường 300.000đ). Metro Hà Nội: vé tháng SV 100.000đ (thường 200.000đ). Buýt điện (153–169): 3.000đ/lượt cho SV.
+A: TP.HCM: Go!Bus (chính thức), BusMap. Hà Nội: Tìm Buýt (timbus.vn). Cả 2 thành phố: Google Maps.
+Q: Xe BRT Hà Nội chạy tuyến nào?

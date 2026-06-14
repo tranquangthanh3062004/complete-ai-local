@@ -7,17 +7,22 @@ python-dotenv
 # === Database ===
 sqlalchemy
 aiosqlite
+asyncpg
+psycopg2-binary
 alembic
+supabase
 
 # === Auth ===
 python-jose[cryptography]
 passlib[bcrypt]
 
-# === LLM - Ollama Only (local, no API key needed) ===
+# === LLM & AI Cloud APIs ===
 langchain
 langchain-core
 langchain-community
 langchain-ollama
+langchain-groq
+langchain-google-genai
 langchain-huggingface
 langchain-text-splitters
 langchain-chroma
@@ -42,6 +47,17 @@ pydantic-settings
 httpx
 requests
 
+# === Text-to-Speech (TTS) ===
+edge-tts                # Microsoft Edge TTS — online, giọng Tiếng Việt cực hay, tự nhiên
+nest-asyncio            # Để chạy asyncio trong synchronous code của FastAPI/Streamlit
+
+# === Language Detection ===
+langdetect              # Phát hiện ngôn ngữ câu hỏi (VI/EN/...)
+
+# === Retry Logic ===
+tenacity                # Retry decorator cho LLM timeout
+
 # === Dev & Test ===
 pytest
 pytest-asyncio
+

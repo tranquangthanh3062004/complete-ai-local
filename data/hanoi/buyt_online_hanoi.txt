@@ -1,0 +1,28 @@
+=== DANH SÁCH TUYẾN XE BUÝT HÀ NỘI (BỔ SUNG TỪ INTERNET) ===
+
+### Tuyến 09A: Bờ Hồ (hoặc Trần Khánh Dư) ⇄ Đại học Mỏ
+* Lộ trình tóm tắt: Bờ Hồ/Trần Khánh Dư – Lê Thái Tổ – Tràng Thi – Điện Biên Phủ – Đội Cấn – Liễu Giai – Nguyễn Chí Thành – Đê La Thành – Kim Mã – Cầu Giấy – Bưởi – Võ Chí Công – Nguyễn Hoàng Tôn – Đại học Mỏ.
+* Thời gian hoạt động: 05:00 – 22:00 hàng ngày.
+* Giá vé: 10.000 VNĐ/lượt.
+
+### Tuyến 09B: Bờ Hồ (hoặc Trần Khánh Dư) ⇄ Bến xe Mỹ Đình
+* Lộ trình tóm tắt: Bờ Hồ/Trần Khánh Dư – Bà Triệu – Trần Nhân Tông – Lê Duẩn – Khâm Thiên – Tây Sơn – Thái Thịnh – Láng Hạ – Nguyễn Chí Thanh – Chùa Láng – Cầu Giấy – Xuân Thủy – Phạm Hùng – Bến xe Mỹ Đình.
+* Thời gian hoạt động: 05:00 – 22:00 hàng ngày.
+* Giá vé: 8.000 VNĐ/lượt.
+
+### Tuyến 14: Bờ Hồ - Cổ Nhuế
+* Chiều đi: Bờ Hồ - Cầu Gỗ - Trần Nhật Duật - Điểm trung chuyển Long Biên - Hàng Đậu - Quán Thánh - Thụy Khuê - Lạc Long Quân - Hoàng Quốc Việt - Phạm Văn Đồng - Cổ Nhuế.
+* Thời gian hoạt động: 05:00 - 21:00.
+* Giá vé: 8.000 VNĐ/lượt (ước tính theo khung <15km).
+
+### Tuyến 16: Bến xe Mỹ Đình - Bến xe Nước Ngầm
+* Lộ trình: Bến xe Mỹ Đình - Phạm Hùng - Xuân Thủy - Cầu Giấy - Đường Láng - Ngã tư Sở - Trường Chinh - Ngã tư Vọng - Giải Phóng - Bến xe Nước Ngầm.
+* Thời gian hoạt động: 05:00 - 21:00.
+* Giá vé: 8.000 VNĐ/lượt.
+
+### Tuyến 26: Mai Động - Sân vận động Quốc gia
+* Lộ trình: Mai Động - Nguyễn Tam Trinh - Kim Ngưu - Thanh Nhàn - Lê Thanh Nghị - Giải Phóng - Xã Đàn - Phạm Ngọc Thạch - Chùa Bộc - Thái Hà - Nguyễn Chí Thanh - Đê La Thành - Cầu Giấy - Xuân Thủy - Hồ Tùng Mậu - Lê Đức Thọ - Sân vận động Quốc gia.
+* Thời gian hoạt động: 05:00 - 22:30.
+* Giá vé: 8.000 VNĐ/lượt.
+
+Lưu ý chung: Vào những ngày cuối tuần khu vực quanh Hồ Hoàn Kiếm tổ chức phố đi bộ, các tuyến buýt 09A và 09B thường chuyển đầu bến về bãi đỗ xe Trần Khánh Dư để tránh khu vực cấm xe.

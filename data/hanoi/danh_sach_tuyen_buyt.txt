@@ -1,0 +1,137 @@
+=== DANH SÁCH TUYẾN XE BUÝT HÀ NỘI (TỪ EXCEL) ===
+
+- Mã số: 1 | Tuyến xe buýt: BX Gia Lâm - BX Yên Nghĩa | Thời gian hoạt động: 5:00 – 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 2 | Tuyến xe buýt: Bác Cổ – BX Yên Nghĩa | Thời gian hoạt động: 5:00 – 22:30 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 03A | Tuyến xe buýt: BX Giáp Bát – BX Gia Lâm | Thời gian hoạt động: 5:00 – 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 03B | Tuyến xe buýt: BX Giáp Bát - Phúc lợi (Long Biên) | Thời gian hoạt động: 6:15 – 20:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 4 | Tuyến xe buýt: Long Biên – BX Nước Ngầm | Thời gian hoạt động: 5:00 – 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 5 | Tuyến xe buýt: KĐT Linh Đàm – Phú Diễn | Thời gian hoạt động: 5:00 – 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 06A | Tuyến xe buýt: BX Giáp Bát – Cầu Giẽ | Thời gian hoạt động: 5:00 – 20:05 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 7 | Tuyến xe buýt: Cầu Giấy – Nội Bài | Thời gian hoạt động: 5:00 - 21:35 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 08A | Tuyến xe buýt: Long Biên – Đông Mỹ | Thời gian hoạt động: 5:05 - 22:30 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 9A | Tuyến xe buýt: Bờ Hồ – Bờ Hồ | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 10A | Tuyến xe buýt: Long Biên - Từ Sơn | Thời gian hoạt động: 5:05 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 11 | Tuyến xe buýt: CV Thống Nhất – HV Nông Nghiệp | Thời gian hoạt động: 5:00 - 22:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 12 | Tuyến xe buýt: CV Nghĩa Đô – Đại Áng | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 13 | Tuyến xe buýt: CV nước Hồ Tây – Cổ Nhuế | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 8.000 VNĐ
+- Mã số: 14 | Tuyến xe buýt: Bờ Hồ – Cổ Nhuế | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 8.000 VNĐ
+- Mã số: 15 | Tuyến xe buýt: BX Gia Lâm – Phố Nỉ | Thời gian hoạt động: 5:00 - 19:30 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 16 | Tuyến xe buýt: BX Mỹ Đình - BX Nước Ngầm | Thời gian hoạt động: 5:00 – 21:00 | Giá vé tham khảo: 8.000 VNĐ
+- Mã số: 17 | Tuyến xe buýt: Long Biên – Nội Bài | Thời gian hoạt động: 5:00 - 20:30 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 18 | Tuyến xe buýt: ĐH.Kinh tế QD – ĐH.Kinh tế QD | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 8.000 VNĐ
+- Mã số: 19 | Tuyến xe buýt: Trần Khánh Dư – KVC Thiên đường Bảo Sơn | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 20A | Tuyến xe buýt: Cầu Giấy – BX Phùng | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 21A | Tuyến xe buýt: BX Giáp Bát – BX Yên Nghĩa | Thời gian hoạt động: 5:00 - 21:07 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 22A | Tuyến xe buýt: BX.Gia Lâm – TTTM.Big C Thăng Long | Thời gian hoạt động: 5:00 - 22:30 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 23 | Tuyến xe buýt: Nguyễn Công Trứ – Nguyễn Công Trứ | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 24 | Tuyến xe buýt: Long Biên – Cầu Giấy | Thời gian hoạt động: 5:00 - 22:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 25 | Tuyến xe buýt: BV Nam Thăng Long – BX Giáp Bát | Thời gian hoạt động: 5:09 - 21:00 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 26 | Tuyến xe buýt: Mai Động – SVĐ Quốc gia | Thời gian hoạt động: 5:00 - 22:30 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 27 | Tuyến xe buýt: BX.Nam Thăng Long – BX.Yên Nghĩa | Thời gian hoạt động: 5:00 - 21:35 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 28 | Tuyến xe buýt: BX Giáp Bát – ĐH Mỏ | Thời gian hoạt động: 5:01 - 21:02 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 29 | Tuyến xe buýt: BX Giáp Bát – Tân Lập | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 30 | Tuyến xe buýt: Mai Động – BX Mỹ Đình | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 31 | Tuyến xe buýt: Bách Khoa – Đại học Mỏ | Thời gian hoạt động: 5:05 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 32 | Tuyến xe buýt: BX Giáp Bát – Nhổn | Thời gian hoạt động: 5:00 - 22:30 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 33 | Tuyến xe buýt: BX Yên Nghĩa – Xuân Đỉnh | Thời gian hoạt động: 5:04 - 21:04 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 34 | Tuyến xe buýt: BX Mỹ Đình – BX Gia Lâm | Thời gian hoạt động: 5:00 - 21:10 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 35A | Tuyến xe buýt: Trần Khánh Dư – BX.Nam Thăng Long | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 36 | Tuyến xe buýt: Yên Phụ – KĐT Linh Đàm | Thời gian hoạt động: 5:05 - 21:00 | Giá vé tham khảo: 8.000 VNĐ
+- Mã số: 37 | Tuyến xe buýt: BX Giáp Bát – Chương Mỹ | Thời gian hoạt động: 5:06 - 21:01 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 38 | Tuyến xe buýt: BX Nam Thăng Long – Mai Động | Thời gian hoạt động: 5:05 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 39 | Tuyến xe buýt: CV.Nghĩa Đô – BV.Nội tiết TW | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 41 | Tuyến xe buýt: Nghi Tàm – BX Giáp Bát | Thời gian hoạt động: 5:10 - 20:30 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 42 | Tuyến xe buýt: Giáp Bát – Đức Giang | Thời gian hoạt động: 5:10 - 20:30 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 43 | Tuyến xe buýt: CV Thống Nhất – Đông Anh | Thời gian hoạt động: 5:10 - 20:30 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 44 | Tuyến xe buýt: Trần Khánh Dư – BX Mỹ Đình | Thời gian hoạt động: 5:10 - 20:30 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 45 | Tuyến xe buýt: Time City – BX Nam Thăng Long | Thời gian hoạt động: 5:10 - 20:30 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 46 | Tuyến xe buýt: BX Mỹ Đình – Đông Anh | Thời gian hoạt động: 5:10 - 20:30 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 47A | Tuyến xe buýt: BX Long Biên – Bát Tràng | Thời gian hoạt động: 5:10 - 20:30 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 48 | Tuyến xe buýt: TTTM Savico Long Biên – BX Nước Ngầm | Thời gian hoạt động: 5:00 - 20:40 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 49 | Tuyến xe buýt: Trần Khánh Dư – KĐT.Mỹ Đình II | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 50 | Tuyến xe buýt: Long Biên – SVĐ Quốc Gia | Thời gian hoạt động: 5:00 - 21:09 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 51 | Tuyến xe buýt: Trần Khánh Dư – CV Cầu Giấy | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 52A | Tuyến xe buýt: CV Thống nhất – Lệ Chi | Thời gian hoạt động: 5:06 - 20:59 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 53A | Tuyến xe buýt: Hoàng Quốc Việt – Đông Anh | Thời gian hoạt động: 5:00 - 20:18 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 55A | Tuyến xe buýt: KĐT Times City – Cầu Giấy | Thời gian hoạt động: 5:20 - 20:20 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 56A | Tuyến xe buýt: BX Nam Thăng Long – Núi Đôi | Thời gian hoạt động: 4:45 - 20:45 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 57 | Tuyến xe buýt: Nam Thăng Long – KCN Phú Nghĩa | Thời gian hoạt động: 5:23 - 18:08 | Giá vé tham khảo: 20.000 VNĐ
+- Mã số: 58 | Tuyến xe buýt: Long Biên – Thạch Đà | Thời gian hoạt động: 5:23 - 18:08 | Giá vé tham khảo: 20.000 VNĐ
+- Mã số: 59 | Tuyến xe buýt: TT Đông Anh – HV Nông nghiệp | Thời gian hoạt động: 5:23 - 18:08 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 60A | Tuyến xe buýt: KĐT Tứ Hiệp – Nam Thăng Long | Thời gian hoạt động: 5:23 - 18:08 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 20C | Tuyến xe buýt: Nhổn – Võng Xuyên | Thời gian hoạt động: 5:23 - 18:08 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 62 | Tuyến xe buýt: BX Yên Nghĩa – BX Thường Tín | Thời gian hoạt động: 5:00 - 21:02 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 63 | Tuyến xe buýt: KCN.Bắc Thăng Long – Tiến Thịnh | Thời gian hoạt động: 5:00 - 20:30 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 64 | Tuyến xe buýt: KCN.Bắc Thăng Long – Phố Nỉ | Thời gian hoạt động: 5:00 - 21:05 | Giá vé tham khảo: 20.000 VNĐ
+- Mã số: 65 | Tuyến xe buýt: Thụy Lâm (Đông Anh) – Long Biên | Thời gian hoạt động: 5:00 - 21:05 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 72 | Tuyến xe buýt: BX Yên Nghĩa – Xuân Mai | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 84 | Tuyến xe buýt: KĐT Mỹ Đình – KĐT Linh Đàm | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 85 | Tuyến xe buýt: CV Nghĩa Đô – KĐT Văn Phú | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 86 | Tuyến xe buýt: Ga Hà Nội – SB Nội Bài | Thời gian hoạt động: 5:05 - 21:40 | Giá vé tham khảo: 35.000 VNĐ
+- Mã số: 88 | Tuyến xe buýt: BX.Mỹ Đình – Xuân Mai | Thời gian hoạt động: 5:05 - 18:30 | Giá vé tham khảo: 20.000 VNĐ
+- Mã số: 89 | Tuyến xe buýt: BX.Yên Nghĩa – BX.Sơn Tây | Thời gian hoạt động: 5:00 - 18:56 | Giá vé tham khảo: 20.000 VNĐ
+- Mã số: 90 | Tuyến xe buýt: BX.Kim Mã – Cầu Nhật Tân – SB Nội Bài | Thời gian hoạt động: 5:30 - 21:10 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 91 | Tuyến xe buýt: BX.Yên Nghĩa – Phú Túc | Thời gian hoạt động: 5:00 - 19:00 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 92 | Tuyến xe buýt: Nhổn – Sơn Tây – Tây Đằng | Thời gian hoạt động: 5:00 - 19:21 | Giá vé tham khảo: 20.000 VNĐ
+- Mã số: 93 | Tuyến xe buýt: Nam Thăng Long – Bắc Sơn | Thời gian hoạt động: 5:00 - 18:49 | Giá vé tham khảo: 20.000 VNĐ
+- Mã số: 94 | Tuyến xe buýt: BX Giáp Bát – Kim Bài | Thời gian hoạt động: 5:05 - 20:05 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 95 | Tuyến xe buýt: Nam Thăng Long – Xuân Hòa | Thời gian hoạt động: 5:00 - 19:30 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 96 | Tuyến xe buýt: CV Nghĩa Đô – Đông Anh | Thời gian hoạt động: 5:00 - 19:30 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 97 | Tuyến xe buýt: Hoài Đức – CV Nghĩa Đô | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 98 | Tuyến xe buýt: Yên Phụ – Aeon Mall Long Biên | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 99 | Tuyến xe buýt: Kim Mã – BV Nội Tiết TW Cơ sở 2 | Thời gian hoạt động: 5:00 - 21:30 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 100 | Tuyến xe buýt: Long Biên – KĐT Đặng Xá | Thời gian hoạt động: 5:00 - 20:10 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 101 | Tuyến xe buýt: BX Giáp Bát – Vân Đình | Thời gian hoạt động: 5:00 - 20:41 | Giá vé tham khảo: 20.000 VNĐ
+- Mã số: 102 | Tuyến xe buýt: BX Yên Nghĩa – Vân Đình | Thời gian hoạt động: 5:00 - 20:00 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 103 | Tuyến xe buýt: BX Mỹ Đình – Hương Sơn | Thời gian hoạt động: 5:00 - 20:00 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 104 | Tuyến xe buýt: Mỹ Đình – Bắc Linh Đàm | Thời gian hoạt động: 5:00 - 21:06 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 105 | Tuyến xe buýt: Đô Nghĩa – Cầu Giấy | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 106 | Tuyến xe buýt: KĐT.Mỗ Lao – Aeon Mall Long Biên | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 107 | Tuyến xe buýt: Kim Mã – Làng VH du lịch các dân tộc VN | Thời gian hoạt động: 5:00 - 20:00 | Giá vé tham khảo: 20.000 VNĐ
+- Mã số: 108 | Tuyến xe buýt: BX Thường Tín – Minh Tân | Thời gian hoạt động: 4:25 - 19:30 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 08BCT | Tuyến xe buýt: Long Biên – Vạn Phúc | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 08B | Tuyến xe buýt: Long Biên – Vạn Phúc | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 03B | Tuyến xe buýt: BX.Nước Ngầm – Vincom – Phúc Lợi | Thời gian hoạt động: 5:30 - 20:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 06B | Tuyến xe buýt: BX Giáp Bát – Hồng Vân | Thời gian hoạt động: 5:20 - 19:55 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 09CT | Tuyến xe buýt: Trần Khánh Dư – Trần Khánh Dư | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 10B | Tuyến xe buýt: Long Biên – Trung Mầu | Thời gian hoạt động: 5:10 - 20:20 | Giá vé tham khảo: 7.000 VNĐ
+- Mã số: 14CT | Tuyến xe buýt: Trần Khánh Dư – Cổ Nhuế | Thời gian hoạt động: 5:00 - 21:00 | Giá vé tham khảo: 7.000 VNĐ
+- Mã số: 16 | Tuyến xe buýt: BX Mỹ Đình – BX Nước Ngầm | Thời gian hoạt động: 5:00 - 21:20 | Giá vé tham khảo: 8.000 VNĐ
+- Mã số: 20B | Tuyến xe buýt: Cầu Giấy – BX Sơn Tây | Thời gian hoạt động: 5:10 - 20:15 | Giá vé tham khảo: 8.000 VNĐ
+- Mã số: 21B | Tuyến xe buýt: KĐT Pháp Vân – BX Mỹ Đình | Thời gian hoạt động: 5:02 - 21:02 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 22B | Tuyến xe buýt: KĐT Kiến Hưng – BX Mỹ Đình | Thời gian hoạt động: 5:00 - 22:30 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 35B | Tuyến xe buýt: Nam Thăng Long – Thanh Lâm | Thời gian hoạt động: 5:00 - 20:00 | Giá vé tham khảo: 7.000 VNĐ
+- Mã số: 36CT | Tuyến xe buýt: Yên Phụ – KĐT Linh Đàm | Thời gian hoạt động: 5:05 - 21:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 47B | Tuyến xe buýt: ĐH.Kinh tế QD – Kiêu Kỵ | Thời gian hoạt động: 5:00 - 19:50 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 52B | Tuyến xe buýt: CV Thống Nhất – Đặng Xá | Thời gian hoạt động: 5:03 - 20:55 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 53B | Tuyến xe buýt: BX Mỹ Đình – KCN Quang Minh | Thời gian hoạt động: 5:00 - 20:18 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 55B | Tuyến xe buýt: TTTM Aeon Mall – Cầu Giấy | Thời gian hoạt động: 5:00 - 20:40 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 56B | Tuyến xe buýt: KĐT mới Sóc Sơn – Bắc Phú | Thời gian hoạt động: 4:50 - 18:40 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 60B | Tuyến xe buýt: BX.Nước Ngầm – BV.Bệnh Nhiệt Đới TW 2 | Thời gian hoạt động: 5:30 - 20:00 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 61 | Tuyến xe buýt: Vân Hà – CV.Cầu Giấy | Thời gian hoạt động: 5:10 - 19:50 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 06C | Tuyến xe buýt: BX Giáp Bát – Phú Minh | Thời gian hoạt động: 5:10 - 19:50 | Giá vé tham khảo: 12.000 VNĐ
+- Mã số: 06D | Tuyến xe buýt: BX Giáp Bát – Tân Dân | Thời gian hoạt động: 5:25 - 20:00 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 06E | Tuyến xe buýt: BX Giáp Bát – Phú Túc | Thời gian hoạt động: 5:45 - 18:15 | Giá vé tham khảo: 15.000 VNĐ
+- Mã số: 08ACT | Tuyến xe buýt: Long Biên – Đông Mỹ | Thời gian hoạt động: 5:05 - 22:30 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: BRT01 | Tuyến xe buýt: BX Yên Nghĩa – Kim Mã | Thời gian hoạt động: 5:00 - 22:00 | Giá vé tham khảo: 10.000 VNĐ
+- Mã số: 22C | Tuyến xe buýt: BX Giáp Bát – KĐT Dương Nội | Thời gian hoạt động: 5:00 - 21:30 | Giá vé tham khảo: 8.000 VNĐ
+- Mã số: 86CT | Tuyến xe buýt: Ga Hà Nội – Sân Bay Nội Bài | Thời gian hoạt động: 5:05 - 21:40 | Giá vé tham khảo: 45.000 VNĐ
+- 
+- 
+- 
+- Mã số: Điểm Tham Quan | Tuyến xe buýt: Các Tuyến Xe Buýt Phù Hợp | Thời gian hoạt động: Mô Tả Điểm Tham Quan
+- Mã số: Hồ Hoàn Kiếm và Phố Cổ | Tuyến xe buýt: 08, 09, 14, 31, 36, 86 | Thời gian hoạt động: Trung tâm văn hóa, lịch sử của Hà Nội, nơi tập trung nhiều hoạt động giải trí và ẩm thực.
+- Mã số: Lăng Chủ tịch Hồ Chí Minh | Tuyến xe buýt: 09, 22, 33, 45, 50 | Thời gian hoạt động: Nơi an nghỉ của Chủ tịch Hồ Chí Minh, cùng với việc tham quan khu phức hợp Ba Đình.
+- Mã số: Văn Miếu - Quốc Tử Giám | Tuyến xe buýt: 02, 23, 32, 38, 41 | Thời gian hoạt động: Ngôi trường đại học đầu tiên của Việt Nam, một biểu tượng của tri thức và sự trường tồn.
+- Mã số: Hồ Tây | Tuyến xe buýt: 09A, 13, 14, 25, 31, 33, 41, 45, 60A | Thời gian hoạt động: Một trong những hồ nước lớn tại Hà Nội, thích hợp cho những hoạt động nghỉ dưỡng và vui chơi.
+- Mã số: Làng gốm Bát Tràng | Tuyến xe buýt: 47A, 47B, 52B, 69 | Thời gian hoạt động: Thăm làng gốm với truyền thống lâu đời, thử tài nghệ làm gốm.
+- Mã số: Vườn quốc gia Ba Vì | Tuyến xe buýt: 20B, 71, 74, 77, 110 | Thời gian hoạt động: Khám phá thiên nhiên, tham gia các hoạt động dã ngoại và nghỉ dưỡng.
+- Mã số: Chùa Hương | Tuyến xe buýt: 75, 78, 103, 211, 215 | Thời gian hoạt động: Điểm hành hương nổi tiếng với lễ hội Chùa Hương hàng năm.
+- Mã số: Bảo tàng Dân tộc học Việt Nam | Tuyến xe buýt: 07, 14, 38, 47 | Thời gian hoạt động: Khám phá văn hóa đa dạng của 54 dân tộc Việt Nam.
+- Mã số: Nhà hát lớn Hà Nội | Tuyến xe buýt: 02, 03, 11, 34, 40, 55 | Thời gian hoạt động: Nơi diễn ra các vở opera, nhạc kịch và nghệ thuật biểu diễn truyền thống.
+- Mã số: Đền Quán Thánh | Tuyến xe buýt: 13, 22, 27, 33, 41 | Thời gian hoạt động: Một trong bốn đền bảo vệ Thăng Long xưa, nổi tiếng với kiến trúc cổ và yên bình.
+- Mã số: Phủ Tây Hồ | Tuyến xe buýt: 31, 55, 57, 58, 90 | Thời gian hoạt động: Đền thờ thánh Mẫu, nổi tiếng với kiến trúc đẹp và không gian linh thiêng.
+- Mã số: Cầu Long Biên | Tuyến xe buýt: 14, 21, 35, 50, 55 | Thời gian hoạt động: Cây cầu lịch sử bắc qua sông Hồng, từng chứng kiến nhiều biến cố lịch sử của thủ đô.
+- Mã số: Chợ Đồng Xuân | Tuyến xe buýt: 01, 14, 36, 52, 55 | Thời gian hoạt động: Chợ truyền thống lớn tại Hà Nội, nơi mua sắm sầm uất và đa dạng.
+- Mã số: Bảo tàng Lịch sử Quốc gia | Tuyến xe buýt: 03, 16, 22, 29, 45 | Thời gian hoạt động: Nơi trưng bày, bảo tồn và giới thiệu lịch sử Việt Nam qua các triển lãm.
+- Mã số: Khu di tích Hoàng thành Thăng Long | Tuyến xe buýt: 22, 33, 38, 40, 55 | Thời gian hoạt động: Khu di tích lịch sử cấp quốc gia, thể hiện rõ nét lịch sử hình thành và phát triển của Thăng Long - Hà Nội.

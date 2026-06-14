@@ -1,0 +1,82 @@
+=== METRO HÀ NỘI ===
+METRO HÀ NỘI
+================================================================================
+
+=== B1. TUYẾN 2A: CÁT LINH – HÀ ĐÔNG (ĐANG HOẠT ĐỘNG) ===
+
+THÔNG TIN CHUNG:
+- Tên: Đường sắt đô thị Hà Nội tuyến 2A
+- Chiều dài: 13 km (toàn bộ trên cao)
+- Số ga: 12 ga
+- Khai thác chính thức: 06/11/2021
+- Đơn vị vận hành: Công ty TNHH MTV Đường sắt Hà Nội (MRB)
+- Hotline: (024) 7307 0888
+- Website: mrhanoi.gov.vn
+
+LỘ TRÌNH 12 GA (Cát Linh → Hà Đông):
+Ga 01 – Cát Linh: Quận Đống Đa | Điểm đầu, gần Đại học Kiến trúc, kết nối nhiều tuyến buýt
+Ga 02 – La Thành: Quận Đống Đa | Gần Văn Miếu Quốc Tử Giám (đi bộ ~800m)
+Ga 03 – Thái Hà: Quận Đống Đa | Khu thương mại Thái Hà, nhiều quán ăn
+Ga 04 – Láng: Quận Đống Đa | Gần ĐH Quốc gia Hà Nội, bệnh viện Nhi
+Ga 05 – Thượng Đình: Quận Thanh Xuân | Khu công nghiệp cao su Thượng Đình
+Ga 06 – Vành Đai 3: Quận Thanh Xuân | Nút giao Vành đai 3 – Nguyễn Trãi
+Ga 07 – Phùng Khoang: Quận Nam Từ Liêm | Khu dân cư mới
+Ga 08 – Văn Quán: Quận Hà Đông | Khu đô thị Văn Quán
+Ga 09 – Hà Đông: Quận Hà Đông | Trung tâm quận Hà Đông, chợ Hà Đông
+Ga 10 – La Khê: Quận Hà Đông | Khu dân cư La Khê
+Ga 11 – Văn Khê: Quận Hà Đông | Khu đô thị Văn Khê
+Ga 12 – Yên Nghĩa: Quận Hà Đông | Điểm cuối, kết nối BRT Kim Mã–Yên Nghĩa, bến xe Yên Nghĩa
+
+GIỜ HOẠT ĐỘNG:
+- Chuyến đầu: 05:30
+- Chuyến cuối: 22:30
+- Tần suất cao điểm: 6 phút/chuyến
+- Tần suất thường: 10 phút/chuyến
+- Thời gian toàn tuyến: ~23 phút
+
+GIÁ VÉ METRO CÁT LINH – HÀ ĐÔNG:
+- 1–4 ga: 8.000 đồng
+- 5–8 ga: 10.000 đồng
+- 9–12 ga (toàn tuyến): 15.000 đồng
+- Vé ngày: 30.000 đồng
+- Vé tháng thường: 200.000 đồng
+- Vé tháng sinh viên: 100.000 đồng
+- Miễn phí: Trẻ dưới 6 tuổi, người ≥60 tuổi, người khuyết tật
+
+=== B2. TUYẾN 3: NHỔN – GA HÀ NỘI (MỘT PHẦN ĐANG HOẠT ĐỘNG) ===
+
+THÔNG TIN CHUNG:
+- Chiều dài: 12,5 km (8,5 km trên cao + 4 km ngầm)
+- Số ga: 12 ga (8 ga trên cao + 4 ga ngầm)
+- Đoạn trên cao: Vận hành thương mại từ 08/08/2024
+- Đoạn ngầm: Đang thi công, dự kiến hoàn thành cuối 2027
+- Website: metrohanoi.vn
+
+LỘ TRÌNH 12 GA:
+[ĐANG KHAI THÁC – 8 ga trên cao]
+Ga 01 – Nhổn: Huyện Từ Liêm | Điểm đầu, bãi đỗ xe rộng
+Ga 02 – Minh Khai: Quận Nam Từ Liêm | Khu dân cư
+Ga 03 – Phú Diễn: Quận Bắc Từ Liêm | Khu dân cư
+Ga 04 – Cầu Diễn: Quận Nam Từ Liêm | Gần cầu Diễn
+Ga 05 – Lê Đức Thọ: Quận Nam Từ Liêm | Trục đường Lê Đức Thọ
+Ga 06 – Đại học Quốc gia: Quận Cầu Giấy | Gần ĐH Quốc gia Hà Nội
+Ga 07 – Chùa Hà: Quận Cầu Giấy | Gần chùa Hà (cầu duyên nổi tiếng)
+Ga 08 – Cầu Giấy: Quận Cầu Giấy | Điểm chuyển tiếp lên/xuống tuyến trên cao
+
+[ĐANG XÂY DỰNG – 4 ga ngầm, dự kiến 2027]
+Ga 09 – Kim Mã (S9): Quận Ba Đình | Gần bến xe Kim Mã, kết nối BRT
+Ga 10 – Cát Linh (S10): Quận Đống Đa | Kết nối tuyến 2A (Cát Linh – Hà Đông)
+Ga 11 – Văn Miếu (S11): Quận Đống Đa | Gần Văn Miếu Quốc Tử Giám
+Ga 12 – Ga Hà Nội (S12): Quận Hoàn Kiếm | Kết nối ga đường sắt quốc gia Hà Nội
+
+GIỜ HOẠT ĐỘNG (Đoạn trên cao Nhổn – Cầu Giấy):
+- 05:30 – 22:00 hàng ngày
+- Cao điểm: theo biểu đồ thực tế
+- Thấp điểm & cuối tuần: 10 phút/chuyến
+- Tối (19:30–22:00): 15 phút/chuyến
+- Từ 01/02/2026: 100% soát vé điện tử sinh trắc học
+
+GIÁ VÉ METRO NHỔN – CẦU GIẤY:
+- Tương đương tuyến 2A: 8.000–15.000 đồng tùy số ga
+- Vé ngày: 30.000 đồng
+

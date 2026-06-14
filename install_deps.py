@@ -24,8 +24,7 @@ packages_core = [
     "alembic",
 ]
 
-packages_llm = [
-    "langchain",
+dl    "langchain",
     "langchain-core",
     "langchain-community",
     "langchain-ollama",
@@ -33,7 +32,7 @@ packages_llm = [
     "langchain-text-splitters",
     "langchain-chroma",
 ]
-
+    
 packages_vector = [
     "chromadb",
 ]

@@ -1,10 +1,12 @@
 """
-RAG Router v3.0 — Upload nhiều loại file, Chat với tài liệu qua Ollama local.
-Tính năng mới:
-  - Hỗ trợ .pdf, .docx, .txt (Feature 3.1)
-  - Highlight đoạn trích nguồn (Feature 3.4)
-  - Xóa tài liệu khỏi ChromaDB (Feature 3.3)
+RAG Router v4.0 — Chatbot Giao Thông Công Cộng (GTCC)
+Chủ đề: Hỏi đáp về xe buýt, metro, BRT, luật giao thông, lịch trình...
+Tính năng:
+  - Hỗ trợ .pdf, .docx, .txt
+  - Highlight đoạn trích nguồn
+  - Xóa tài liệu khỏi ChromaDB
   - LearningEvent tracking
+  - Topic detection chuyên về GTCC
 """
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
 from pydantic import BaseModel
@@ -26,8 +28,10 @@ from database import get_db
 from routers.auth import get_current_user
 from models import User, Document, LearningEvent, TopicMastery
 from llm_factory import get_llm
+from logger import get_logger
 
 router = APIRouter(prefix="/documents", tags=["rag"])
+logger = get_logger("rag")
 
 # ── Supported file types ──────────────────────────────────────────────────────
 SUPPORTED_TYPES = {".pdf", ".txt", ".docx"}
@@ -38,44 +42,112 @@ _embeddings = None
 def get_embeddings():
     global _embeddings
     if _embeddings is None:
+        model_name = getattr(settings, "embedding_model", "sentence-transformers/all-MiniLM-L6-v2")
+        logger.info(f"Loading embedding model: {model_name}")
         _embeddings = HuggingFaceEmbeddings(
-            model_name="keepitreal/vietnamese-sbert",
+            model_name=model_name,
             model_kwargs={"device": "cpu"},
             encode_kwargs={"normalize_embeddings": True},
         )
     return _embeddings
 
+# ── Vector Store (Supabase pgvector hoặc ChromaDB) ────────────────────────────
+_vector_store_instance = None
 
-# ── Topic Detection ───────────────────────────────────────────────────────────
+def get_vector_store():
+    global _vector_store_instance
+    if _vector_store_instance is None:
+        embeddings = get_embeddings()
+        
+        # Nếu cấu hình Supabase, dùng Supabase Vector Store
+        if settings.supabase_url and settings.supabase_key:
+            try:
+                from supabase.client import create_client
+                from langchain_community.vectorstores import SupabaseVectorStore
+                
+                logger.info("Initializing Supabase Vector Store...")
+                supabase_client = create_client(settings.supabase_url, settings.supabase_key)
+                _vector_store_instance = SupabaseVectorStore(
+                    embedding=embeddings,
+                    client=supabase_client,
+                    table_name="documents",
+                    query_name="match_documents"
+                )
+            except ImportError:
+                logger.error("Missing supabase package. Fallback to ChromaDB.")
+                
+        # Ngược lại, dùng ChromaDB (cho Local)
+        if _vector_store_instance is None:
+            logger.info("Initializing ChromaDB (Local)...")
+            os.makedirs(settings.chroma_persist_dir, exist_ok=True)
+            from langchain_chroma import Chroma
+            _vector_store_instance = Chroma(
+                persist_directory=settings.chroma_persist_dir,
+                embedding_function=embeddings,
+            )
+            
+    return _vector_store_instance
+
+
+# ── Topic Detection - Chuyên về GTCC ─────────────────────────────────────────
 TOPIC_KEYWORDS = {
-    "luat": [
-        "luat", "dieu", "khoan", "quy dinh", "nghi dinh", "thong tu", "phap ly",
-        "luật", "điều", "khoản", "quy định", "nghị định", "thông tư", "pháp lý",
+    "xe_buyt": [
+        "xe buýt", "xe buyt", "bus", "tuyến buýt", "tuyen buyt", "bến xe",
+        "trạm xe buýt", "tram xe buyt", "vé xe buýt", "ve xe buyt",
+        "giờ xe buýt", "lịch xe buýt", "lich xe buyt", "số tuyến", "so tuyen",
+        "xe bus", "minibus", "transerco", "ttqlgtcc",
     ],
-    "ky thuat": [
-        "lap trinh", "code", "python", "api", "server", "database", "ham", "thuat toan",
-        "lập trình", "hàm", "thuật toán", "javascript", "react", "docker",
+    "metro_tau_dien": [
+        "metro", "tàu điện", "tau dien", "đường sắt đô thị", "duong sat do thi",
+        "mrt", "lrt", "tàu ngầm", "tau ngam", "ga metro", "cát linh",
+        "cat linh", "hà đông", "ha dong", "nhổn", "nhon", "bến thành",
+        "ben thanh", "suối tiên", "suoi tien", "tuyến metro", "tuyen metro",
+        "tàu điện ngầm", "mrb", "vml",
     ],
-    "toan": [
-        "tinh", "phuong trinh", "so hoc", "xac suat", "dao ham", "tich phan",
-        "tính", "phương trình", "số học", "xác suất", "đạo hàm", "tích phân",
-        "thống kê", "ma trận",
+    "brt_xe_buyt_nhanh": [
+        "brt", "xe buýt nhanh", "xe buyt nhanh", "bus rapid transit",
+        "kim mã", "kim ma", "yên nghĩa", "yen nghia", "làn đường riêng",
+        "lan duong rieng",
     ],
-    "y te": [
-        "benh", "thuoc", "trieu chung", "chan doan", "suc khoe",
-        "bệnh", "thuốc", "triệu chứng", "chẩn đoán", "sức khỏe", "y tế", "bác sĩ",
+    "ve_gia_cuoc": [
+        "giá vé", "gia ve", "vé tháng", "ve thang", "vé ngày", "ve ngay",
+        "học sinh sinh viên", "hoc sinh sinh vien", "miễn phí", "mien phi",
+        "ưu đãi", "uu dai", "giảm giá", "giam gia", "thanh toán", "thanh toan",
+        "mua vé", "mua ve", "thẻ xe buýt", "the xe buyt",
     ],
-    "kinh te": [
-        "kinh doanh", "tai chinh", "dau tu", "thi truong", "loi nhuan",
-        "tài chính", "đầu tư", "thị trường", "lợi nhuận", "kinh tế", "ngân hàng",
+    "lich_trinh_tuyen": [
+        "lịch trình", "lich trinh", "giờ chạy", "gio chay", "giờ mở cửa",
+        "gio mo cua", "tần suất", "tan suat", "chuyến đầu", "chuyen dau",
+        "chuyến cuối", "chuyen cuoi", "lộ trình", "lo trinh", "tuyến đường",
+        "tuyen duong", "đón trả khách", "don tra khach",
     ],
-    "lich su": [
-        "lich su", "chien tranh", "trieu dai", "su kien",
-        "lịch sử", "chiến tranh", "triều đại", "sự kiện", "lịch sử",
+    "luat_quy_dinh": [
+        "luật", "luat", "quy định", "quy dinh", "nghị định", "nghi dinh",
+        "vi phạm", "vi pham", "xử phạt", "xu phat", "phạt tiền", "phat tien",
+        "đèn đỏ", "den do", "tốc độ", "toc do", "mũ bảo hiểm", "mu bao hiem",
+        "nồng độ cồn", "nong do con", "bằng lái", "bang lai", "giấy phép",
+        "giay phep", "luật giao thông", "luat giao thong",
     ],
-    "khoa hoc": [
-        "vật lý", "hóa học", "sinh học", "thiên văn", "khoa học", "nghiên cứu",
-        "physics", "chemistry", "biology", "science",
+    "giao_thong_duong_thuy": [
+        "buýt sông", "buyt song", "phà", "pha", "tàu thủy", "tau thuy",
+        "đường thủy", "duong thuy", "bến phà", "ben pha", "sông sài gòn",
+        "song sai gon", "cần giờ", "can gio",
+    ],
+    "ung_dung_tien_ich": [
+        "busmap", "imaas", "ứng dụng", "ung dung", "app", "google maps",
+        "tra cứu", "tra cuu", "thông tin tuyến", "thong tin tuyen",
+        "thẻ thông minh", "the thong minh", "thanh toán điện tử",
+        "thanh toan dien tu", "qr code", "mã qr",
+    ],
+    "xe_dap_xe_may_chia_se": [
+        "xe đạp chia sẻ", "xe dap chia se", "xe máy điện chia sẻ",
+        "xe may dien chia se", "tnego", "ecobike", "mobike", "grab bike",
+        "xe điện", "xe dien",
+    ],
+    "san_bay_ga_tau": [
+        "sân bay", "san bay", "tân sơn nhất", "tan son nhat", "nội bài",
+        "noi bai", "ga tàu", "ga tau", "từ sân bay", "tu san bay",
+        "đến trung tâm", "den trung tam",
     ],
 }
 
@@ -84,7 +156,22 @@ def detect_topic(text: str) -> str:
     for topic, keywords in TOPIC_KEYWORDS.items():
         if any(kw in text_lower for kw in keywords):
             return topic
-    return "general"
+    return "gtcc_chung"
+
+# Tên hiển thị topic đẹp hơn
+TOPIC_DISPLAY = {
+    "xe_buyt": "🚌 Xe Buýt",
+    "metro_tau_dien": "🚇 Metro / Tàu Điện",
+    "brt_xe_buyt_nhanh": "🚍 BRT - Xe Buýt Nhanh",
+    "ve_gia_cuoc": "🎫 Vé & Giá Cước",
+    "lich_trinh_tuyen": "🗓️ Lịch Trình / Tuyến",
+    "luat_quy_dinh": "📋 Luật & Quy Định",
+    "giao_thong_duong_thuy": "⛵ Giao Thông Đường Thủy",
+    "ung_dung_tien_ich": "📱 Ứng Dụng & Tiện Ích",
+    "xe_dap_xe_may_chia_se": "🛵 Xe Đạp / Xe Máy Chia Sẻ",
+    "san_bay_ga_tau": "✈️ Sân Bay & Nhà Ga",
+    "gtcc_chung": "🚦 GTCC Chung",
+}
 
 
 # ── Schemas ───────────────────────────────────────────────────────────────────
@@ -104,23 +191,27 @@ class ChatResponse(BaseModel):
     suggestions: list[str] = []    # gợi ý câu hỏi tiếp theo
 
 
-# ── RAG Prompt ────────────────────────────────────────────────────────────────
-RAG_PROMPT = ChatPromptTemplate.from_template("""Bạn là trợ lý AI thông minh. Hãy trả lời câu hỏi DỰA TRÊN nội dung tài liệu dưới đây.
-Nếu tài liệu không có thông tin liên quan, hãy nói rõ là không tìm thấy trong tài liệu.
-CHỈ THỊ QUAN TRỌNG: Chỉ trích xuất những thông tin phục vụ trực tiếp cho việc trả lời câu hỏi. Trả lời ngắn gọn, đi thẳng vào trọng tâm và tuyệt đối KHÔNG phân tích lan man hay thêm các thông tin thừa.
-Trả lời bằng Tiếng Việt, rõ ràng và chính xác. Dùng markdown để trình bày.
-BẮT BUỘC phải thêm dòng '*Nguồn: Dữ liệu từ tài liệu upload*' ở cuối câu trả lời nếu tìm thấy thông tin.
+# ── RAG Prompt - Chuyên về GTCC (v3.0 - Tối ưu độ chính xác) ─────────────────
+RAG_PROMPT = ChatPromptTemplate.from_template("""Bạn là Trợ lý GTCC (Giao Thông Công Cộng) chuyên nghiệp Việt Nam.
 
-Tài liệu tham khảo:
+TÀI LIỆU THAM KHẢO:
 {context}
 
-Câu hỏi: {question}
+CÂU HỎI: {question}
 
-Trả lời:""")
+HƯỚNG DẪN TRẢ LỜI:
+- Trả lời HOÀN TOÀN bằng Tiếng Việt, rõ ràng, có cấu trúc
+- Dùng thông tin từ tài liệu ở trên (ưu tiên cao nhất)
+- Với lộ trình/tuyến: ghi rõ số tuyến, điểm đầu-cuối, giờ chạy, giá vé
+- Với giá vé: ghi rõ đơn vị đồng/VNĐ, phân loại (lượt/ngày/tháng/SV)
+- Dùng emoji phù hợp: 🚌 xe buýt, 🚇 metro, 🎫 vé, 📍 địa điểm, ⏰ giờ
+- Nếu không tìm thấy thông tin: nói rõ và gợi ý dùng BusMap/Go!Bus/Tìm Buýt
+
+TRẢ LỜI:""")
 
 def format_docs(docs):
     return "\n\n---\n\n".join(
-        f"[Nguồn: {os.path.basename(d.metadata.get('source', d.metadata.get('file_path', 'unknown')))}]\n{d.page_content}"
+        f"[Nguồn: {os.path.basename(d.metadata.get('source', d.metadata.get('file_path', 'GTCC Data')))}]\n{d.page_content}"
         for d in docs
     )
 
@@ -181,11 +272,7 @@ async def upload_document(
         )
         chunks = splitter.split_documents(docs)
 
-        os.makedirs(settings.chroma_persist_dir, exist_ok=True)
-        vectordb = Chroma(
-            persist_directory  = settings.chroma_persist_dir,
-            embedding_function = get_embeddings(),
-        )
+        vectordb = get_vector_store()
         vectordb.add_documents(chunks)
 
         doc = Document(
@@ -198,7 +285,7 @@ async def upload_document(
         await db.refresh(doc)
 
         return {
-            "message" : f"✅ Đã xử lý '{file.filename}' — {len(chunks)} đoạn văn bản",
+            "message" : f"✅ Đã xử lý tài liệu GTCC '{file.filename}' — {len(chunks)} đoạn văn bản",
             "doc_id"  : doc.id,
             "chunks"  : len(chunks),
             "pages"   : len(docs),
@@ -209,71 +296,171 @@ async def upload_document(
             os.remove(file_path)
 
 
-# ── Chat với tài liệu ─────────────────────────────────────────────────────────
+# ── Chat với tài liệu GTCC ────────────────────────────────────────────────────
 @router.post("/chat/", response_model=ChatResponse)
 async def chat(
     request     : ChatRequest,
     db          : AsyncSession = Depends(get_db),
     current_user: Optional[User] = Depends(get_current_user),
 ):
+    # ── 1. Sanitize input ──────────────────────────────────────────────────────
+    from services.sanitizer import sanitize_query
+    clean_query, is_safe, reason = sanitize_query(request.query)
+    if not is_safe:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=400, detail=reason)
+
+    # ── 2. Cache check ─────────────────────────────────────────────────────────
+    from services.cache_service import get_rag_cache
+    from services.lang_detect import build_multilingual_query
+    cache = get_rag_cache()
+    cached = cache.get(clean_query)
+    if cached:
+        logger.info(f"[RAG Cache HIT] Q: '{clean_query[:60]}'")
+        elapsed = 0
+        event = await _save_event(db, current_user, request, cached,
+                                  detect_topic(clean_query), elapsed)
+        return ChatResponse(
+            response    = cached,
+            event_id    = event.id,
+            topic       = TOPIC_DISPLAY.get(detect_topic(clean_query), "🚦 GTCC Chung"),
+            sources     = [],
+            excerpts    = [],
+            suggestions = _get_gtcc_suggestions(detect_topic(clean_query)),
+        )
+
+    topic = detect_topic(clean_query)
+    lang, lang_instruction = build_multilingual_query(clean_query)
     llm   = get_llm(request.model_name)
-    topic = detect_topic(request.query)
     start = time.time()
 
-    chroma_dir = settings.chroma_persist_dir
+    # ── 3. Kiểm tra Vector Store có data chưa ─────────────────────────────────
+    vectordb = get_vector_store()
+    try:
+        probe_docs = vectordb.similarity_search(clean_query, k=1)
+        has_data   = bool(probe_docs)
+    except Exception:
+        has_data = False
 
-    if not os.path.exists(chroma_dir):
-        answer  = llm.invoke(request.query)
+    # ── 4. Fallback khi chưa có dữ liệu RAG ───────────────────────────────────
+    if not has_data:
+        fallback_answer = (
+            "📋 **Chưa có tài liệu GTCC trong hệ thống.**\n\n"
+            "Bạn có thể upload file PDF/TXT/DOCX tại tab **📁 Tài Liệu** để bot học thêm.\n"
+            "Hoặc hỏi trực tiếp tại tab **💬 Hỏi AI Trực Tiếp** để tôi trả lời từ kiến thức chung."
+        )
+        try:
+            system = lang_instruction + "\nBạn là trợ lý GTCC Việt Nam. Trả lời ngắn gọn." if lang_instruction else "Bạn là trợ lý GTCC Việt Nam. Trả lời ngắn gọn bằng tiếng Việt."
+            answer = llm.invoke(f"{system}\nCâu hỏi: {clean_query}")
+            if isinstance(answer, str):
+                answer = answer.strip()
+            # langchain trả về AIMessage
+            if hasattr(answer, "content"):
+                answer = answer.content.strip()
+            if not answer:
+                answer = fallback_answer
+        except Exception:
+            answer = fallback_answer
+
         elapsed = (time.time() - start) * 1000
         event   = await _save_event(db, current_user, request, answer, topic, elapsed)
-        return ChatResponse(response=answer, event_id=event.id, topic=topic)
+        return ChatResponse(response=answer, event_id=event.id, topic=TOPIC_DISPLAY.get(topic, topic))
 
+    # ── 5. Thực hiện RAG ───────────────────────────────────────────────────────
     try:
-        vectordb  = Chroma(
-            persist_directory  = chroma_dir,
-            embedding_function = get_embeddings(),
-        )
-        retriever = vectordb.as_retriever(
-            search_kwargs={"k": settings.rag_top_k}
-        )
+        retriever = vectordb.as_retriever(search_kwargs={"k": settings.rag_top_k})
 
-        # LCEL chain
-        rag_chain = (
-            {"context": retriever | format_docs, "question": RunnablePassthrough()}
-            | RAG_PROMPT
-            | llm
-            | StrOutputParser()
-        )
+        # Lấy source docs trước (1 lần duy nhất, tái dùng cho cả chain và excerpt)
+        source_docs = retriever.invoke(clean_query)
+        context_text = format_docs(source_docs)
 
-        answer  = rag_chain.invoke(request.query)
+        # Thêm language instruction nếu cần
+        if lang_instruction:
+            context_text = lang_instruction + "\n\n" + context_text
+
+        # Build chain dùng context đã có (không gọi retriever thêm lần nữa)
+        from langchain_core.prompts import ChatPromptTemplate
+        prompt_with_context = ChatPromptTemplate.from_template(
+            RAG_PROMPT.messages[0].prompt.template if hasattr(RAG_PROMPT, 'messages') else str(RAG_PROMPT)
+        )
+        answer = (RAG_PROMPT | llm | StrOutputParser()).invoke({
+            "context" : context_text,
+            "question": clean_query,
+        })
         elapsed = (time.time() - start) * 1000
 
-        # Lấy nguồn và đoạn trích
-        source_docs = retriever.invoke(request.query)
-        sources = list({
+        if not answer or not answer.strip():
+            answer = "⚠️ Chưa tìm thấy thông tin phù hợp trong tài liệu. Hãy thử hỏi tab 💬 Hỏi AI."
+
+        sources  = list({
             os.path.basename(d.metadata.get("source", d.metadata.get("file_path", "")))
             for d in source_docs
             if d.metadata.get("source") or d.metadata.get("file_path")
         })
-        excerpts = [d.page_content[:200] + "..." for d in source_docs[:2]]
+        excerpts = [d.page_content[:250] + "..." for d in source_docs[:3]]
+        suggestions = _get_gtcc_suggestions(topic)
+
+        # Lưu vào cache
+        cache.set(clean_query, answer)
 
         event = await _save_event(db, current_user, request, answer, topic, elapsed)
         await _update_topic_count(db, current_user.id if current_user else None, topic)
 
+        logger.info(f"[RAG Chat] lang={lang} | Q: '{clean_query[:60]}' | Topic: {topic} | Sources: {len(sources)} | Time: {elapsed:.0f}ms")
+
         return ChatResponse(
             response    = answer,
             event_id    = event.id,
-            topic       = topic,
+            topic       = TOPIC_DISPLAY.get(topic, topic),
             sources     = sources,
             excerpts    = excerpts,
-            suggestions = [],
+            suggestions = suggestions,
         )
 
     except Exception as e:
         err = str(e)
+        logger.error(f"Error in RAG chat: {err}", exc_info=True)
         if "connection" in err.lower() or "refused" in err.lower() or "10061" in err:
-            raise HTTPException(status_code=503, detail="Ollama chưa chạy hoặc mất kết nối. Hãy kiểm tra lại.")
+            raise HTTPException(status_code=503, detail="Ollama/LLM chưa chạy hoặc mất kết nối.")
         raise HTTPException(status_code=500, detail=f"Lỗi xử lý RAG: {err}")
+
+
+
+def _get_gtcc_suggestions(topic: str) -> list:
+    """Gợi ý câu hỏi tiếp theo theo chủ đề GTCC."""
+    suggestions_map = {
+        "xe_buyt": [
+            "Giá vé xe buýt TP.HCM là bao nhiêu?",
+            "Học sinh có được giảm giá vé không?",
+            "Làm sao mua vé tháng xe buýt?",
+        ],
+        "metro_tau_dien": [
+            "Metro số 1 TP.HCM có những ga nào?",
+            "Giờ chạy của metro Cát Linh - Hà Đông?",
+            "Giá vé metro là bao nhiêu?",
+        ],
+        "ve_gia_cuoc": [
+            "Ai được miễn phí vé xe buýt?",
+            "Mua vé tháng ở đâu?",
+            "Thanh toán vé điện tử được không?",
+        ],
+        "luat_quy_dinh": [
+            "Vi phạm vượt đèn đỏ bị phạt bao nhiêu?",
+            "Quy định về nồng độ cồn khi lái xe?",
+            "Quy định đi xe buýt có gì?",
+        ],
+        "san_bay_ga_tau": [
+            "Đi từ sân bay Nội Bài vào trung tâm Hà Nội bằng gì?",
+            "Có xe buýt từ sân bay Tân Sơn Nhất không?",
+            "Giá taxi sân bay so với xe buýt?",
+        ],
+    }
+    default = [
+        "Xe buýt tuyến nào đi qua trung tâm?",
+        "Làm thế nào để tra cứu lộ trình GTCC?",
+        "App nào hỗ trợ đi xe buýt tốt nhất?",
+    ]
+    return suggestions_map.get(topic, default)
 
 
 # ── Danh sách tài liệu ────────────────────────────────────────────────────────
@@ -301,7 +488,7 @@ async def delete_document(
     db          : AsyncSession = Depends(get_db),
     current_user: Optional[User] = Depends(get_current_user),
 ):
-    """Xóa tài liệu khỏi DB (ChromaDB không xóa được dễ, chỉ xóa record)."""
+    """Xóa tài liệu khỏi DB."""
     result = await db.execute(select(Document).where(Document.id == doc_id))
     doc = result.scalar_one_or_none()
     if not doc:

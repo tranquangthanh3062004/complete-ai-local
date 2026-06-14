@@ -59,11 +59,26 @@ def main():
         chunk_overlap=CHUNK_OVERLAP,
     )
 
-    os.makedirs(CHROMA_DIR, exist_ok=True)
-    vectordb = Chroma(
-        persist_directory=CHROMA_DIR,
-        embedding_function=embeddings,
-    )
+    from config import settings
+    if settings.supabase_url and settings.supabase_key:
+        print("    [+] Ket noi Supabase Vector Store...")
+        from supabase.client import create_client
+        from langchain_community.vectorstores import SupabaseVectorStore
+        supabase_client = create_client(settings.supabase_url, settings.supabase_key)
+        vectordb = SupabaseVectorStore(
+            embedding=embeddings,
+            client=supabase_client,
+            table_name="documents",
+            query_name="match_documents"
+        )
+    else:
+        print("    [+] Khoi tao ChromaDB (Local)...")
+        from langchain_chroma import Chroma
+        os.makedirs(CHROMA_DIR, exist_ok=True)
+        vectordb = Chroma(
+            persist_directory=CHROMA_DIR,
+            embedding_function=embeddings,
+        )
 
     # ── Nạp từng file ─────────────────────────────────────────────────────────
     total_chunks = 0

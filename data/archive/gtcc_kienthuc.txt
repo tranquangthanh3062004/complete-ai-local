@@ -1,0 +1,504 @@
+================================================================================
+    DỮ LIỆU KIẾN THỨC GIAO THÔNG CÔNG CỘNG (GTCC) VIỆT NAM
+    Phiên bản: 3.0 | Cập nhật: 2026-05
+    Nguồn: Tổng hợp từ buyttphcm.com.vn, transerco.com.vn, metro.hochiminhcity.gov.vn, mrhanoi.gov.vn, metrohanoi.vn
+================================================================================
+
+================================================================================
+PHẦN A — METRO TP. HỒ CHÍ MINH
+================================================================================
+
+=== A1. METRO SỐ 1: BẾN THÀNH – SUỐI TIÊN (ĐANG HOẠT ĐỘNG) ===
+
+THÔNG TIN CHUNG:
+- Tên đầy đủ: Tuyến Đường sắt đô thị số 1 – Bến Thành – Suối Tiên
+- Chiều dài: 19,7 km (2,6 km ngầm + 17,1 km trên cao)
+- Số ga: 14 ga (3 ga ngầm + 11 ga trên cao)
+- Ngày khai thác thương mại: 22/12/2024
+- Đơn vị vận hành: Công ty TNHH MTV Đường sắt Đô thị số 1 TP.HCM (VML)
+- Hotline: (028) 3636 0908
+- Website: metro.hochiminhcity.gov.vn
+- App đặt vé: HCMC Metro (iOS & Android)
+
+LỘ TRÌNH 14 GA (Bến Thành → Suối Tiên):
+Ga 01 – Bến Thành (ngầm, B3): Quận 1 | Kết nối: Metro 2, 3, 4 tương lai; xe buýt nhiều tuyến; chợ Bến Thành
+Ga 02 – Ba Son (ngầm, B2): Quận 1 | Gần cảng Ba Son, khu đô thị Vinhomes Ba Son
+Ga 03 – Văn Thánh (ngầm, B1): Quận Bình Thạnh | Gần cầu Văn Thánh, siêu thị Vinmart
+Ga 04 – Tân Cảng (trên cao): Quận Bình Thạnh | Khu vực Tân Cảng, cầu Sài Gòn
+Ga 05 – Thảo Điền (trên cao): TP. Thủ Đức (cũ Q.2) | Khu dân cư cao cấp, trường quốc tế
+Ga 06 – An Phú (trên cao): TP. Thủ Đức (cũ Q.2) | Gần AEON Mall, khu vực An Phú
+Ga 07 – Rạch Chiếc (trên cao): TP. Thủ Đức (cũ Q.2) | Khu thể thao Rạch Chiếc
+Ga 08 – Phước Long (trên cao): TP. Thủ Đức | Khu dân cư Phước Long
+Ga 09 – Bình Thái (trên cao): TP. Thủ Đức | Nút giao thông Bình Thái, nhiều tuyến buýt
+Ga 10 – Thủ Đức (trên cao): TP. Thủ Đức | ĐH Quốc gia TP.HCM gần đây, khu giáo dục
+Ga 11 – Khu Công nghệ Cao (trên cao): TP. Thủ Đức | Khu CNC Sài Gòn Hi-Tech Park (SHTP)
+Ga 12 – Tân Phú (trên cao): TP. Thủ Đức | Khu dân cư Tân Phú, chợ Tam Hà
+Ga 13 – Bình Dương (trên cao): TP. Thủ Đức | Ranh giới TP.HCM – Bình Dương
+Ga 14 – Suối Tiên (trên cao): TP. Thủ Đức | Công viên Suối Tiên, Bến xe Miền Đông mới, kết nối Bình Dương
+
+GIỜ HOẠT ĐỘNG:
+- Chuyến đầu: 05:30 (từ cả 2 đầu tuyến)
+- Chuyến cuối: 22:00 (từ cả 2 đầu tuyến)
+- Tần suất giờ cao điểm (6h–9h, 16h–19h): 3–5 phút/chuyến
+- Tần suất giờ thường: 7–10 phút/chuyến
+- Thời gian toàn tuyến (Bến Thành ↔ Suối Tiên): ~30 phút
+
+GIÁ VÉ METRO SỐ 1 (2024–2026):
+- 0–4 km: 6.000 đồng
+- 4–8 km: 8.000 đồng
+- 8–12 km: 10.000 đồng
+- 12–16 km: 12.000 đồng
+- Trên 16 km (toàn tuyến): 20.000 đồng
+- Vé ngày (đi không giới hạn): 40.000 đồng
+- Vé 3 ngày: 90.000 đồng
+- Vé tháng sinh viên: 150.000 đồng/tháng
+- Vé tháng thường: 300.000 đồng/tháng
+- Miễn phí: Trẻ dưới 6 tuổi, người khuyết tật nặng, thương binh
+
+CÁCH MUA VÉ:
+1. Máy bán vé tự động tại ga (tiền mặt, thẻ ngân hàng nội địa, quốc tế)
+2. App HCMC Metro (quét QR tại cổng soát vé)
+3. Quầy vé có nhân viên hỗ trợ
+
+KẾT NỐI XE BUÝT TẠI CÁC GA METRO SỐ 1:
+- Ga Bến Thành: Buýt 01, 02, 03, 04, 19, 27, 36, 50, 54, 65, 93, 102, 109, 150, 152
+- Ga Thảo Điền: Buýt điện 158, 159
+- Ga An Phú: Buýt điện 160, 161; buýt 40A
+- Ga Rạch Chiếc: Buýt điện 162, 163
+- Ga Bình Thái: Buýt 40D, buýt điện 164
+- Ga Thủ Đức: Buýt 36, buýt điện 165, 166; xe đạp công cộng
+- Ga Suối Tiên: Buýt 60, 602, buýt điện 167, 168, 169
+
+=== A2. METRO SỐ 2: BẾN THÀNH – THAM LƯƠNG (ĐANG XÂY DỰNG) ===
+
+- Chiều dài: ~11,3 km (>9 km ngầm + trên cao + depot)
+- Số ga: 10 ga (ngầm và trên cao)
+- Khởi công: 15/01/2026
+- Dự kiến hoàn thành: Trước 2030
+- Lộ trình dự kiến: Bến Thành → Tao Đàn → Dân Chủ → Hòa Hưng → Phạm Văn Hai → Lê Thị Riêng → Bảy Hiền → Tham Lương
+- Kết nối: Metro 1 (Bến Thành), Metro 3A tương lai
+
+=== A3. CÁC TUYẾN METRO TP.HCM QUY HOẠCH ===
+
+Tuyến 3A (Bến Thành – Tân Kiên): ~19,8 km, 18 ga, dự kiến sau 2030
+Tuyến 3B (Ngã 6 Cộng Hòa – Hiệp Bình Phước): dự kiến sau 2035
+Tuyến 4 (Thạnh Xuân – Khu đô thị Hiệp Phước): dự kiến sau 2035
+Tuyến 5 (Depot Đa Phước – Cần Giuộc – Cầu Sài Gòn): dự kiến sau 2035
+Tuyến 6 giai đoạn 1 (Tân Sơn Nhất – Phú Hữu): đang lập báo cáo khả thi 2026
+Tuyến Bến Thành – Cần Giờ: Động thổ 19/12/2025, dự kiến 2028
+Tuyến Thủ Thiêm – Long Thành: 47,7 km, 19 ga, dự kiến khởi công 2/7/2026
+
+================================================================================
+PHẦN B — METRO HÀ NỘI
+================================================================================
+
+=== B1. TUYẾN 2A: CÁT LINH – HÀ ĐÔNG (ĐANG HOẠT ĐỘNG) ===
+
+THÔNG TIN CHUNG:
+- Tên: Đường sắt đô thị Hà Nội tuyến 2A
+- Chiều dài: 13 km (toàn bộ trên cao)
+- Số ga: 12 ga
+- Khai thác chính thức: 06/11/2021
+- Đơn vị vận hành: Công ty TNHH MTV Đường sắt Hà Nội (MRB)
+- Hotline: (024) 7307 0888
+- Website: mrhanoi.gov.vn
+
+LỘ TRÌNH 12 GA (Cát Linh → Hà Đông):
+Ga 01 – Cát Linh: Quận Đống Đa | Điểm đầu, gần Đại học Kiến trúc, kết nối nhiều tuyến buýt
+Ga 02 – La Thành: Quận Đống Đa | Gần Văn Miếu Quốc Tử Giám (đi bộ ~800m)
+Ga 03 – Thái Hà: Quận Đống Đa | Khu thương mại Thái Hà, nhiều quán ăn
+Ga 04 – Láng: Quận Đống Đa | Gần ĐH Quốc gia Hà Nội, bệnh viện Nhi
+Ga 05 – Thượng Đình: Quận Thanh Xuân | Khu công nghiệp cao su Thượng Đình
+Ga 06 – Vành Đai 3: Quận Thanh Xuân | Nút giao Vành đai 3 – Nguyễn Trãi
+Ga 07 – Phùng Khoang: Quận Nam Từ Liêm | Khu dân cư mới
+Ga 08 – Văn Quán: Quận Hà Đông | Khu đô thị Văn Quán
+Ga 09 – Hà Đông: Quận Hà Đông | Trung tâm quận Hà Đông, chợ Hà Đông
+Ga 10 – La Khê: Quận Hà Đông | Khu dân cư La Khê
+Ga 11 – Văn Khê: Quận Hà Đông | Khu đô thị Văn Khê
+Ga 12 – Yên Nghĩa: Quận Hà Đông | Điểm cuối, kết nối BRT Kim Mã–Yên Nghĩa, bến xe Yên Nghĩa
+
+GIỜ HOẠT ĐỘNG:
+- Chuyến đầu: 05:30
+- Chuyến cuối: 22:30
+- Tần suất cao điểm: 6 phút/chuyến
+- Tần suất thường: 10 phút/chuyến
+- Thời gian toàn tuyến: ~23 phút
+
+GIÁ VÉ METRO CÁT LINH – HÀ ĐÔNG:
+- 1–4 ga: 8.000 đồng
+- 5–8 ga: 10.000 đồng
+- 9–12 ga (toàn tuyến): 15.000 đồng
+- Vé ngày: 30.000 đồng
+- Vé tháng thường: 200.000 đồng
+- Vé tháng sinh viên: 100.000 đồng
+- Miễn phí: Trẻ dưới 6 tuổi, người ≥60 tuổi, người khuyết tật
+
+=== B2. TUYẾN 3: NHỔN – GA HÀ NỘI (MỘT PHẦN ĐANG HOẠT ĐỘNG) ===
+
+THÔNG TIN CHUNG:
+- Chiều dài: 12,5 km (8,5 km trên cao + 4 km ngầm)
+- Số ga: 12 ga (8 ga trên cao + 4 ga ngầm)
+- Đoạn trên cao: Vận hành thương mại từ 08/08/2024
+- Đoạn ngầm: Đang thi công, dự kiến hoàn thành cuối 2027
+- Website: metrohanoi.vn
+
+LỘ TRÌNH 12 GA:
+[ĐANG KHAI THÁC – 8 ga trên cao]
+Ga 01 – Nhổn: Huyện Từ Liêm | Điểm đầu, bãi đỗ xe rộng
+Ga 02 – Minh Khai: Quận Nam Từ Liêm | Khu dân cư
+Ga 03 – Phú Diễn: Quận Bắc Từ Liêm | Khu dân cư
+Ga 04 – Cầu Diễn: Quận Nam Từ Liêm | Gần cầu Diễn
+Ga 05 – Lê Đức Thọ: Quận Nam Từ Liêm | Trục đường Lê Đức Thọ
+Ga 06 – Đại học Quốc gia: Quận Cầu Giấy | Gần ĐH Quốc gia Hà Nội
+Ga 07 – Chùa Hà: Quận Cầu Giấy | Gần chùa Hà (cầu duyên nổi tiếng)
+Ga 08 – Cầu Giấy: Quận Cầu Giấy | Điểm chuyển tiếp lên/xuống tuyến trên cao
+
+[ĐANG XÂY DỰNG – 4 ga ngầm, dự kiến 2027]
+Ga 09 – Kim Mã (S9): Quận Ba Đình | Gần bến xe Kim Mã, kết nối BRT
+Ga 10 – Cát Linh (S10): Quận Đống Đa | Kết nối tuyến 2A (Cát Linh – Hà Đông)
+Ga 11 – Văn Miếu (S11): Quận Đống Đa | Gần Văn Miếu Quốc Tử Giám
+Ga 12 – Ga Hà Nội (S12): Quận Hoàn Kiếm | Kết nối ga đường sắt quốc gia Hà Nội
+
+GIỜ HOẠT ĐỘNG (Đoạn trên cao Nhổn – Cầu Giấy):
+- 05:30 – 22:00 hàng ngày
+- Cao điểm: theo biểu đồ thực tế
+- Thấp điểm & cuối tuần: 10 phút/chuyến
+- Tối (19:30–22:00): 15 phút/chuyến
+- Từ 01/02/2026: 100% soát vé điện tử sinh trắc học
+
+GIÁ VÉ METRO NHỔN – CẦU GIẤY:
+- Tương đương tuyến 2A: 8.000–15.000 đồng tùy số ga
+- Vé ngày: 30.000 đồng
+
+================================================================================
+PHẦN C — XE BUÝT ĐIỆN TP.HCM (KẾT NỐI METRO SỐ 1)
+================================================================================
+
+17 TUYẾN XE BUÝT ĐIỆN KẾT NỐI METRO SỐ 1 (Tuyến 153–169):
+- Đơn vị vận hành: Công ty CP Xe khách Phương Trang (Futa Bus Lines)
+- Màu sắc: Xanh–vàng, hoa hướng dương (biểu tượng TP. Thủ Đức)
+- Giờ hoạt động: 05:00 – 22:00 (khớp với Metro số 1)
+- Tần suất: 8–20 phút/chuyến
+- Giá vé: 5.000–6.000 đồng/lượt
+- Học sinh/sinh viên: 3.000 đồng/lượt
+- Vé tập 30 chuyến: 112.500 đồng
+
+CHI TIẾT 17 TUYẾN XE BUÝT ĐIỆN:
+Tuyến 153: Ga Bến Thành → Khu đô thị Thủ Thiêm (Q.2)
+Tuyến 154: Ga An Phú → Khu dân cư Bình Khánh, An Khánh
+Tuyến 155: Ga Thảo Điền → Khu biệt thự Thảo Điền, trường quốc tế
+Tuyến 156: Ga Rạch Chiếc → Khu thể thao liên hợp, Trường Thọ
+Tuyến 157: Ga Bình Thái → ĐH Hutech, khu dân cư Linh Đông
+Tuyến 158: Ga Thủ Đức → ĐH Quốc gia TP.HCM (cổng chính)
+Tuyến 159: Ga Thủ Đức → ĐH Quốc gia (cổng phụ), KTX ĐH Quốc gia
+Tuyến 160: Ga Khu CNC → Khu CNC Sài Gòn Hi-Tech Park (nội bộ)
+Tuyến 161: Ga Tân Phú → Khu dân cư Tam Hà, chợ Tam Hà
+Tuyến 162: Ga Bình Dương → Thị xã Dĩ An, Bình Dương
+Tuyến 163: Ga Suối Tiên → Công viên Suối Tiên, Vinhomes Grand Park
+Tuyến 164: Ga Suối Tiên → Bến xe Miền Đông mới
+Tuyến 165: Ga Suối Tiên → KCN Long Bình, Q.9
+Tuyến 166: Ga Suối Tiên → Khu dân cư Long Phước, Q.9
+Tuyến 167: Ga Suối Tiên → ĐH Quốc gia (vòng lớn qua Long Bình)
+Tuyến 168: Ga Bến Thành → Chợ Bà Chiểu, Bình Thạnh
+Tuyến 169: Ga Bến Thành → Khu công nghiệp Tân Tạo, Bình Tân
+
+================================================================================
+PHẦN D — XE BUÝT TP. HỒ CHÍ MINH (CHI TIẾT CÁC TUYẾN QUAN TRỌNG)
+================================================================================
+
+TỔNG QUAN MẠNG LƯỚI:
+- Tổng số tuyến: hơn 150 tuyến (bao gồm 17 tuyến điện mới)
+- Đơn vị quản lý: Trung tâm Quản lý Giao thông Công cộng TP.HCM (TTQLGTCC)
+- Website: buyttphcm.com.vn
+- App tra cứu: Go!Bus (chính thức), BusMap, Google Maps
+- Mini app Zalo: GoBus TPHCM
+
+=== NHÓM 1: TUYẾN ĐẦU MỐI – TRUNG TÂM ===
+
+TUYẾN 01 (Bến xe An Sương – Bến Thành):
+- Lộ trình: Bến xe An Sương → Âu Cơ → Lạc Long Quân → CMT8 → Bến Thành
+- Chiều dài: ~20 km | Thời gian: 50–70 phút
+- Giờ: 05:00 – 21:30 | Tần suất: 10–15 phút
+- Giá: 6.000 đồng
+
+TUYẾN 02 (Thủ Đức – Bến Thành):
+- Lộ trình: Bến xe Thủ Đức → Xa Lộ Hà Nội → Đinh Tiên Hoàng → Bến Thành
+- Chiều dài: ~20 km | Giờ: 05:00 – 20:30 | Tần suất: 15–20 phút
+- Giá: 6.000 đồng
+
+TUYẾN 03 (Bến xe Miền Tây – Sở Thú):
+- Lộ trình: Bến xe Miền Tây → Kinh Dương Vương → Nguyễn Văn Cừ → Nguyễn Thị Minh Khai → Sở Thú
+- Giờ: 05:30 – 21:00 | Tần suất: 10–15 phút | Giá: 5.000 đồng
+
+TUYẾN 14 (Bến Thành – Bến xe An Sương):
+- Lộ trình: Bến Thành → CMT8 → Điện Biên Phủ → Lạc Long Quân → Âu Cơ → Bến xe An Sương
+- Giờ: 05:00 – 21:00 | Tần suất: 15 phút | Giá: 6.000 đồng
+
+=== NHÓM 2: TUYẾN SÂN BAY ===
+
+TUYẾN 109 (Sân bay TSN – Bến xe Miền Tây):
+- Lộ trình: Sân bay TSN → Cộng Hòa → Lăng Cha Cả → Lê Văn Sỹ → Nguyễn Văn Cừ → Bến xe Miền Tây
+- Chiều dài: ~22 km | Giờ: 05:30 – 20:00 | Tần suất: 20 phút
+- Giá: 5.000 đồng | Thời gian: 45–60 phút
+
+TUYẾN 152 (Sân bay TSN – Bến Thành):
+- Lộ trình: Sân bay TSN → Cộng Hòa → Lý Thường Kiệt → Nguyễn Trãi → Bến Thành
+- Chiều dài: ~7 km | Giờ: 06:00 – 18:00 | Tần suất: 15–20 phút
+- Giá: 5.000 đồng | Thời gian: 30–45 phút (tùy kẹt xe)
+- Đây là tuyến trực tiếp từ sân bay TSN vào trung tâm Q.1
+
+=== NHÓM 3: TUYẾN LIÊN TỈNH / ĐẦU MỐI ===
+
+TUYẾN 36 (Bến Thành – Đại học Quốc gia TP.HCM):
+- Lộ trình: Bến Thành → Đinh Tiên Hoàng → Nguyễn Hữu Cảnh → Xa Lộ Hà Nội → ĐHQG TP.HCM
+- Giờ: 05:00 – 20:30 | Tần suất: 20–30 phút | Giá: 7.000 đồng
+- Thời gian: 60–90 phút (tùy kẹt xe)
+
+TUYẾN 54 (Bến Thành – Bến xe Miền Đông):
+- Lộ trình: Bến Thành → Đinh Tiên Hoàng → Xô Viết Nghệ Tĩnh → Hàng Xanh → Đinh Bộ Lĩnh → Bến xe Miền Đông
+- Giờ: 05:30 – 20:30 | Tần suất: 15 phút | Giá: 5.000 đồng
+
+TUYẾN 60 (Bến xe Miền Đông mới – Bến Thành):
+- Lộ trình: Bến xe Miền Đông mới (Suối Tiên) → Xa Lộ Hà Nội → Đinh Tiên Hoàng → Bến Thành
+- Giờ: 05:30 – 21:00 | Tần suất: 20 phút | Giá: 7.000 đồng
+
+TUYẾN 68 (Vĩnh Long – TP.HCM / Bến xe Miền Tây):
+- Chạy từ Vĩnh Long → Bến xe Miền Tây | Giá: 45.000–70.000 đồng
+
+GIÁ VÉ XE BUÝT TP.HCM (Cập nhật 2025–2026):
+- Tuyến ngắn (<15 km): 5.000 đồng/lượt
+- Tuyến trung (<25 km): 6.000 đồng/lượt
+- Tuyến dài (≥25 km): 7.000–8.000 đồng/lượt
+- Vé buýt điện (153–169): 5.000–6.000 đồng
+- Vé tháng 1 tuyến: 150.000 đồng
+- Vé tháng liên tuyến: 300.000 đồng
+- Học sinh/sinh viên: giảm 50%
+- Người cao tuổi ≥60, khuyết tật, thương binh: MIỄN PHÍ
+
+================================================================================
+PHẦN E — XE BUÝT HÀ NỘI (CHI TIẾT CÁC TUYẾN QUAN TRỌNG)
+================================================================================
+
+TỔNG QUAN:
+- Đơn vị quản lý chính: Tổng công ty Vận tải Hà Nội (Transerco)
+- Website: transerco.com.vn | timbus.vn
+- App: Tìm Buýt (iOS & Android) | Hotline: 1900 1296
+- Giá vé từ 01/11/2024: 8.000đ (<15km) đến 20.000đ (>40km)
+- Thẻ vé điện tử liên thông đang thí điểm
+
+=== NHÓM 1: TUYẾN SÂN BAY NỘI BÀI ===
+
+TUYẾN 07 (Nội Bài – Bến xe Mỹ Đình):
+- Lộ trình: Sân bay Nội Bài → QL2 → Cầu Thăng Long → Trần Duy Hưng → Bến xe Mỹ Đình
+- Giờ: 05:30 – 22:00 | Tần suất: 15–20 phút | Giá: 9.000 đồng
+- Thời gian: 45–50 phút | Đây là tuyến phổ biến nhất từ Nội Bài
+
+TUYẾN 17 (Nội Bài – Long Biên):
+- Lộ trình: Sân bay Nội Bài → QL5 → Cầu Đuống → Long Biên
+- Giờ: 05:30 – 22:00 | Tần suất: 20–30 phút | Giá: 9.000 đồng
+
+TUYẾN 86 (Nội Bài – Bến xe Gia Lâm):
+- Lộ trình: Sân bay Nội Bài → QL5 → Cầu Đuống → Gia Lâm → Bến xe Gia Lâm
+- Giờ: 05:05 – 22:05 | Tần suất: 30–40 phút | Giá: 9.000 đồng
+- Thời gian: 45–60 phút
+
+=== NHÓM 2: TUYẾN TRỤC CHÍNH ===
+
+TUYẾN 01 (Bến xe Yên Nghĩa – Bến xe Gia Lâm):
+- Lộ trình: Bến xe Yên Nghĩa → QL1A → Nguyễn Trãi → Kim Mã → Đinh Tiên Hoàng → Cầu Long Biên → Bến xe Gia Lâm
+- Giờ: 05:05 – 21:35 | Tần suất: 10–15 phút | Giá: 9.000 đồng
+- Thời gian: 70–90 phút | Qua hầu hết khu trung tâm Hà Nội
+
+TUYẾN 22A (Kim Mã – Bến xe Nước Ngầm):
+- Lộ trình: Bến xe Kim Mã → Nguyễn Thái Học → Lê Duẩn → Giải Phóng → Bến xe Nước Ngầm
+- Giờ: 05:30 – 21:30 | Tần suất: 15 phút | Giá: 9.000 đồng
+
+TUYẾN 32 (Bến xe Mỹ Đình – ĐH Quốc gia HN):
+- Lộ trình: Bến xe Mỹ Đình → Phạm Hùng → Nhổn → Hoài Đức → ĐH Quốc gia HN
+- Giờ: 05:30 – 21:30 | Tần suất: 20–25 phút | Giá: 9.000 đồng
+
+TUYẾN 34 (Trần Khánh Dư – Nhổn):
+- Lộ trình: Trần Khánh Dư → Hoàn Kiếm → Kim Mã → Cầu Giấy → Nhổn
+- Giờ: 05:30 – 21:30 | Tần suất: 15–20 phút | Giá: 9.000 đồng
+- Kết nối Metro tuyến 3 tại ga Nhổn và Cầu Giấy
+
+TUYẾN 38 (Bến xe Giáp Bát – Nội Bài):
+- Lộ trình: Bến xe Giáp Bát → Giải Phóng → Hoàng Quốc Việt → QL5 → Sân bay Nội Bài
+- Giờ: 05:30 – 21:30 | Tần suất: 30 phút | Giá: 9.000–20.000 đồng
+
+GIÁ VÉ XE BUÝT HÀ NỘI (Cập nhật từ 01/11/2024):
+- Dưới 15 km: 8.000 đồng
+- 15–25 km: 10.000 đồng
+- 25–40 km: 15.000 đồng
+- Trên 40 km: 20.000 đồng
+- Vé tháng 1 tuyến: 100.000 đồng
+- Vé tháng toàn mạng: 200.000 đồng
+- Học sinh/sinh viên 1 tuyến: 50.000 đồng/tháng
+- Người cao tuổi ≥60: MIỄN PHÍ (hầu hết tuyến)
+- Người khuyết tật, thương binh: MIỄN PHÍ
+
+================================================================================
+PHẦN F — XE BUÝT NHANH BRT
+================================================================================
+
+=== BRT HÀ NỘI (KIM MÃ – YÊN NGHĨA) – ĐANG HOẠT ĐỘNG ===
+- Chiều dài: 14,7 km | Số trạm: 21 trạm
+- Lộ trình: Kim Mã → Giảng Võ → Láng Hạ → Lê Văn Lương → Tố Hữu → Yên Nghĩa
+- Giờ: 05:00 – 22:00 | Tần suất: 5–10 phút (cao điểm), 15 phút (thường)
+- Giá: 9.000 đồng (như xe buýt thường)
+- Đặc điểm: Làn đường riêng, nhanh hơn buýt thường 30–40%
+- Kết nối: Ga Yên Nghĩa (Metro 2A), Kim Mã (Metro 3 S9 tương lai)
+
+=== BRT TP.HCM (QUY HOẠCH) ===
+- Tuyến BRT số 1: Vòng xoay An Lạc – Rạch Chiếc (22,7 km)
+- Tuyến BRT số 2: Bến xe Miền Tây – Ngã tư Thủ Đức (20,3 km)
+- Các tuyến đang trong giai đoạn quy hoạch và chuẩn bị đầu tư
+
+================================================================================
+PHẦN G — BUÝT SÔNG TP.HCM
+================================================================================
+
+TUYẾN SỐ 1 (LINH ĐÔNG – BẠCH ĐẰNG):
+- Lộ trình: Bến Bạch Đằng (Q.1) → Bình An (Q.2) → Thanh Đa (Bình Thạnh) → Hiệp Bình Chánh → Linh Đông (Thủ Đức)
+- Chiều dài: 10,8 km | Số bến: 8 bến
+- Giờ: 05:30 – 19:30 | Tần suất: 30–60 phút | Giá: 15.000 đồng/lượt
+- Miễn phí: Người ≥60, khuyết tật, trẻ <6 tuổi
+
+TUYẾN SỐ 2 (BẠCH ĐẰNG – LÒ GỐM):
+- Lộ trình: Bến Bạch Đằng (Q.1) → Khánh Hội (Q.4) → Lò Gốm (Q.6/Q.8)
+- Chiều dài: ~10 km | Giờ: 06:00 – 19:00
+- Giá: 15.000 đồng/lượt
+
+================================================================================
+PHẦN H — GỢI Ý LỘ TRÌNH THỰC TẾ (CÂU HỎI THƯỜNG GẶP)
+================================================================================
+
+TỪ SÂN BAY TÂN SƠN NHẤT → TRUNG TÂM TP.HCM (Q.1):
+Cách 1 – Rẻ nhất: Buýt 152 từ sân bay → Bến Thành | 5.000đ | 30–45 phút
+Cách 2 – Kết hợp Metro: Buýt 109 → Bến xe Miền Tây → Buýt 03 → Bến Thành
+Cách 3 – Grab/taxi: 100.000–150.000đ | 20–30 phút (tùy kẹt xe)
+
+TỪ SÂN BAY NỘI BÀI → TRUNG TÂM HÀ NỘI (Hoàn Kiếm):
+Cách 1 – Buýt 7: Nội Bài → Bến xe Mỹ Đình → Buýt 45/49 → Hoàn Kiếm | ~18.000đ | 70–90 phút
+Cách 2 – Buýt 86: Nội Bài → Bến xe Gia Lâm → Buýt 01 → Hoàn Kiếm | ~18.000đ | 80–100 phút
+Cách 3 – Grab/taxi: 200.000–350.000đ | 30–50 phút (tùy kẹt xe)
+
+TỪ Q.1 → ĐẠI HỌC QUỐC GIA TP.HCM (THỦ ĐỨC):
+Cách 1 – Metro (nhanh nhất): Ga Bến Thành → Ga Thủ Đức (~18 phút, 12.000đ) + Buýt điện 158/159 vào trường
+Cách 2 – Buýt 36: Bến Thành → ĐHQG (~60–90 phút, 7.000đ)
+
+TỪ CÁT LINH → HÀ ĐÔNG:
+Cách 1 – Metro 2A: Ga Cát Linh → Ga Yên Nghĩa (~23 phút, 15.000đ)
+Cách 2 – BRT: Kim Mã → Yên Nghĩa (~30–40 phút, 9.000đ)
+
+TỪ NHỔN → TRUNG TÂM HÀ NỘI:
+Metro 3 (trên cao): Ga Nhổn → Ga Cầu Giấy (~15 phút) + chờ đoạn ngầm 2027
+
+TỪ TRUNG TÂM TP.HCM → SUỐI TIÊN / CÔNG VIÊN SUỐI TIÊN:
+Metro 1: Ga Bến Thành → Ga Suối Tiên (~30 phút, 20.000đ)
+Buýt 60: Bến Thành → Bến xe Miền Đông mới (~60–90 phút, 7.000đ)
+
+================================================================================
+PHẦN I — ỨNG DỤNG & TIỆN ÍCH
+================================================================================
+
+ỨNG DỤNG TP.HCM:
+- Go!Bus (GoBus TPHCM): App chính thức, theo dõi xe thời gian thực, tìm lộ trình, mini app Zalo
+- HCMC Metro: Mua vé Metro số 1, xem lịch tàu, thông tin ga
+- BusMap: Tìm đường, xem bản đồ, mua vé điện tử
+
+ỨNG DỤNG HÀ NỘI:
+- Tìm Buýt (timbus.vn): App chính thức Transerco, tra lộ trình, vé tháng online, theo dõi thời gian thực
+- iMaaS: Mua vé tích hợp Metro + xe buýt, theo dõi tàu điện
+- Hà Nội Metro: Thông tin Metro tuyến 2A và 3
+
+ĐA NỀN TẢNG:
+- Google Maps: Tìm đường GTCC, cập nhật thời gian thực
+- Apple Maps: Hỗ trợ phương tiện công cộng tại Việt Nam
+
+================================================================================
+PHẦN J — QUY ĐỊNH & LUẬT PHÁP
+================================================================================
+
+QUY ĐỊNH ĐI XE BUÝT:
+- Không hút thuốc, không xả rác, giữ trật tự, không ăn uống mạnh
+- Nhường ghế cho người cao tuổi, khuyết tật, phụ nữ mang thai, trẻ em
+- Hành lý tay: không quá 20 kg
+- Không mang chất dễ cháy, nổ, chất độc, vật sắc nhọn nguy hiểm
+- Thanh toán tiền mặt hoặc thẻ điện tử trước/khi lên xe
+
+QUY ĐỊNH ĐI METRO:
+- NGHIÊM CẤM ăn uống trong tàu và trên sân ga (phạt 100.000–300.000đ)
+- Không hút thuốc trong toàn bộ khu vực nhà ga
+- Không mang xe đạp, xe máy lên tàu (trừ xe đẩy em bé gấp gọn)
+- Không chụp ảnh tại khu vực vận hành, buồng lái
+- Không đứng sát cửa, không giữ cửa tàu
+- Vượt vạch vàng an toàn: có thể bị phạt
+- Mang theo vé/thẻ hợp lệ khi soát vé
+
+LUẬT GIAO THÔNG – NGHỊ ĐỊNH 100/2019/NĐ-CP (Mức phạt xe cơ giới):
+- Không có GPLX: 800.000 – 1.200.000đ (xe máy) | 4.000.000 – 6.000.000đ (ô tô)
+- Vượt đèn đỏ: 4.000.000 – 6.000.000đ (xe máy) | 6.000.000 – 8.000.000đ (ô tô)
+- Nồng độ cồn 0,25–0,4 mg/l khí thở: 6.000.000 – 8.000.000đ + tước GPLX 10–12 tháng
+- Nồng độ cồn >0,4 mg/l (xe máy): 30.000.000 – 40.000.000đ + tước GPLX 22–24 tháng
+- Không đội mũ bảo hiểm: 200.000 – 400.000đ
+- Dùng điện thoại khi lái xe máy: 800.000 – 1.000.000đ | ô tô: 1.000.000 – 2.000.000đ
+- Đi ngược chiều (xe máy): 300.000 – 400.000đ | ô tô: 3.000.000 – 5.000.000đ
+
+================================================================================
+PHẦN K — THÔNG TIN LIÊN HỆ
+================================================================================
+
+TP. HỒ CHÍ MINH:
+- TTQLGTCC TP.HCM: (028) 38 246 090 | buyttphcm.com.vn
+- Metro TP.HCM (VML): (028) 3636 0908 | metro.hochiminhcity.gov.vn
+- Buýt sông TP.HCM: (028) 38 217 299
+
+HÀ NỘI:
+- Transerco: 1900 1296 | transerco.com.vn | timbus.vn
+- Metro Hà Nội (MRB – Tuyến 2A): (024) 7307 0888 | mrhanoi.gov.vn
+- Metro Hà Nội (Tuyến 3): metrohanoi.vn
+
+================================================================================
+PHẦN L — CÂU HỎI THƯỜNG GẶP (FAQ)
+================================================================================
+
+Q: Metro số 1 TP.HCM có bao nhiêu ga? Đi từ đâu đến đâu?
+A: 14 ga, từ Bến Thành (Q.1) đến Suối Tiên (TP. Thủ Đức). 3 ga ngầm (Bến Thành, Ba Son, Văn Thánh), 11 ga trên cao. Khai thác từ 22/12/2024.
+
+Q: Vé Metro số 1 giá bao nhiêu?
+A: Từ 6.000đ (0–4 km) đến 20.000đ (toàn tuyến >16 km). Vé ngày 40.000đ. Vé tháng SV 150.000đ, thường 300.000đ.
+
+Q: Đi từ sân bay Tân Sơn Nhất vào trung tâm Q.1 bằng gì?
+A: Buýt 152 (5.000đ, 30–45 phút) là rẻ nhất. Nhanh hơn thì Grab/taxi (100.000–150.000đ, 20–30 phút).
+
+Q: Đi từ sân bay Nội Bài vào Hà Nội bằng gì?
+A: Buýt 07 đến Bến xe Mỹ Đình (9.000đ, 45–50 phút) hoặc buýt 86 đến Bến xe Gia Lâm. Sau đó đi buýt tiếp vào trung tâm.
+
+Q: Metro Cát Linh – Hà Đông chạy mấy giờ?
+A: 05:30 – 22:30 hàng ngày. Tần suất: 6 phút/chuyến cao điểm, 10 phút/chuyến thường.
+
+Q: Metro tuyến 3 Hà Nội (Nhổn – Ga Hà Nội) hiện đang chạy đến đâu?
+A: Đang chạy đoạn trên cao từ ga Nhổn đến ga Cầu Giấy (8 ga, từ 08/08/2024). Đoạn ngầm Cầu Giấy – Ga Hà Nội đang xây, dự kiến 2027.
+
+Q: Học sinh sinh viên đi buýt/metro được giảm giá không?
+A: Có. Xe buýt: giảm 50% hoặc vé tháng ưu đãi. Metro TP.HCM: vé tháng SV 150.000đ (thường 300.000đ). Metro Hà Nội: vé tháng SV 100.000đ (thường 200.000đ). Buýt điện (153–169): 3.000đ/lượt cho SV.
+
+Q: App nào tra cứu xe buýt tốt nhất?
+A: TP.HCM: Go!Bus (chính thức), BusMap. Hà Nội: Tìm Buýt (timbus.vn). Cả 2 thành phố: Google Maps.
+
+Q: Xe buýt điện TP.HCM có những tuyến nào?
+A: 17 tuyến điện số 153–169, do Phương Trang vận hành, kết nối các ga Metro số 1. Màu xanh–vàng, hoa hướng dương.
+
+Q: Đi từ Q.1 đến ĐH Quốc gia TP.HCM nhanh nhất bằng gì?
+A: Metro số 1: Ga Bến Thành → Ga Thủ Đức (~18 phút, 12.000đ) + Buýt điện 158 vào trường (~5 phút).
+
+Q: Buýt sông TP.HCM có những tuyến nào?
+A: Tuyến 1: Bạch Đằng (Q.1) – Linh Đông (Thủ Đức), 10,8 km, 8 bến, 15.000đ. Tuyến 2: Bạch Đằng – Lò Gốm (Q.6/Q.8).
+
+Q: Xe BRT Hà Nội chạy tuyến nào?
+A: Kim Mã – Yên Nghĩa, 14,7 km, 21 trạm, 9.000đ/lượt. Có làn đường riêng, nhanh hơn buýt 30–40%.
+
+================================================================================
+    HẾT DỮ LIỆU GTCC v3.0 | Cập nhật 2026-05
+================================================================================

@@ -3,3 +3,64 @@ DANG DAY DU LIEU LEN GITHUB...
 ==========================================
 
 [1] Khoi tao Git...
+Reinitialized existing Git repository in C:/Users/ADMIN 88/OneDrive/Desktop/my_open_llm/.git/
+
+[2] Them file vao Git...
+
+[3] Tao commit...
+[main (root-commit) f408c1b] Initial commit
+ 40 files changed, 4577 insertions(+)
+ create mode 100644 .env.example
+ create mode 100644 .gitignore
+ create mode 100644 Dockerfile
+ create mode 100644 Dockerfile.frontend
+ create mode 100644 HUONG_DAN.md
+ create mode 100644 README.md
+ create mode 100644 START.bat
+ create mode 100644 TODO.md
+ create mode 100644 alembic.ini
+ create mode 100644 alembic/env.py
+ create mode 100644 alembic/versions/001_initial_schema.py
+ create mode 100644 alerts/# accident_monitor_gui.py
+ create mode 100644 alerts/pip install ipywidgets opencv-python pil.py
+ create mode 100644 alerts/python run_detr_vscode.py
+ create mode 100644 "alerts/\304\220ang ghi 2025-11-21 073805.mp4"
+ create mode 100644 app.py
+ create mode 100644 check_imports.py
+ create mode 100644 config.py
+ create mode 100644 database.py
+ create mode 100644 debug_import.py
+ create mode 100644 docker-compose.yml
+ create mode 100644 git_log.txt
+ create mode 100644 ingest.py
+ create mode 100644 ingest_all.py
+ create mode 100644 install_deps.py
+ create mode 100644 llm_factory.py
+ create mode 100644 main.py
+ create mode 100644 models.py
+ create mode 100644 push_to_github.bat
+ create mode 100644 pyproject.toml
+ create mode 100644 requirements.txt
+ create mode 100644 routers/__init__.py
+ create mode 100644 routers/agents.py
+ create mode 100644 routers/auth.py
+ create mode 100644 routers/learning.py
+ create mode 100644 routers/rag.py
+ create mode 100644 run.bat
+ create mode 100644 run_perfect.bat
+ create mode 100644 test_api.py
+ create mode 100644 tests/test_main.py
+
+[4] Chuyen nhanh main...
+
+[5] Ket noi URL...
+
+[6] Day ma nguon len Github...
+To https://github.com/tranquangthanh3062004/complete-ai-local.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/tranquangthanh3062004/complete-ai-local.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.

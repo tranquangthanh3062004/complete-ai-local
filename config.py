@@ -1,4 +1,4 @@
-"""Configuration management - chỉ dùng Ollama local, không cần API bên ngoài."""
+"""Configuration management - Hỗ trợ cả Local Ollama và Free Cloud APIs (Groq/Gemini)."""
 from pydantic_settings import BaseSettings
 from typing import Optional
 
@@ -9,30 +9,45 @@ class Settings(BaseSettings):
     app_version: str = "3.0.0"
     debug      : bool = False
 
-    # ── Database (SQLite local - không cần server) ────────────────────────────
+    # ── Database (SQLite local hoặc PostgreSQL Cloud) ────────────────────────────
     database_url: str = "sqlite+aiosqlite:///./completeai.db"
+    
+    # ── Supabase / pgvector ───────────────────────────────────────────────────
+    supabase_url: Optional[str] = None
+    supabase_key: Optional[str] = None
 
-    # ── LLM - Ollama Local ONLY ───────────────────────────────────────────────
-    ollama_base_url  : str = "http://localhost:11434"
-    ollama_model     : str = "llama3.2"          # Đổi: mistral, qwen2, phi3, gemma3...
-    ollama_embed_model: str = "nomic-embed-text" # Model embedding local (optional)
+    # ── AI Engine Configurations ──────────────────────────────────────────────
+    llm_engine      : str = "groq" # 'groq', 'gemini', 'ollama'
+    llm_model_name  : str = "llama3-8b-8192" 
+    
+    # API Keys
+    groq_api_key    : Optional[str] = None
+    gemini_api_key  : Optional[str] = None
+    
+    # Ollama (Nếu dùng local)
+    ollama_base_url : str = "http://localhost:11434"
+
+    # Embeddings
+    embedding_engine: str = "huggingface" # 'huggingface' or 'gemini'
+    embedding_model : str = "paraphrase-multilingual-MiniLM-L12-v2"
 
     # ── Auth ──────────────────────────────────────────────────────────────────
     secret_key                  : str = "super-secret-key-change-in-production-please"
     access_token_expire_minutes : int = 1440     # 24 giờ
 
-    # ── Vector Store (local ChromaDB) ─────────────────────────────────────────
+    # ── Vector Store & Logging ───────────────────────────────────────────────
     chroma_persist_dir: str = "./chroma_db"
+    log_dir           : str = "./logs"
 
     # ── Uploads ───────────────────────────────────────────────────────────────
     upload_dir      : str = "./data/uploads"
     max_upload_mb   : int = 50               # giới hạn kích thước file upload
-    chunk_size      : int = 1000             # kích thước đoạn văn bản
-    chunk_overlap   : int = 200              # overlap giữa các đoạn
+    chunk_size      : int = 800             # chunk nhỏ hơn = chính xác hơn
+    chunk_overlap   : int = 150              # overlap vừa phải
 
     # ── RAG ───────────────────────────────────────────────────────────────────
-    rag_top_k    : int   = 4       # số tài liệu lấy từ vector store
-    rag_threshold: float = 0.3     # ngưỡng similarity tối thiểu
+    rag_top_k    : int   = 8       # Tăng lên 8 để lấy nhiều ngữ cảnh hơn
+    rag_threshold: float = 0.25    # Hạ ngưỡng để bắt được câu hỏi biến thể
 
     # ── Performance ───────────────────────────────────────────────────────────
     llm_timeout_seconds: int = 120   # timeout cho LLM call
