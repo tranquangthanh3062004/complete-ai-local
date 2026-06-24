@@ -1,0 +1,18 @@
+=== THÔNG TIN METRO TP.HCM ===
+
+Tuyến Metro số 1 TP.HCM (Bến Thành - Suối Tiên)
+- Trạng thái: Dự kiến vận hành thương mại vào cuối năm 2024 / năm 2025.
+- Chiều dài: 19.7 km (2.6 km đi ngầm, 17.1 km trên cao).
+- Tổng số ga: 14 ga (3 ga ngầm, 11 ga trên cao).
+- Lộ trình đi qua các ga: Bến Thành (ngầm) - Nhà hát Thành phố (ngầm) - Ba Son (ngầm) - Công viên Văn Thánh - Tân Cảng - Thảo Điền - An Phú - Rạch Chiếc - Phước Long - Bình Thái - Thủ Đức - Khu Công nghệ cao - Suối Tiên - Bến xe Miền Đông mới.
+- Vận tốc thiết kế: 110 km/h (trên cao) và 80 km/h (đoạn ngầm). Thời gian đi toàn tuyến khoảng 30 phút.
+- Giờ hoạt động: Dự kiến từ 5h00 đến 23h30 hàng ngày.
+- Giá vé (Dự kiến):
+  + Vé lượt: Từ 12.000 VNĐ đến 18.000 VNĐ (tuỳ cự ly).
+  + Vé 1 ngày: 40.000 VNĐ (đi không giới hạn số lượt).
+  + Vé 3 ngày: 90.000 VNĐ.
+  + Vé tháng phổ thông: 260.000 VNĐ/tháng.
+  + Sinh viên, học sinh: 130.000 VNĐ/tháng.
+- Phương thức thanh toán: Sử dụng thẻ thông minh (IC Card) nạp tiền. Có hỗ trợ mua vé qua ứng dụng điện thoại.
+
+* Thành phố sẽ triển khai các tuyến xe buýt gom dọc theo trục Xa lộ Hà Nội để hỗ trợ hành khách tiếp cận các nhà ga Metro số 1.

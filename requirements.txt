@@ -25,19 +25,13 @@ langchain-groq
 langchain-google-genai
 langchain-huggingface
 langchain-text-splitters
-langchain-chroma
-
-# === Vector Store (local) ===
-chromadb
+# === Cloud Vector Store ===
+pinecone-client
+langchain-pinecone
 
 # === Document Processing ===
 pypdf
-sentence-transformers
 docx2txt
-
-# === Frontend ===
-streamlit
-plotly
 
 # === Pydantic ===
 pydantic
@@ -61,3 +55,5 @@ tenacity                # Retry decorator cho LLM timeout
 pytest
 pytest-asyncio
 
+# === Security ===
+slowapi

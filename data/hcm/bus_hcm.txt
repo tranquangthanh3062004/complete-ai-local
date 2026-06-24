@@ -1,0 +1,38 @@
+=== THÔNG TIN XE BUÝT TP.HCM ===
+
+Trung tâm Quản lý Giao thông công cộng TP.HCM (Buyttphcm / Go!Bus) quản lý hệ thống xe buýt tại khu vực Thành phố Hồ Chí Minh.
+
+1. Các tuyến xe buýt phổ biến:
+Tuyến 01: Bến Thành - Bến xe Chợ Lớn
+- Thời gian: 5h00 - 20h30.
+- Lộ trình đi qua các điểm trung tâm: Hàm Nghi, Trần Hưng Đạo, Châu Văn Liêm, Bến xe Chợ Lớn.
+- Giá vé: 6.000 VNĐ/lượt.
+
+Tuyến 152: Khu dân cư Trung Sơn - Bến Thành - Sân bay Tân Sơn Nhất
+- Tuyến xe buýt giá rẻ đi sân bay TSN.
+- Thời gian hoạt động: 5h15 - 19h00.
+- Giá vé: 5.000 VNĐ/lượt.
+
+Tuyến 109: Bến xe buýt Sài Gòn - Sân bay Tân Sơn Nhất
+- Tuyến buýt chất lượng cao đi sân bay.
+- Thời gian: 5h45 - 23h40.
+- Giá vé: 15.000 VNĐ/lượt (dưới 5km là 8.000 VNĐ).
+
+Tuyến 08: Bến xe buýt Chợ Lớn - Đại học Quốc gia TP.HCM
+- Rất phổ biến với sinh viên Làng Đại Học.
+- Giá vé: 7.000 VNĐ/lượt (Sinh viên: 3.000 VNĐ).
+
+2. Giá vé xe buýt TP.HCM (áp dụng tuyến trợ giá):
+- Cự ly dưới 15km: 5.000 VNĐ/lượt.
+- Cự ly từ 15km đến dưới 25km: 6.000 VNĐ/lượt.
+- Cự ly từ 25km trở lên: 7.000 VNĐ/lượt.
+- Học sinh, Sinh viên: Đồng giá 3.000 VNĐ/lượt (khi xuất trình thẻ HSSV hợp lệ).
+
+3. Thanh toán:
+- Sử dụng tiền mặt.
+- Mua vé tập (tập 30 vé): Giảm giá so với vé lẻ. Tập 30 vé giá từ 112.500đ đến 157.500đ tuỳ cự ly.
+- Thẻ thanh toán tự động (thí điểm trên một số tuyến) thông qua thẻ Unipass, ví Momo hoặc ZaloPay.
+
+4. Ứng dụng tra cứu: 
+- BusMap (rất phổ biến tại HCM).
+- Go!Bus (app chính thức của TTQLGTCC TP.HCM).

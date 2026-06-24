@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0F172A">
+    <title>GTCC Assistant | Trợ lý Giao thông</title>
+    
+    <!-- PWA Setup -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="glass-header">
+            <div class="header-left">
+                <div class="logo-circle">
+                    <i data-lucide="bus" class="icon-primary"></i>
+                </div>
+                <div class="header-titles">
+                    <h1>GTCC Assistant</h1>
+                    <span class="status"><span class="dot"></span> Đang trực tuyến</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <button id="theme-toggle" class="icon-btn" aria-label="Toggle Theme">
+                    <i data-lucide="moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Chat Area -->
+        <main class="chat-container" id="chat-container">
+            <!-- Initial Welcome Message -->
+            <div class="message-wrapper bot slide-in">
+                <div class="avatar"><i data-lucide="bot"></i></div>
+                <div class="message-content glass-card">
+                    <p>Chào bạn! 👋 Mình là trợ lý AI chuyên về Giao thông công cộng tại Việt Nam.</p>
+                    <p>Bạn cần tìm tuyến buýt, hỏi giá vé Metro hay luật giao thông nào?</p>
+                </div>
+            </div>
+
+            <!-- Suggestions -->
+            <div class="suggestions" id="suggestions">
+                <button class="chip" onclick="sendSuggested('Từ Cát Linh đi Yên Nghĩa giá bao nhiêu?')">🎫 Giá vé Cát Linh - Hà Đông</button>
+                <button class="chip" onclick="sendSuggested('Sinh viên đi xe buýt TP.HCM cần gì?')">🎓 Ưu đãi sinh viên HCM</button>
+                <button class="chip" onclick="sendSuggested('Sân bay Nội Bài đi xe buýt nào?')">✈️ Buýt Nội Bài</button>
+                <button class="chip" onclick="sendSuggested('Mức phạt lỗi vượt đèn đỏ xe máy?')">🚦 Phạt vượt đèn đỏ</button>
+            </div>
+        </main>
+
+        <!-- Typing Indicator (Hidden by default) -->
+        <div id="typing-indicator" class="typing-indicator hidden">
+            <span>AI đang soạn tin</span>
+            <div class="dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <footer class="input-area glass-footer">
+            <form id="chat-form">
+                <button type="button" class="icon-btn secondary" title="Tính năng đang phát triển" aria-label="Location">
+                    <i data-lucide="map-pin"></i>
+                </button>
+                <div class="input-wrapper">
+                    <input type="text" id="user-input" placeholder="Nhập câu hỏi của bạn..." autocomplete="off">
+                </div>
+                <button type="submit" id="send-btn" class="send-btn" disabled aria-label="Send Message">
+                    <i data-lucide="send"></i>
+                </button>
+            </form>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/app.js"></script>
+    <script>
+        lucide.createIcons();
+        // Đăng ký Service Worker cho PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(err => {
+                    console.log('Service Worker registration failed:', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

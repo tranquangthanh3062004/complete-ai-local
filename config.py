@@ -10,26 +10,28 @@ class Settings(BaseSettings):
     debug      : bool = False
 
     # ── Database (SQLite local hoặc PostgreSQL Cloud) ────────────────────────────
-    database_url: str = "sqlite+aiosqlite:///./completeai.db"
+    database_url: str = "postgresql+asyncpg://postgres:YourPassword@db.yourproject.supabase.co:5432/postgres"
     
     # ── Supabase / pgvector ───────────────────────────────────────────────────
     supabase_url: Optional[str] = None
     supabase_key: Optional[str] = None
 
     # ── AI Engine Configurations ──────────────────────────────────────────────
-    llm_engine      : str = "groq" # 'groq', 'gemini', 'ollama'
-    llm_model_name  : str = "llama3-8b-8192" 
+    llm_engine      : str = "gemini" # 'groq', 'gemini', 'ollama'
+    llm_model_name  : str = "gemini-1.5-flash" 
     
     # API Keys
     groq_api_key    : Optional[str] = None
     gemini_api_key  : Optional[str] = None
+    pinecone_api_key: Optional[str] = None
+    pinecone_index_name: str = "gtcc-index"
     
     # Ollama (Nếu dùng local)
     ollama_base_url : str = "http://localhost:11434"
 
     # Embeddings
-    embedding_engine: str = "huggingface" # 'huggingface' or 'gemini'
-    embedding_model : str = "paraphrase-multilingual-MiniLM-L12-v2"
+    embedding_engine: str = "gemini" # 'huggingface' or 'gemini'
+    embedding_model : str = "models/text-embedding-004"
 
     # ── Auth ──────────────────────────────────────────────────────────────────
     secret_key                  : str = "super-secret-key-change-in-production-please"

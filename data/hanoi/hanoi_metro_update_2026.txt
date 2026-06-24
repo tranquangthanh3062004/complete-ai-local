@@ -1,0 +1,30 @@
+=== THÔNG TIN METRO - TÀU ĐIỆN ĐÔ THỊ HÀ NỘI ===
+
+1. Tuyến Metro 2A: Cát Linh - Hà Đông
+- Trạng thái: Đã đi vào khai thác thương mại.
+- Lộ trình (12 ga trên cao): Cát Linh - La Thành - Thái Hà - Láng - Thượng Đình - Vành Đai 3 - Phùng Khoang - Văn Quán - Hà Đông - La Khê - Văn Khê - Yên Nghĩa.
+- Tổng chiều dài: 13.05 km.
+- Thời gian di chuyển toàn tuyến: ~23 phút.
+- Thời gian hoạt động: 5h30 sáng đến 22h00 đêm hàng ngày.
+- Giá vé lượt: 
+  + Thấp nhất: 8.000 VNĐ (đi 1 ga)
+  + Cao nhất: 15.000 VNĐ (đi toàn tuyến)
+- Giá vé ngày: 30.000 VNĐ/người/ngày (không giới hạn số lượt đi lại trong ngày).
+- Giá vé tháng:
+  + Vé tháng phổ thông: 200.000 VNĐ/tháng.
+  + Học sinh, sinh viên, người lao động tại các KCN: 100.000 VNĐ/tháng.
+  + Mua theo tập thể (từ 30 người): 140.000 VNĐ/tháng.
+- Miễn phí vé: Dành cho người có công, người khuyết tật, người cao tuổi (từ 60 tuổi), trẻ em dưới 6 tuổi.
+
+2. Tuyến Metro 3: Nhổn - Ga Hà Nội
+- Trạng thái: Đoạn trên cao (Nhổn - Cầu Giấy) đã đi vào khai thác. Đoạn ngầm (Cầu Giấy - Ga Hà Nội) đang hoàn thiện.
+- Lộ trình 8 ga trên cao: Nhổn - Minh Khai - Phú Diễn - Cầu Diễn - Lê Đức Thọ - ĐHQG Hà Nội - Chùa Hà - Cầu Giấy.
+- Thời gian hoạt động: 5h30 sáng đến 22h00 đêm hàng ngày.
+- Giá vé lượt:
+  + Từ 8.000 VNĐ đến 12.000 VNĐ (đối với đoạn trên cao hiện tại).
+- Giá vé ngày: 24.000 VNĐ/người/ngày.
+- Giá vé tháng:
+  + Vé tháng phổ thông: 200.000 VNĐ/tháng.
+  + Ưu tiên: 100.000 VNĐ/tháng.
+
+* Hệ thống thanh toán: Cả hai tuyến hiện nay sử dụng thẻ thông minh (IC Card) để quẹt khi ra vào ga. Có hệ thống máy bán vé tự động tại các nhà ga. Có thể thanh toán bằng ứng dụng VNeID (đang thí điểm).

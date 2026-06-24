@@ -1,0 +1,32 @@
+=== QUY ĐỊNH GIÁ VÉ VÀ VÉ THÁNG XE BUÝT HÀ NỘI ===
+
+1. Giá vé lượt (mua trực tiếp trên xe):
+- Tuyến xe có cự ly dưới 15km: 7.000 VNĐ/lượt
+- Tuyến xe có cự ly từ 15km đến dưới 25km: 7.000 VNĐ/lượt
+- Tuyến xe có cự ly từ 25km đến dưới 30km: 8.000 VNĐ/lượt
+- Tuyến xe có cự ly từ 30km đến dưới 40km: 9.000 VNĐ/lượt
+- Tuyến xe có cự ly từ 40km trở lên: 9.000 VNĐ/lượt
+(Lưu ý: Các tuyến chất lượng cao đi sân bay như tuyến 68 có giá 50.000 VNĐ, tuyến 86 có giá 45.000 VNĐ)
+
+2. Giá vé tháng (có dán ảnh thẻ, áp dụng cho các tuyến có trợ giá):
+- Đối tượng ưu tiên (Học sinh, sinh viên, công nhân KCN, người cao tuổi trên 60 tuổi chưa làm thẻ miễn phí):
+  + Vé tháng 1 tuyến: 55.000 VNĐ/tháng
+  + Vé tháng liên tuyến: 100.000 VNĐ/tháng
+- Đối tượng không ưu tiên (người bình thường):
+  + Vé tháng 1 tuyến: 100.000 VNĐ/tháng
+  + Vé tháng liên tuyến: 200.000 VNĐ/tháng
+- Mua theo hình thức tập thể (từ 30 người trở lên):
+  + Vé tháng 1 tuyến: 70.000 VNĐ/tháng
+  + Vé tháng liên tuyến: 140.000 VNĐ/tháng
+
+3. Đối tượng được miễn phí vé (Thẻ đi xe buýt miễn phí - Thẻ màu vàng):
+- Người có công với cách mạng.
+- Người khuyết tật.
+- Người cao tuổi (Từ đủ 60 tuổi trở lên).
+- Nhân khẩu thuộc hộ nghèo.
+- Trẻ em dưới 6 tuổi.
+
+4. Hướng dẫn làm vé tháng xe buýt (bản cứng / vé điện tử ảo):
+- Chuẩn bị: 2 ảnh 3x4, Bản sao CCCD, Đơn đăng ký làm vé tháng (hoặc xác nhận của trường học đối với HSSV).
+- Nơi nộp: Các điểm bán vé tháng trên địa bàn thành phố (VD: Điểm trung chuyển Long Biên, Cầu Giấy, Bến xe Kim Mã, Yên Nghĩa, Mỹ Đình).
+- Thẻ vé tháng ảo: Người dùng có thể sử dụng ứng dụng Thẻ Vé Giao Thông Hà Nội (Timbus) để đăng ký vé tháng ảo, nạp tiền và quét mã QR khi lên xe, không cần mang thẻ cứng.

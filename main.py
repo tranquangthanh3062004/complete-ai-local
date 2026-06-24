@@ -6,6 +6,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 import uvicorn
 import time
 import uuid
@@ -13,6 +14,10 @@ import uuid
 from database import create_tables, seed_superuser
 from routers import auth, rag, agents, learning
 from logger import get_logger
+
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from rate_limiter import limiter
 
 logger = get_logger("main")
 
@@ -45,6 +50,8 @@ app = FastAPI(
     docs_url    = "/docs",
     redoc_url   = "/redoc",
 )
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
@@ -78,6 +85,9 @@ app.include_router(auth.router)
 app.include_router(rag.router)
 app.include_router(agents.router)
 app.include_router(learning.router)
+
+# Mount PWA frontend (for local dev)
+app.mount("/", StaticFiles(directory="public", html=True), name="public")
 
 
 @app.get("/health", tags=["system"])

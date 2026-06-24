@@ -1,0 +1,58 @@
+=== DANH SÁCH CHI TIẾT CÁC TUYẾN XE BUÝT HÀ NỘI ===
+
+Tuyến 01: Bến xe Gia Lâm - Bến xe Yên Nghĩa
+- Thời gian hoạt động: 5h00 - 21h00
+- Tần suất: 10 - 15 phút/chuyến
+- Lộ trình lượt đi: Bến xe Gia Lâm - Ngô Gia Khảm - Ngọc Lâm - Nguyễn Văn Cừ - Trần Nhật Duật - Điểm trung chuyển Long Biên - Hàng Đậu - Quán Thánh - Hồ Xuân Hương - Trần Phú - Điện Biên Phủ - Trần Phú - Chu Văn An - Tôn Đức Thắng - Nguyễn Lương Bằng - Tây Sơn - Ngã tư Sở - Nguyễn Trãi - Trần Phú (Hà Đông) - Quang Trung (Hà Đông) - Ba La - Quốc lộ 6 - Bến xe Yên Nghĩa.
+- Giá vé: 7.000 VNĐ/lượt
+
+Tuyến 02: Bác Cổ - Bến xe Yên Nghĩa
+- Thời gian hoạt động: 5h00 - 22h30
+- Tần suất: 5 - 10- 15 phút/chuyến
+- Lộ trình lượt đi: Bác Cổ (Bãi đỗ xe Trần Khánh Dư) - Trần Khánh Dư - Trần Hưng Đạo - Lê Thánh Tông - Tràng Tiền - Hàng Khay - Tràng Thi - Điện Biên Phủ - Trần Phú - Chu Văn An - Tôn Đức Thắng - Nguyễn Lương Bằng - Tây Sơn - Ngã tư Sở - Nguyễn Trãi - Trần Phú (Hà Đông) - Quang Trung (Hà Đông) - Ba La - Quốc lộ 6 - Bến xe Yên Nghĩa.
+- Giá vé: 7.000 VNĐ/lượt
+
+Tuyến 03A: Bến xe Giáp Bát - Bến xe Gia Lâm
+- Thời gian hoạt động: 5h03 - 21h03
+- Tần suất: 10 - 15 phút/chuyến
+- Giá vé: 7.000 VNĐ/lượt
+
+Tuyến 08A: Long Biên - Đông Mỹ
+- Thời gian hoạt động: 5h00 - 22h30
+- Tần suất: 10 - 15 phút/chuyến
+- Lộ trình chính: Long Biên - Trần Nhật Duật - Nguyễn Hữu Huân - Lý Thái Tổ - Ngô Quyền - Lý Thường Kiệt - Bà Triệu - Lê Đại Hành - Bạch Mai - Lê Thanh Nghị - Trần Đại Nghĩa - Đại La - Trường Chinh - Giải Phóng - Ngọc Hồi - Ngũ Hiệp - Đông Mỹ.
+- Giá vé: 7.000 VNĐ/lượt
+
+Tuyến 09A: Bờ Hồ - Khu liên cơ quan Sở ngành Hà Nội
+- Nhánh vòng tròn: Bờ Hồ - Bờ Hồ
+- Thời gian: 5h00 - 21h00
+- Giá vé: 7.000 VNĐ/lượt
+
+Tuyến 21A: Bến xe Giáp Bát - Bến xe Yên Nghĩa
+- Thời gian hoạt động: 5h00 - 21h00
+- Tần suất: 10 - 15 phút/chuyến
+- Giá vé: 7.000 VNĐ/lượt
+
+Tuyến 32: Bến xe Giáp Bát - Nhổn
+- Thời gian hoạt động: 5h00 - 22h30
+- Tần suất: 5 - 10 phút/chuyến
+- Lộ trình đi: Bến xe Giáp Bát - Giải Phóng - Lê Duẩn - Trần Nhân Tông - Trần Bình Trọng - Trần Hưng Đạo - Quán Sứ - Hai Bà Trưng - Thợ Nhuộm - Tràng Thi - Điện Biên Phủ - Trần Phú - Kim Mã - Cầu Giấy - Điểm trung chuyển Cầu Giấy - Cầu Giấy - Xuân Thuỷ - Hồ Tùng Mậu - Diễn - Đường 32 - Nhổn.
+- Giá vé: 7.000 VNĐ/lượt
+
+Tuyến 68: Hà Đông - Sân bay Nội Bài
+- Bến bãi: Trung tâm thương mại Mê Linh Plaza Hà Đông đến Sân bay Nội Bài (Nhà ga T1, T2).
+- Tần suất: 45 phút/chuyến.
+- Giá vé: 50.000 VNĐ/lượt (Tuyến chất lượng cao không trợ giá).
+
+Tuyến 86: Ga Hà Nội - Bờ Hồ - Sân bay Nội Bài
+- Thời gian: 5h05 - 20h15.
+- Giá vé: 45.000 VNĐ/lượt (Tuyến chất lượng cao).
+- Lộ trình: Ga Hà Nội - Bờ Hồ - Long Biên - Âu Cơ - Cầu Nhật Tân - Sân bay Nội Bài (Nhà ga T1 và T2).
+
+Tuyến 109: Bến xe Mỹ Đình - Sân bay Nội Bài
+- Thời gian: 5h00 - 21h00
+- Giá vé: 8.000 VNĐ/lượt (Có trợ giá).
+- Phù hợp cho sinh viên khu vực Mỹ Đình muốn đi sân bay Nội Bài với giá rẻ.
+
+--- 
+(Dữ liệu được cập nhật bởi Transerco và TTQLGTCC Hà Nội)

@@ -17,12 +17,11 @@ import os, shutil, time
 
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_chroma import Chroma
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 
+from rate_limiter import limiter
 from config import settings
 from database import get_db
 from routers.auth import get_current_user
@@ -42,13 +41,23 @@ _embeddings = None
 def get_embeddings():
     global _embeddings
     if _embeddings is None:
-        model_name = getattr(settings, "embedding_model", "sentence-transformers/all-MiniLM-L6-v2")
-        logger.info(f"Loading embedding model: {model_name}")
-        _embeddings = HuggingFaceEmbeddings(
-            model_name=model_name,
-            model_kwargs={"device": "cpu"},
-            encode_kwargs={"normalize_embeddings": True},
-        )
+        if settings.embedding_engine == "gemini" and settings.gemini_api_key:
+            from langchain_google_genai import GoogleGenerativeAIEmbeddings
+            logger.info("Loading Google Gemini Embeddings...")
+            _embeddings = GoogleGenerativeAIEmbeddings(
+                model=settings.embedding_model, 
+                google_api_key=settings.gemini_api_key
+            )
+        else:
+            try:
+                from langchain_huggingface import HuggingFaceEmbeddings
+                logger.info(f"Loading local embeddings...")
+                _embeddings = HuggingFaceEmbeddings(
+                    model_name="sentence-transformers/all-MiniLM-L6-v2",
+                    model_kwargs={"device": "cpu"}
+                )
+            except ImportError:
+                raise Exception("Missing HuggingFaceEmbeddings. Set gemini_api_key or install sentence-transformers.")
     return _embeddings
 
 # ── Vector Store (Supabase pgvector hoặc ChromaDB) ────────────────────────────
@@ -59,12 +68,25 @@ def get_vector_store():
     if _vector_store_instance is None:
         embeddings = get_embeddings()
         
-        # Nếu cấu hình Supabase, dùng Supabase Vector Store
+        # 1. Pinecone
+        if settings.pinecone_api_key:
+            try:
+                from langchain_pinecone import PineconeVectorStore
+                logger.info("Initializing Pinecone Vector Store...")
+                _vector_store_instance = PineconeVectorStore(
+                    index_name=settings.pinecone_index_name,
+                    embedding=embeddings,
+                    pinecone_api_key=settings.pinecone_api_key
+                )
+                return _vector_store_instance
+            except ImportError:
+                logger.error("Missing pinecone packages.")
+
+        # 2. Supabase pgvector
         if settings.supabase_url and settings.supabase_key:
             try:
                 from supabase.client import create_client
                 from langchain_community.vectorstores import SupabaseVectorStore
-                
                 logger.info("Initializing Supabase Vector Store...")
                 supabase_client = create_client(settings.supabase_url, settings.supabase_key)
                 _vector_store_instance = SupabaseVectorStore(
@@ -73,18 +95,12 @@ def get_vector_store():
                     table_name="documents",
                     query_name="match_documents"
                 )
+                return _vector_store_instance
             except ImportError:
-                logger.error("Missing supabase package. Fallback to ChromaDB.")
+                logger.error("Missing supabase package.")
                 
-        # Ngược lại, dùng ChromaDB (cho Local)
-        if _vector_store_instance is None:
-            logger.info("Initializing ChromaDB (Local)...")
-            os.makedirs(settings.chroma_persist_dir, exist_ok=True)
-            from langchain_chroma import Chroma
-            _vector_store_instance = Chroma(
-                persist_directory=settings.chroma_persist_dir,
-                embedding_function=embeddings,
-            )
+        # 3. Fallback (không dùng Chroma trên serverless)
+        raise Exception("Không tìm thấy cấu hình Vector Database (Pinecone/Supabase)!")
             
     return _vector_store_instance
 
@@ -298,14 +314,16 @@ async def upload_document(
 
 # ── Chat với tài liệu GTCC ────────────────────────────────────────────────────
 @router.post("/chat/", response_model=ChatResponse)
+@limiter.limit("20/minute")
 async def chat(
-    request     : ChatRequest,
+    request     : Request,
+    payload     : ChatRequest,
     db          : AsyncSession = Depends(get_db),
     current_user: Optional[User] = Depends(get_current_user),
 ):
     # ── 1. Sanitize input ──────────────────────────────────────────────────────
     from services.sanitizer import sanitize_query
-    clean_query, is_safe, reason = sanitize_query(request.query)
+    clean_query, is_safe, reason = sanitize_query(payload.query)
     if not is_safe:
         from fastapi import HTTPException
         raise HTTPException(status_code=400, detail=reason)
@@ -318,7 +336,7 @@ async def chat(
     if cached:
         logger.info(f"[RAG Cache HIT] Q: '{clean_query[:60]}'")
         elapsed = 0
-        event = await _save_event(db, current_user, request, cached,
+        event = await _save_event(db, current_user, payload, cached,
                                   detect_topic(clean_query), elapsed)
         return ChatResponse(
             response    = cached,
@@ -331,7 +349,7 @@ async def chat(
 
     topic = detect_topic(clean_query)
     lang, lang_instruction = build_multilingual_query(clean_query)
-    llm   = get_llm(request.model_name)
+    llm   = get_llm(payload.model_name)
     start = time.time()
 
     # ── 3. Kiểm tra Vector Store có data chưa ─────────────────────────────────
@@ -363,7 +381,7 @@ async def chat(
             answer = fallback_answer
 
         elapsed = (time.time() - start) * 1000
-        event   = await _save_event(db, current_user, request, answer, topic, elapsed)
+        event   = await _save_event(db, current_user, payload, answer, topic, elapsed)
         return ChatResponse(response=answer, event_id=event.id, topic=TOPIC_DISPLAY.get(topic, topic))
 
     # ── 5. Thực hiện RAG ───────────────────────────────────────────────────────
@@ -403,7 +421,7 @@ async def chat(
         # Lưu vào cache
         cache.set(clean_query, answer)
 
-        event = await _save_event(db, current_user, request, answer, topic, elapsed)
+        event = await _save_event(db, current_user, payload, answer, topic, elapsed)
         await _update_topic_count(db, current_user.id if current_user else None, topic)
 
         logger.info(f"[RAG Chat] lang={lang} | Q: '{clean_query[:60]}' | Topic: {topic} | Sources: {len(sources)} | Time: {elapsed:.0f}ms")
@@ -500,15 +518,15 @@ async def delete_document(
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
-async def _save_event(db, current_user, request, answer, topic, elapsed):
+async def _save_event(db, current_user, payload, answer, topic, elapsed):
     event = LearningEvent(
         user_id          = current_user.id if current_user else None,
-        session_id       = request.session_id,
-        question         = request.query,
+        session_id       = payload.session_id,
+        question         = payload.query,
         answer           = answer,
         topic            = topic,
         response_time_ms = elapsed,
-        model_used       = request.model_name or settings.ollama_model,
+        model_used       = payload.model_name or settings.llm_model_name,
     )
     db.add(event)
     await db.commit()

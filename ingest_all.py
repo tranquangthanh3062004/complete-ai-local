@@ -1,31 +1,27 @@
 """
-ingest_all.py — Nạp toàn bộ file PDF/TXT từ thư mục data/ vào ChromaDB.
-Chạy một lần: venv\Scripts\python ingest_all.py
+ingest_all.py — Nạp toàn bộ file PDF/TXT/DOCX vào Pinecone Vector Store.
+Sử dụng: venv\Scripts\python ingest_all.py
+Yêu cầu: Đã cấu hình PINECONE_API_KEY và GEMINI_API_KEY trong .env
 """
 import os
 import sys
 
-# ── Thư mục chứa file cần nạp ─────────────────────────────────────────────────
 DATA_DIR         = "./data"
-CHROMA_DIR       = "./chroma_db"
 from config import settings
 EMBED_MODEL      = settings.embedding_model
 CHUNK_SIZE       = 1000
 CHUNK_OVERLAP    = 200
-
 SUPPORTED_EXT    = {".pdf", ".txt", ".docx"}
 
 def main():
     print("=" * 55)
-    print("  CompleteAI — Nap du lieu vao ChromaDB")
+    print("  CompleteAI — Nạp dữ liệu lên Cloud Vector Store")
     print("=" * 55)
 
-    # Kiểm tra thư mục
     if not os.path.exists(DATA_DIR):
-        print(f"[LOI] Khong tim thay thu muc: {DATA_DIR}")
+        print(f"[LỖI] Không tìm thấy thư mục: {DATA_DIR}")
         sys.exit(1)
 
-    # Tìm tất cả file hỗ trợ
     files = []
     for root, _, fnames in os.walk(DATA_DIR):
         for fname in fnames:
@@ -34,35 +30,46 @@ def main():
                 files.append(os.path.join(root, fname))
 
     if not files:
-        print(f"[CANH BAO] Khong co file PDF/TXT/DOCX nao trong {DATA_DIR}")
+        print(f"[CẢNH BÁO] Không có file hợp lệ nào trong {DATA_DIR}")
         sys.exit(0)
 
-    print(f"\nTim thay {len(files)} file(s):")
+    print(f"\nTìm thấy {len(files)} file(s):")
     for f in files:
         size_kb = os.path.getsize(f) / 1024
         print(f"  - {os.path.basename(f)} ({size_kb:.0f} KB)")
 
-    # ── Import libraries ──────────────────────────────────────────────────────
-    print("\n[1/4] Dang khoi tao mo hinh Embedding...")
-    from langchain_huggingface import HuggingFaceEmbeddings
+    print("\n[1/4] Đang khởi tạo mô hình Embedding...")
+    if settings.embedding_engine == "gemini" and settings.gemini_api_key:
+        from langchain_google_genai import GoogleGenerativeAIEmbeddings
+        embeddings = GoogleGenerativeAIEmbeddings(
+            model=settings.embedding_model, 
+            google_api_key=settings.gemini_api_key
+        )
+        print("    [+] Sử dụng Google Gemini Embeddings.")
+    else:
+        print("    [!] Khuyên dùng Gemini Embeddings cho hệ thống Serverless.")
+        from langchain_huggingface import HuggingFaceEmbeddings
+        embeddings = HuggingFaceEmbeddings(
+            model_name="sentence-transformers/all-MiniLM-L6-v2",
+            model_kwargs={"device": "cpu"}
+        )
+
     from langchain_text_splitters import RecursiveCharacterTextSplitter
-    from langchain_chroma import Chroma
-
-    embeddings = HuggingFaceEmbeddings(
-        model_name=EMBED_MODEL,
-        model_kwargs={"device": "cpu"},
-        encode_kwargs={"normalize_embeddings": True},
-    )
-    print("    Mo hinh Embedding san sang.")
-
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=CHUNK_SIZE,
         chunk_overlap=CHUNK_OVERLAP,
     )
 
-    from config import settings
-    if settings.supabase_url and settings.supabase_key:
-        print("    [+] Ket noi Supabase Vector Store...")
+    if settings.pinecone_api_key:
+        print("    [+] Kết nối Pinecone Vector Store...")
+        from langchain_pinecone import PineconeVectorStore
+        vectordb = PineconeVectorStore(
+            index_name=settings.pinecone_index_name,
+            embedding=embeddings,
+            pinecone_api_key=settings.pinecone_api_key
+        )
+    elif settings.supabase_url and settings.supabase_key:
+        print("    [+] Kết nối Supabase Vector Store...")
         from supabase.client import create_client
         from langchain_community.vectorstores import SupabaseVectorStore
         supabase_client = create_client(settings.supabase_url, settings.supabase_key)
@@ -73,20 +80,14 @@ def main():
             query_name="match_documents"
         )
     else:
-        print("    [+] Khoi tao ChromaDB (Local)...")
-        from langchain_chroma import Chroma
-        os.makedirs(CHROMA_DIR, exist_ok=True)
-        vectordb = Chroma(
-            persist_directory=CHROMA_DIR,
-            embedding_function=embeddings,
-        )
+        print("    [LỖI] Bạn cần khai báo pinecone_api_key trong .env để chạy!")
+        sys.exit(1)
 
-    # ── Nạp từng file ─────────────────────────────────────────────────────────
     total_chunks = 0
     for i, fpath in enumerate(files, 1):
         fname = os.path.basename(fpath)
         ext   = os.path.splitext(fname.lower())[1]
-        print(f"\n[{i+1}/4] Dang xu ly: {fname}")
+        print(f"\n[{i+1}/{len(files)+1}] Đang xử lý: {fname}")
 
         try:
             if ext == ".pdf":
@@ -104,17 +105,15 @@ def main():
             chunks = splitter.split_documents(docs)
             vectordb.add_documents(chunks)
             total_chunks += len(chunks)
-            print(f"    OK: {len(docs)} trang -> {len(chunks)} doan van ban")
+            print(f"    OK: {len(docs)} trang -> {len(chunks)} đoạn văn bản")
 
         except Exception as e:
-            print(f"    [LOI] {fname}: {e}")
+            print(f"    [LỖI] {fname}: {e}")
 
     print("\n" + "=" * 55)
-    print(f"  HOAN TAT! Da nap {len(files)} file, tong {total_chunks} doan.")
-    print(f"  Du lieu luu tai: {CHROMA_DIR}")
-    print("  Gio ban co the hoi AI ve noi dung cac tai lieu nay.")
+    print(f"  HOÀN TẤT! Đã nạp {len(files)} file, tổng {total_chunks} đoạn.")
+    print("  Dữ liệu đã được lưu trữ an toàn trên Đám Mây.")
     print("=" * 55)
-
 
 if __name__ == "__main__":
     main()
