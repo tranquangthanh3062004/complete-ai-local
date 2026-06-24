@@ -10,12 +10,16 @@ class Settings(BaseSettings):
     debug      : bool = False
 
     # ── Database (SQLite local hoặc PostgreSQL Cloud) ────────────────────────────
-    database_url: str = "postgresql+asyncpg://postgres:YourPassword@db.yourproject.supabase.co:5432/postgres"
+    database_url: str = "sqlite+aiosqlite:///./completeai.db"
 
     from pydantic import field_validator
     @field_validator("database_url", mode="before")
     @classmethod
     def fix_database_url(cls, v: str) -> str:
+        # Nếu nhập nhầm biến môi trường Railway (dạng chữ chưa giải mã)
+        if v and "${{" in v:
+            return "sqlite+aiosqlite:///./completeai.db"
+            
         if v and v.startswith("postgresql://"):
             return v.replace("postgresql://", "postgresql+asyncpg://", 1)
         if v and v.startswith("postgres://"):
