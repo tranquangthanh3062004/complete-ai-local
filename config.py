@@ -11,6 +11,16 @@ class Settings(BaseSettings):
 
     # ── Database (SQLite local hoặc PostgreSQL Cloud) ────────────────────────────
     database_url: str = "postgresql+asyncpg://postgres:YourPassword@db.yourproject.supabase.co:5432/postgres"
+
+    from pydantic import field_validator
+    @field_validator("database_url", mode="before")
+    @classmethod
+    def fix_database_url(cls, v: str) -> str:
+        if v and v.startswith("postgresql://"):
+            return v.replace("postgresql://", "postgresql+asyncpg://", 1)
+        if v and v.startswith("postgres://"):
+            return v.replace("postgres://", "postgresql+asyncpg://", 1)
+        return v
     
     # ── Supabase / pgvector ───────────────────────────────────────────────────
     supabase_url: Optional[str] = None
