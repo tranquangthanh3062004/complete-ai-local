@@ -8,6 +8,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+# Expose port (optional)
 EXPOSE 8501
 
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# Use shell form to allow environment variable expansion for PORT
+CMD streamlit run app.py --server.port=${PORT:-8501} --server.address=0.0.0.0
