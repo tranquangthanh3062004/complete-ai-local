@@ -87,21 +87,12 @@ document.addEventListener('DOMContentLoaded', () => {
         chatForm.dispatchEvent(new Event('submit'));
     };
 
-    // Hàm định dạng Markdown cơ bản (Bold, List, Line breaks)
+    // Sử dụng thư viện marked.js để parse markdown chuẩn xác hơn
     function parseMarkdown(text) {
-        let html = text
-            // Bold
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-            // Line breaks
-            .replace(/\n/g, '<br>')
-            // Bullets
-            .replace(/- (.*?)<br>/g, '<ul><li>$1</li></ul>')
-            // Emojis (just keep them)
-            ;
-        
-        // Cleanup nested ul
-        html = html.replace(/<\/ul><ul>/g, '');
-        return `<p>${html}</p>`;
+        if (typeof marked !== 'undefined') {
+            return marked.parse(text);
+        }
+        return `<p>${text}</p>`; // Fallback
     }
 
     // Thêm tin nhắn vào giao diện

@@ -216,7 +216,7 @@ body {
 }
 
 .message-content p {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 .message-content p:last-child {
     margin-bottom: 0;
@@ -225,8 +225,27 @@ body {
 /* Markdown elements in chat */
 .message-content strong { font-weight: 600; color: var(--primary); }
 .user .message-content strong { color: #fff; }
-.message-content ul { padding-left: 20px; margin-top: 8px; }
-.message-content li { margin-bottom: 4px; }
+.message-content ul, .message-content ol { 
+    padding-left: 24px; 
+    margin-top: 8px; 
+    margin-bottom: 12px;
+}
+.message-content li { 
+    margin-bottom: 6px; 
+    line-height: 1.6;
+}
+.message-content li::marker {
+    color: var(--primary);
+}
+.user .message-content li::marker {
+    color: #fff;
+}
+.message-content h1, .message-content h2, .message-content h3 {
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+    color: var(--primary);
+}
 
 /* Suggestions */
 .suggestions {

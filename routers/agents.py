@@ -33,8 +33,9 @@ GTCC_SYSTEM_PROMPT = (
     "NGUYÊN TẮC:\n"
     "1. Nếu có tài liệu GTCC → dùng ngay, không nói thêm.\n"
     "2. Nếu không có dữ liệu → trả lời dựa trên kiến thức chung, đừng xin lỗi dài dòng.\n"
-    "3. Câu khó/không biết → trả lời ngắn: thông tin gợi ý + hướng dẫn dùng app BusMap/Google Maps.\n"
-    "4. Dùng emoji 🚌🚇🎫📍 cho dễ đọc. Không viết dài quá 200 từ.\n"
+    "3. LUÔN chủ động gợi ý lộ trình KẾT HỢP (ví dụ: Xe buýt + Metro).\n"
+    "4. LUÔN gợi ý thuê xe đạp công cộng (TNGO) cho chặng đầu/cuối nếu đi gần (<3km).\n"
+    "5. Dùng emoji 🚌🚇🎫📍🚲 cho dễ đọc. Không viết dài quá 200 từ.\n"
 )
 
 CHAT_PROMPT = PromptTemplate.from_template(
@@ -229,9 +230,14 @@ async def direct_chat(
 
     except Exception as e:
         err = str(e)
-        # Ollama offline → trả fallback ngay, không raise lỗi
+        logger.error(f"[Direct Chat] LLM Error: {err}")
+        # Ollama/Cloud API offline → trả fallback ngay, không raise lỗi
         fallback = QUICK_FALLBACK.get(topic, DEFAULT_FALLBACK)
-        fallback += "\n\n⚠️ *AI đang offline — đang hiển thị thông tin cơ bản.*"
+        
+        if "api_key" in err.lower() or "401" in err.lower() or "authentication" in err.lower():
+            fallback += "\n\n⚠️ *AI đang offline (Thiếu hoặc sai API Key) — đang hiển thị thông tin cơ bản.*"
+        else:
+            fallback += "\n\n⚠️ *AI đang offline hoặc bị lỗi kết nối — đang hiển thị thông tin cơ bản.*"
 
         try:
             event = await _save_chat_event(db, current_user, payload, fallback, 0)
