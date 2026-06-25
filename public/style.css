@@ -388,3 +388,45 @@ body {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* Disclaimer */
+.disclaimer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    opacity: 0.8;
+}
+
+/* Bot Actions Bar */
+.bot-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    margin-left: 44px; /* Align with bot message box */
+}
+
+.action-btn {
+    background: transparent;
+    border: 1px solid var(--border-glass);
+    color: var(--text-muted);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background: var(--bg-surface);
+    color: var(--primary);
+    border-color: var(--primary);
+}
+.action-btn.active {
+    background: var(--primary-glow);
+    color: var(--primary);
+    border-color: var(--primary);
+}

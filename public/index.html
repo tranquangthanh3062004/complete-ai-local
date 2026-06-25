@@ -20,7 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/style.css?v=3">
 </head>
 <body>
     <div class="app-container">
@@ -35,7 +35,10 @@
                     <span class="status"><span class="dot"></span> Đang trực tuyến</span>
                 </div>
             </div>
-            <div class="header-right">
+            <div class="header-right" style="display: flex; gap: 8px;">
+                <button id="clear-chat" class="icon-btn" aria-label="Clear Chat" title="Xóa lịch sử chat">
+                    <i data-lucide="trash-2"></i>
+                </button>
                 <button id="theme-toggle" class="icon-btn" aria-label="Toggle Theme">
                     <i data-lucide="moon"></i>
                 </button>
@@ -85,11 +88,12 @@
                     <i data-lucide="send"></i>
                 </button>
             </form>
+            <p class="disclaimer">AI có thể đưa ra kết quả chưa chính xác. Vui lòng kiểm chứng lại thông tin quan trọng.</p>
         </footer>
     </div>
 
     <!-- Scripts -->
-    <script src="/app.js"></script>
+    <script src="/app.js?v=3"></script>
     <script>
         lucide.createIcons();
         // Đăng ký Service Worker cho PWA
