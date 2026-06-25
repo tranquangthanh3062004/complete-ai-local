@@ -8,7 +8,7 @@ Tính năng:
   - LearningEvent tracking
   - Topic detection chuyên về GTCC
 """
-from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
+from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, Request
 from pydantic import BaseModel
 from typing import Optional
 from sqlalchemy import select
