@@ -86,8 +86,7 @@ app.include_router(rag.router)
 app.include_router(agents.router)
 app.include_router(learning.router)
 
-# Mount PWA frontend (for local dev)
-app.mount("/", StaticFiles(directory="public", html=True), name="public")
+
 
 
 @app.get("/health", tags=["system"])
@@ -163,6 +162,10 @@ async def cache_stats():
         "agent_cache" : get_agent_cache().stats,
         "rag_cache"   : get_rag_cache().stats,
     }
+
+
+# Mount PWA frontend (for local dev)
+app.mount("/", StaticFiles(directory="public", html=True), name="public")
 
 
 if __name__ == "__main__":
