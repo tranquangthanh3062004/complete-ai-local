@@ -14,6 +14,8 @@ from database import get_db
 from models import User
 from datetime import datetime, timedelta, timezone
 import bcrypt
+import httpx
+import os
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -148,3 +150,92 @@ async def login(
 @router.get("/me", response_model=UserOut)
 async def get_me(current_user: User = Depends(require_user)):
     return current_user
+
+
+# ── Google OAuth 2.0 ──────────────────────────────────────────────────────────
+GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", "")
+GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", "")
+GOOGLE_REDIRECT_URI = os.environ.get("GOOGLE_REDIRECT_URI", "http://localhost:5173/auth/google/callback")
+
+@router.get("/google/login")
+async def google_login():
+    if not GOOGLE_CLIENT_ID:
+        raise HTTPException(status_code=500, detail="Google OAuth is not configured")
+    
+    url = (
+        "https://accounts.google.com/o/oauth2/v2/auth"
+        "?response_type=code"
+        f"&client_id={GOOGLE_CLIENT_ID}"
+        f"&redirect_uri={GOOGLE_REDIRECT_URI}"
+        "&scope=openid%20email%20profile"
+        "&access_type=offline"
+    )
+    return {"auth_url": url}
+
+class GoogleCallbackData(BaseModel):
+    code: str
+
+@router.post("/google/callback")
+async def google_callback(payload: GoogleCallbackData, db: AsyncSession = Depends(get_db)):
+    if not GOOGLE_CLIENT_ID or not GOOGLE_CLIENT_SECRET:
+        raise HTTPException(status_code=500, detail="Google OAuth is not configured")
+
+    token_url = "https://oauth2.googleapis.com/token"
+    data = {
+        "code": payload.code,
+        "client_id": GOOGLE_CLIENT_ID,
+        "client_secret": GOOGLE_CLIENT_SECRET,
+        "redirect_uri": GOOGLE_REDIRECT_URI,
+        "grant_type": "authorization_code",
+    }
+    async with httpx.AsyncClient() as client:
+        response = await client.post(token_url, data=data)
+        if response.status_code != 200:
+            raise HTTPException(status_code=400, detail="Failed to exchange code for token")
+        
+        token_data = response.json()
+        access_token = token_data.get("access_token")
+
+        user_info_url = "https://www.googleapis.com/oauth2/v3/userinfo"
+        user_info_response = await client.get(user_info_url, headers={"Authorization": f"Bearer {access_token}"})
+        if user_info_response.status_code != 200:
+            raise HTTPException(status_code=400, detail="Failed to fetch user info")
+        
+        user_info = user_info_response.json()
+
+    # Find or create user
+    email = user_info.get("email")
+    google_id = user_info.get("sub")
+    name = user_info.get("name", email.split("@")[0])
+    picture = user_info.get("picture", "")
+
+    result = await db.execute(select(User).where(User.email == email))
+    user = result.scalar_one_or_none()
+
+    if not user:
+        user = User(
+            email=email,
+            display_name=name,
+            google_id=google_id,
+            avatar_url=picture,
+            auth_provider="google",
+            hashed_password=None,
+            is_active=True,
+            is_superuser=False,
+            role="user"
+        )
+        db.add(user)
+    else:
+        # Update google specific fields
+        user.google_id = google_id
+        user.avatar_url = picture
+        user.auth_provider = "google"
+
+    await db.commit()
+    await db.refresh(user)
+
+    token = create_access_token(
+        data={"sub": user.email},
+        expires_delta=timedelta(minutes=EXPIRE_MINUTES),
+    )
+    return {"access_token": token, "token_type": "bearer", "user": {"id": user.id, "email": user.email, "display_name": user.display_name, "avatar_url": user.avatar_url}}

@@ -54,8 +54,10 @@ async def seed_superuser():
             select(User).where(User.email == "admin@local.com")
         )
         if result.scalar_one_or_none() is None:
+            import os
+            admin_pass = os.environ.get("ADMIN_PASSWORD", "admin123")
             salt   = bcrypt.gensalt()
-            hashed = bcrypt.hashpw(b"admin123", salt).decode("utf-8")
+            hashed = bcrypt.hashpw(admin_pass.encode("utf-8"), salt).decode("utf-8")
             admin  = User(
                 email           = "admin@local.com",
                 hashed_password = hashed,

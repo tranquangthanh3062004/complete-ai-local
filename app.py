@@ -405,6 +405,29 @@ def api_post(path: str, payload: dict = None, timeout: int = REQUEST_TIMEOUT):
         return None
 
 
+def api_stream(path: str, payload: dict = None, timeout: int = 60):
+    try:
+        response = requests.post(
+            f"{BASE_URL}{path}",
+            json=payload or {},
+            headers=auth_headers(),
+            timeout=timeout,
+            stream=True
+        )
+        if response.status_code != 200:
+            yield f"⚠️ Lỗi từ server: {response.text}"
+            return
+            
+        for line in response.iter_lines():
+            if line:
+                decoded_line = line.decode("utf-8")
+                if decoded_line.startswith("data: "):
+                    data = decoded_line[6:]
+                    yield data
+    except Exception as e:
+        yield f"❌ Lỗi kết nối: {str(e)}"
+
+
 def play_tts(text: str):
     if not text or len(text.strip()) < 5:
         return
@@ -635,55 +658,26 @@ with tab_chat:
             st.markdown(prompt)
 
         with st.chat_message("assistant"):
-            with st.spinner("Đang tìm kiếm thông tin..."):
-                resp = api_post("/agents/direct", {
-                    "query"      : prompt,
-                    "model_name" : st.session_state.selected_model,
-                    "temperature": float(st.session_state.temperature),
-                    "messages"   : st.session_state.messages[-6:],
-                    "session_id" : st.session_state.session_id,
-                    "suggest"    : True,
-                }, timeout=REQUEST_TIMEOUT)
+            payload = {
+                "query"      : prompt,
+                "model_name" : st.session_state.selected_model,
+                "temperature": float(st.session_state.temperature),
+                "messages"   : st.session_state.messages[-6:],
+                "session_id" : st.session_state.session_id,
+                "suggest"    : True,
+            }
+            
+            answer = st.write_stream(api_stream("/agents/stream", payload))
+            
+            if len(answer) <= 250 and not answer.startswith("❌") and not answer.startswith("⚠️"):
+                play_tts(answer)
 
-            if resp is None:
-                answer = "❌ Không thể kết nối backend. Hãy chạy `START.bat` trước."
-                st.error(answer)
-            elif resp == "timeout":
-                answer = "⏱️ Quá thời gian chờ. Model đang xử lý, thử lại sau."
-                st.warning(answer)
-            elif hasattr(resp, "status_code") and not resp.ok:
-                try:    detail = resp.json().get("detail", resp.text)
-                except: detail = resp.text
-                answer = f"⚠️ {detail}" if resp.status_code == 400 else f"❌ Lỗi: {detail}"
-                st.warning(answer) if resp.status_code == 400 else st.error(answer)
-            else:
-                data        = resp.json()
-                answer      = data.get("result", "").strip() or "Xin lỗi, chưa tìm được thông tin."
-                ev_id       = data.get("event_id", -1)
-                topic       = data.get("topic", "")
-                resp_ms     = data.get("response_ms", 0)
-                is_cached   = data.get("cached", False)
-                suggestions = data.get("suggestions", [])
-
-                st.markdown(answer)
-
-                chips = ""
-                if topic:    chips += f'<span class="chip chip-topic">📌 {topic}</span>'
-                if is_cached: chips += '<span class="chip chip-cache">⚡ Cache</span>'
-                if chips: st.markdown(chips, unsafe_allow_html=True)
-
-                label = "⚡ Cache" if is_cached else f"⏱️ {resp_ms:.0f}ms"
-                st.caption(f"{label} · {data.get('model', '?')}")
-
-                if len(answer) <= 250:
-                    play_tts(answer)
-
-                idx2 = len(st.session_state.messages)
-                st.session_state.messages.append({
-                    "role": "assistant", "content": answer,
-                    "event_id": ev_id, "topic": topic,
-                    "cached": is_cached, "suggestions": suggestions, "idx": idx2,
-                })
+            idx2 = len(st.session_state.messages)
+            st.session_state.messages.append({
+                "role": "assistant", "content": answer,
+                "event_id": -1, "topic": "General",
+                "cached": False, "suggestions": [], "idx": idx2,
+            })
         st.rerun()
 
     # Actions row

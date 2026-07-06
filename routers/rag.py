@@ -254,6 +254,17 @@ async def upload_document(
             status_code=413,
             detail=f"File quá lớn ({size_mb:.1f}MB). Giới hạn: {settings.max_upload_mb}MB"
         )
+        
+    # File Signature (Magic Bytes) Validation
+    if ext == ".pdf" and not content.startswith(b"%PDF"):
+        raise HTTPException(status_code=400, detail="File PDF không hợp lệ (Sai định dạng).")
+    elif ext == ".docx" and not content.startswith(b"PK\x03\x04"):
+        raise HTTPException(status_code=400, detail="File DOCX không hợp lệ (Sai định dạng).")
+    elif ext == ".txt":
+        try:
+            content.decode("utf-8")
+        except UnicodeDecodeError:
+            raise HTTPException(status_code=400, detail="File TXT phải ở định dạng UTF-8.")
 
     os.makedirs(settings.upload_dir, exist_ok=True)
     file_path = os.path.join(settings.upload_dir, file.filename)

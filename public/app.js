@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({
                     query: text,
                     messages: chatHistory,
-                    model_name: 'gemini',
                     session_id: 'web-pwa-session'
                 })
             });

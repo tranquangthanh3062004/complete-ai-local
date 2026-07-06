@@ -12,7 +12,7 @@ import time
 import uuid
 
 from database import create_tables, seed_superuser
-from routers import auth, rag, agents, learning
+from routers import auth, rag, agents, maps, learning
 from logger import get_logger
 
 from slowapi import _rate_limit_exceeded_handler
@@ -53,10 +53,15 @@ app = FastAPI(
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+import os
+origins = os.environ.get("CORS_ORIGINS", "*").split(",")
+# If origins is *, allow_credentials must be False according to CORS spec.
+credentials = False if origins == ["*"] else True
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins     = ["*"],
-    allow_credentials = True,
+    allow_origins     = origins,
+    allow_credentials = credentials,
     allow_methods     = ["*"],
     allow_headers     = ["*"],
 )
@@ -84,6 +89,7 @@ async def add_request_metadata(request: Request, call_next):
 app.include_router(auth.router)
 app.include_router(rag.router)
 app.include_router(agents.router)
+app.include_router(maps.router)
 app.include_router(learning.router)
 
 
@@ -124,6 +130,35 @@ async def list_models():
         "total"       : len(models),
     }
 
+# ── Mount Static React Build ────────────────────────────────────────────
+import os
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+if os.path.exists("public_react"):
+    app.mount("/assets", StaticFiles(directory="public_react/assets"), name="assets")
+    
+    @app.get("/{full_path:path}")
+    async def serve_react_app(full_path: str):
+        # Serve index.html for all non-API paths that don't match static files
+        if full_path.startswith("api/"):
+            return {"error": "Not found"}
+        
+        # Check if the exact file exists (e.g. favicon.ico, manifest.json)
+        file_path = os.path.join("public_react", full_path)
+        if os.path.isfile(file_path):
+            return FileResponse(file_path)
+            
+        return FileResponse("public_react/index.html")
+else:
+    @app.get("/")
+    async def root(request: Request):
+        return {
+            "app": "GTCC Bot Backend",
+            "status": "running",
+            "docs": str(request.base_url) + "docs",
+            "message": "Frontend build not found. Running in API-only mode."
+        }
 
 @app.post("/tts", tags=["utility"])
 async def text_to_speech_endpoint(request: Request):

@@ -22,8 +22,11 @@ class User(Base):
 
     id              = Column(Integer, primary_key=True, index=True)
     email           = Column(String, unique=True, index=True, nullable=False)
-    hashed_password = Column(String, nullable=False)
+    hashed_password = Column(String, nullable=True)  # Nullable for OAuth users
     display_name    = Column(String, default="")
+    avatar_url      = Column(String, nullable=True)
+    google_id       = Column(String, unique=True, index=True, nullable=True)
+    auth_provider   = Column(String, default="local") # local | google
     is_active       = Column(Boolean, default=True)
     is_superuser    = Column(Boolean, default=False)
     role            = Column(String, default="user")   # admin | user | guest
@@ -61,6 +64,29 @@ class Chat(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     user = relationship("User", back_populates="chats")
+
+
+class RefreshToken(Base):
+    """Lưu trữ refresh token cho session dài hạn."""
+    __tablename__ = "refresh_tokens"
+
+    id         = Column(Integer, primary_key=True, index=True)
+    user_id    = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
+    token_hash = Column(String, nullable=False, unique=True)
+    expires_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class RouteQuery(Base):
+    """Lưu trữ lịch sử tra cứu tuyến đường."""
+    __tablename__ = "route_queries"
+
+    id          = Column(Integer, primary_key=True, index=True)
+    user_id     = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=True)
+    origin      = Column(String, nullable=False)
+    destination = Column(String, nullable=False)
+    result      = Column(JSON, nullable=True)
+    created_at  = Column(DateTime, default=datetime.utcnow)
 
 
 # ─────────────────────────────────────────────

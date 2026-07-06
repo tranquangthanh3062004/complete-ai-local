@@ -80,5 +80,47 @@ def check_penalty_law(violation: str) -> str:
     
     return "Hành vi vi phạm này cần tham khảo chi tiết tại Nghị định 100/2019/NĐ-CP và 123/2021/NĐ-CP."
 
+@tool
+def plan_route(origin: str, destination: str, city: str = "HCM") -> str:
+    """
+    Lập kế hoạch hành trình đa phương tiện (Smart Transport) giữa hai địa điểm.
+    Hỗ trợ kết hợp: Đi bộ, Xe buýt, Metro, BRT, Xe đạp công cộng (TNGO).
+    Gọi công cụ này khi người dùng muốn đi từ A đến B:
+    - "Làm sao đi từ sân bay Tân Sơn Nhất đến ĐHQG?"
+    - "Chỉ đường từ Cát Linh đến Yên Nghĩa"
+    
+    Args:
+        origin (str): Điểm đi (vd: "Sân bay TSN").
+        destination (str): Điểm đến (vd: "Bến Thành").
+        city (str): Thành phố ("HCM" hoặc "HN").
+        
+    Returns:
+        str: Kế hoạch lộ trình chi tiết.
+    """
+    from services.route_planner import find_route
+    import json
+    
+    result = find_route(origin, destination, city)
+    if "error" in result:
+        return result["error"]
+        
+    # Format the result elegantly for the LLM to use
+    output = f"Lộ trình tối ưu từ {result['origin']} đến {result['destination']}:\n"
+    output += f"- Tổng thời gian: {result['total_time']} phút\n"
+    output += f"- Tổng chi phí: {result['total_cost']} VNĐ\n"
+    output += f"- Số lần chuyển tuyến: {result['transfers']}\n\n"
+    output += "Các bước đi:\n"
+    
+    for step in result["steps"]:
+        emoji = "🚶"
+        if step["type"] == "bus": emoji = "🚌"
+        elif step["type"] == "metro": emoji = "🚇"
+        elif step["type"] == "brt": emoji = "🚍"
+        elif step["type"] == "bike": emoji = "🚲"
+        
+        output += f"{step['step']}. {emoji} [{step['type'].upper()} {step['line']}] Từ {step['from']} đến {step['to']} (⏱️ {step['duration']}ph - 💰 {step['cost']}đ)\n"
+        
+    return output
+
 # Danh sách các công cụ để Inject vào LLM Agent
-GTCC_AGENT_TOOLS = [search_bus_route, get_ticket_price, check_penalty_law]
+GTCC_AGENT_TOOLS = [search_bus_route, get_ticket_price, check_penalty_law, plan_route]

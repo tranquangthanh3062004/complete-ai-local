@@ -12,6 +12,8 @@ import time
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi.responses import StreamingResponse
+import asyncio
 
 from llm_factory import get_llm
 from routers.auth import get_current_user
@@ -20,7 +22,7 @@ from database import get_db
 from config import settings
 from routers.rag import get_vector_store, format_docs, detect_topic, TOPIC_DISPLAY
 from logger import get_logger
-from services.cache_service import get_agent_cache
+from services.cache_service import get_semantic_cache, get_agent_cache
 from services.sanitizer import sanitize_query, is_gtcc_related
 from services.lang_detect import build_multilingual_query
 
@@ -260,6 +262,117 @@ async def direct_chat(
         logger.error(f"Error in direct_chat: {err}", exc_info=True)
         raise HTTPException(status_code=500, detail=err)
 
+
+@router.post("/stream")
+@limiter.limit("20/minute")
+async def stream_chat(
+    request     : Request,
+    payload     : AgentRequest,
+    db          : AsyncSession = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user),
+):
+    """Streaming endpoint for fast UX."""
+    clean_query, is_safe, reason = sanitize_query(payload.query)
+    if not is_safe:
+        raise HTTPException(status_code=400, detail=reason)
+
+    topic = detect_topic(clean_query)
+    start = time.time()
+    cache = get_semantic_cache()
+    cached_answer = cache.get(clean_query)
+
+    async def event_generator():
+        if cached_answer:
+            # Fake streaming for cached responses to keep the UX consistent
+            chunk_size = max(1, len(cached_answer) // 20)
+            for i in range(0, len(cached_answer), chunk_size):
+                chunk = cached_answer[i:i+chunk_size]
+                yield f"data: {chunk}\n\n"
+                await asyncio.sleep(0.02)
+            return
+
+        llm = get_llm(payload.model_name, payload.temperature or 0.1)
+        lang, lang_instruction = build_multilingual_query(clean_query)
+        
+        # History
+        history_text = ""
+        if payload.messages:
+            for msg in payload.messages[-3:]:
+                role = "User" if msg.get("role") == "user" else "Bot"
+                content = str(msg.get("content", ""))[:200]
+                history_text += f"{role}: {content}\n"
+                
+        # Smart Transport Injection logic
+        # If user is asking for a route, try to provide transit context
+        route_context = ""
+        query_lower = clean_query.lower()
+        if "đi từ" in query_lower or "đến" in query_lower or "lộ trình" in query_lower or "tuyến" in query_lower:
+            try:
+                from services.route_planner import find_route
+                import re
+
+                def extract_route_query(text: str):
+                    patterns = [
+                        r"từ\s+(.+?)\s+đến\s+(.+?)(?:\s*\?|$)",
+                        r"đi từ\s+(.+?)\s+tới\s+(.+?)(?:\s*\?|$)",
+                        r"(.+?)\s+đến\s+(.+?)(?:\s*\?|$)",
+                    ]
+                    for p in patterns:
+                        m = re.search(p, text.lower())
+                        if m:
+                            return m.group(1).strip(), m.group(2).strip()
+                    return text, text
+
+                origin, destination = extract_route_query(clean_query)
+                route_data = find_route(origin, destination)
+                if "error" not in route_data:
+                    route_context = f"\nLỘ TRÌNH KẾT HỢP GỢI Ý:\nTừ {route_data['origin']} đến {route_data['destination']}: Tổng {route_data['total_time']}phút, {route_data['total_cost']}VNĐ.\n"
+                    for s in route_data["steps"]:
+                        route_context += f"- Bước {s['step']}: {s['type']} {s['line']} từ {s['from']} đến {s['to']} ({s['duration']}phút, {s['cost']}VNĐ)\n"
+            except Exception as e:
+                pass
+
+        # RAG context
+        rag_context = ""
+        try:
+            vectordb = get_vector_store()
+            docs = vectordb.similarity_search(clean_query, k=4)
+            if docs:
+                rag_context = "Tài liệu GTCC:\n" + format_docs(docs) + "\n\n"
+        except Exception:
+            pass
+
+        if lang_instruction:
+            rag_context = lang_instruction + "\n" + rag_context
+            
+        full_context = rag_context + route_context
+
+        chain = CHAT_PROMPT | llm | StrOutputParser()
+        full_answer = ""
+        
+        try:
+            # Langchain's astream
+            async for chunk in chain.astream({
+                "history" : history_text,
+                "context" : full_context,
+                "question": clean_query,
+            }):
+                full_answer += chunk
+                # Safely format SSE chunk with newlines
+                chunk_sse = chunk.replace('\n', '\ndata: ')
+                yield f"data: {chunk_sse}\n\n"
+                
+            if len(full_answer) >= 5:
+                cache.set(clean_query, full_answer)
+                elapsed_ms = round((time.time() - start) * 1000, 1)
+                # Background task to save event could be used here
+                # await _save_chat_event(db, current_user, payload, full_answer, elapsed_ms, clean_query)
+        except Exception as e:
+            logger.error(f"Streaming error: {e}")
+            fallback = QUICK_FALLBACK.get(topic, DEFAULT_FALLBACK)
+            yield f"data: {fallback}\n\n"
+            
+    return StreamingResponse(event_generator(), media_type="text/event-stream")
 
 @router.post("/research")
 @limiter.limit("20/minute")
