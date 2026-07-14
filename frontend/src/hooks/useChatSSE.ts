@@ -25,7 +25,7 @@ export function useChatSSE() {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
-        body: JSON.stringify({ question: content }),
+        body: JSON.stringify({ query: content }),
       });
 
       if (!response.ok) {

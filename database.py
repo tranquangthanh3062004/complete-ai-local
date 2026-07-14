@@ -55,7 +55,10 @@ async def seed_superuser():
         )
         if result.scalar_one_or_none() is None:
             import os
-            admin_pass = os.environ.get("ADMIN_PASSWORD", "admin123")
+            admin_pass = os.environ.get("ADMIN_PASSWORD")
+            if not admin_pass:
+                print("Skipping admin seed: ADMIN_PASSWORD not set in environment.")
+                return
             salt   = bcrypt.gensalt()
             hashed = bcrypt.hashpw(admin_pass.encode("utf-8"), salt).decode("utf-8")
             admin  = User(

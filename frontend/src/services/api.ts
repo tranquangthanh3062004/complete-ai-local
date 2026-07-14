@@ -30,3 +30,24 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export const playTTS = async (text: string, lang: string = 'vi') => {
+  try {
+    const response = await api.post(
+      '/tts',
+      { text, lang },
+      { responseType: 'blob' }
+    );
+    const audioUrl = URL.createObjectURL(response.data);
+    const audio = new Audio(audioUrl);
+    
+    // Clean up blob URL after audio finishes
+    audio.onended = () => {
+      URL.revokeObjectURL(audioUrl);
+    };
+    
+    await audio.play();
+  } catch (error) {
+    console.error('Error playing TTS:', error);
+  }
+};

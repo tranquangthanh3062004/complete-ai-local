@@ -102,6 +102,7 @@ def is_gtcc_related(query: str) -> bool:
         "giao thông", "giao thong", "sân bay", "san bay",
         "bến xe", "ben xe", "tuyến", "tuyen", "lịch", "lich",
         "giá", "gia", "cước", "cuoc", "luật", "luat", "phạt", "phat",
+        "brt", "xe đạp", "xe dap", "phà", "pha", "cáp treo", "đường thủy",
     ]
     query_lower = query.lower()
     return any(sig in query_lower for sig in gtcc_signals)

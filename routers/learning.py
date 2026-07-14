@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime
 
 from database import get_db
-from routers.auth import get_current_user
+from routers.auth import get_current_user, require_admin
 from models import User, LearningEvent, TopicMastery
 
 router = APIRouter(prefix="/learning", tags=["learning"])
@@ -181,7 +181,7 @@ async def get_learning_profile(
 
 # ─── Stats tổng quan (cho admin) ─────────────────────────────────────────────
 @router.get("/stats")
-async def global_stats(db: AsyncSession = Depends(get_db)):
+async def global_stats(db: AsyncSession = Depends(get_db), current_user: User = Depends(require_admin)):
     """Thống kê toàn hệ thống."""
     total_q = (await db.execute(select(func.count(LearningEvent.id)))).scalar() or 0
     total_pos = (await db.execute(

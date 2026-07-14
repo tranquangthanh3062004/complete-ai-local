@@ -48,7 +48,7 @@ class Settings(BaseSettings):
     embedding_model : str = "models/text-embedding-004"
 
     # ── Auth ──────────────────────────────────────────────────────────────────
-    secret_key                  : str = "super-secret-key-change-in-production-please"
+    secret_key                  : str
     access_token_expire_minutes : int = 1440     # 24 giờ
 
     # ── Vector Store & Logging ───────────────────────────────────────────────

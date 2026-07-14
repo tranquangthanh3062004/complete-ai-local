@@ -20,7 +20,8 @@ from routers.auth import get_current_user
 from models import User, LearningEvent
 from database import get_db
 from config import settings
-from routers.rag import get_vector_store, format_docs, detect_topic, TOPIC_DISPLAY
+from services.ai_rag import get_vector_store, format_docs
+from services.ai_topic import detect_topic, TOPIC_DISPLAY, _get_gtcc_suggestions
 from logger import get_logger
 from services.cache_service import get_semantic_cache, get_agent_cache
 from services.sanitizer import sanitize_query, is_gtcc_related
@@ -31,13 +32,13 @@ logger = get_logger("agents")
 
 # ── System Prompt cực ngắn, tập trung ─────────────────────────────────────────
 GTCC_SYSTEM_PROMPT = (
-    "Bạn là Trợ lý GTCC Việt Nam. Trả lời NGẮN GỌN, TRỌNG TÂM bằng tiếng Việt.\n"
-    "NGUYÊN TẮC:\n"
-    "1. Nếu có tài liệu GTCC → dùng ngay, không nói thêm.\n"
-    "2. Nếu không có dữ liệu → trả lời dựa trên kiến thức chung, đừng xin lỗi dài dòng.\n"
-    "3. LUÔN chủ động gợi ý lộ trình KẾT HỢP (ví dụ: Xe buýt + Metro).\n"
-    "4. LUÔN gợi ý thuê xe đạp công cộng (TNGO) cho chặng đầu/cuối nếu đi gần (<3km).\n"
-    "5. Dùng emoji 🚌🚇🎫📍🚲 cho dễ đọc. Không viết dài quá 200 từ.\n"
+    "Bạn là Trợ lý AI Giao Thông Công Cộng (GTCC) Việt Nam.\n"
+    "NGUYÊN TẮC TRẢ LỜI:\n"
+    "1. ĐỊNH DẠNG: Bắt buộc dùng Markdown (in đậm, danh sách, bảng biểu nếu cần) để câu trả lời rõ ràng.\n"
+    "2. TRỌNG TÂM: Chỉ trả lời các vấn đề về xe buýt, metro, lộ trình, giá vé, luật giao thông. Từ chối khéo léo các chủ đề khác.\n"
+    "3. KẾT HỢP PTTCC: Nếu hỏi lộ trình, ưu tiên gợi ý kết hợp đa phương thức (ví dụ: Xe buýt + Metro).\n"
+    "4. TÍCH CỰC: Thêm emoji 🚌 🚇 🎫 📍 🚲 để giao diện thân thiện.\n"
+    "5. NGẮN GỌN: Không xin lỗi dài dòng, trả lời ngay vào vấn đề, tối đa 250 từ.\n"
 )
 
 CHAT_PROMPT = PromptTemplate.from_template(
@@ -137,7 +138,6 @@ async def direct_chat(
     cached_answer = cache.get(clean_query)
     if cached_answer:
         logger.info(f"[Direct Chat] Cache HIT | Q: '{clean_query[:60]}'")
-        from routers.rag import _get_gtcc_suggestions
         return {
             "result"      : cached_answer,
             "event_id"    : -1,   # Không tạo event mới cho cached response
@@ -215,7 +215,6 @@ async def direct_chat(
         elapsed_ms = round((time.time() - start) * 1000, 1)
         event = await _save_chat_event(db, current_user, payload, answer, elapsed_ms, clean_query)
 
-        from routers.rag import _get_gtcc_suggestions
         suggestions = _get_gtcc_suggestions(topic) if payload.suggest else []
 
         logger.info(f"[Direct Chat] Session: {payload.session_id} | lang={lang} | Q: '{clean_query[:60]}' | Topic: {topic} | Time: {elapsed_ms}ms")
@@ -243,7 +242,6 @@ async def direct_chat(
 
         try:
             event = await _save_chat_event(db, current_user, payload, fallback, 0)
-            from routers.rag import _get_gtcc_suggestions
             return {
                 "result"      : fallback,
                 "event_id"    : event.id,
@@ -366,7 +364,7 @@ async def stream_chat(
                 cache.set(clean_query, full_answer)
                 elapsed_ms = round((time.time() - start) * 1000, 1)
                 # Background task to save event could be used here
-                # await _save_chat_event(db, current_user, payload, full_answer, elapsed_ms, clean_query)
+                await _save_chat_event(db, current_user, payload, full_answer, elapsed_ms, clean_query)
         except Exception as e:
             logger.error(f"Streaming error: {e}")
             fallback = QUICK_FALLBACK.get(topic, DEFAULT_FALLBACK)

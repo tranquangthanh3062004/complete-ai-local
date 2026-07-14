@@ -32,162 +32,13 @@ from logger import get_logger
 router = APIRouter(prefix="/documents", tags=["rag"])
 logger = get_logger("rag")
 
+from services.ai_topic import detect_topic, TOPIC_DISPLAY
+from services.ai_rag import get_vector_store, format_docs
+
 # ── Supported file types ──────────────────────────────────────────────────────
 SUPPORTED_TYPES = {".pdf", ".txt", ".docx"}
 
-# ── Embeddings (lazy load + cache) ────────────────────────────────────────────
-_embeddings = None
 
-def get_embeddings():
-    global _embeddings
-    if _embeddings is None:
-        if settings.embedding_engine == "gemini" and settings.gemini_api_key:
-            from langchain_google_genai import GoogleGenerativeAIEmbeddings
-            logger.info("Loading Google Gemini Embeddings...")
-            _embeddings = GoogleGenerativeAIEmbeddings(
-                model=settings.embedding_model, 
-                google_api_key=settings.gemini_api_key
-            )
-        else:
-            try:
-                from langchain_huggingface import HuggingFaceEmbeddings
-                logger.info(f"Loading local embeddings...")
-                _embeddings = HuggingFaceEmbeddings(
-                    model_name="sentence-transformers/all-MiniLM-L6-v2",
-                    model_kwargs={"device": "cpu"}
-                )
-            except ImportError:
-                raise Exception("Missing HuggingFaceEmbeddings. Set gemini_api_key or install sentence-transformers.")
-    return _embeddings
-
-# ── Vector Store (Supabase pgvector hoặc ChromaDB) ────────────────────────────
-_vector_store_instance = None
-
-def get_vector_store():
-    global _vector_store_instance
-    if _vector_store_instance is None:
-        embeddings = get_embeddings()
-        
-        # 1. Pinecone
-        if settings.pinecone_api_key:
-            try:
-                from langchain_pinecone import PineconeVectorStore
-                logger.info("Initializing Pinecone Vector Store...")
-                _vector_store_instance = PineconeVectorStore(
-                    index_name=settings.pinecone_index_name,
-                    embedding=embeddings,
-                    pinecone_api_key=settings.pinecone_api_key
-                )
-                return _vector_store_instance
-            except ImportError:
-                logger.error("Missing pinecone packages.")
-
-        # 2. Supabase pgvector
-        if settings.supabase_url and settings.supabase_key:
-            try:
-                from supabase.client import create_client
-                from langchain_community.vectorstores import SupabaseVectorStore
-                logger.info("Initializing Supabase Vector Store...")
-                supabase_client = create_client(settings.supabase_url, settings.supabase_key)
-                _vector_store_instance = SupabaseVectorStore(
-                    embedding=embeddings,
-                    client=supabase_client,
-                    table_name="documents",
-                    query_name="match_documents"
-                )
-                return _vector_store_instance
-            except ImportError:
-                logger.error("Missing supabase package.")
-                
-        # 3. Fallback (không dùng Chroma trên serverless)
-        raise Exception("Không tìm thấy cấu hình Vector Database (Pinecone/Supabase)!")
-            
-    return _vector_store_instance
-
-
-# ── Topic Detection - Chuyên về GTCC ─────────────────────────────────────────
-TOPIC_KEYWORDS = {
-    "xe_buyt": [
-        "xe buýt", "xe buyt", "bus", "tuyến buýt", "tuyen buyt", "bến xe",
-        "trạm xe buýt", "tram xe buyt", "vé xe buýt", "ve xe buyt",
-        "giờ xe buýt", "lịch xe buýt", "lich xe buyt", "số tuyến", "so tuyen",
-        "xe bus", "minibus", "transerco", "ttqlgtcc",
-    ],
-    "metro_tau_dien": [
-        "metro", "tàu điện", "tau dien", "đường sắt đô thị", "duong sat do thi",
-        "mrt", "lrt", "tàu ngầm", "tau ngam", "ga metro", "cát linh",
-        "cat linh", "hà đông", "ha dong", "nhổn", "nhon", "bến thành",
-        "ben thanh", "suối tiên", "suoi tien", "tuyến metro", "tuyen metro",
-        "tàu điện ngầm", "mrb", "vml",
-    ],
-    "brt_xe_buyt_nhanh": [
-        "brt", "xe buýt nhanh", "xe buyt nhanh", "bus rapid transit",
-        "kim mã", "kim ma", "yên nghĩa", "yen nghia", "làn đường riêng",
-        "lan duong rieng",
-    ],
-    "ve_gia_cuoc": [
-        "giá vé", "gia ve", "vé tháng", "ve thang", "vé ngày", "ve ngay",
-        "học sinh sinh viên", "hoc sinh sinh vien", "miễn phí", "mien phi",
-        "ưu đãi", "uu dai", "giảm giá", "giam gia", "thanh toán", "thanh toan",
-        "mua vé", "mua ve", "thẻ xe buýt", "the xe buyt",
-    ],
-    "lich_trinh_tuyen": [
-        "lịch trình", "lich trinh", "giờ chạy", "gio chay", "giờ mở cửa",
-        "gio mo cua", "tần suất", "tan suat", "chuyến đầu", "chuyen dau",
-        "chuyến cuối", "chuyen cuoi", "lộ trình", "lo trinh", "tuyến đường",
-        "tuyen duong", "đón trả khách", "don tra khach",
-    ],
-    "luat_quy_dinh": [
-        "luật", "luat", "quy định", "quy dinh", "nghị định", "nghi dinh",
-        "vi phạm", "vi pham", "xử phạt", "xu phat", "phạt tiền", "phat tien",
-        "đèn đỏ", "den do", "tốc độ", "toc do", "mũ bảo hiểm", "mu bao hiem",
-        "nồng độ cồn", "nong do con", "bằng lái", "bang lai", "giấy phép",
-        "giay phep", "luật giao thông", "luat giao thong",
-    ],
-    "giao_thong_duong_thuy": [
-        "buýt sông", "buyt song", "phà", "pha", "tàu thủy", "tau thuy",
-        "đường thủy", "duong thuy", "bến phà", "ben pha", "sông sài gòn",
-        "song sai gon", "cần giờ", "can gio",
-    ],
-    "ung_dung_tien_ich": [
-        "busmap", "imaas", "ứng dụng", "ung dung", "app", "google maps",
-        "tra cứu", "tra cuu", "thông tin tuyến", "thong tin tuyen",
-        "thẻ thông minh", "the thong minh", "thanh toán điện tử",
-        "thanh toan dien tu", "qr code", "mã qr",
-    ],
-    "xe_dap_xe_may_chia_se": [
-        "xe đạp chia sẻ", "xe dap chia se", "xe máy điện chia sẻ",
-        "xe may dien chia se", "tnego", "ecobike", "mobike", "grab bike",
-        "xe điện", "xe dien",
-    ],
-    "san_bay_ga_tau": [
-        "sân bay", "san bay", "tân sơn nhất", "tan son nhat", "nội bài",
-        "noi bai", "ga tàu", "ga tau", "từ sân bay", "tu san bay",
-        "đến trung tâm", "den trung tam",
-    ],
-}
-
-def detect_topic(text: str) -> str:
-    text_lower = text.lower()
-    for topic, keywords in TOPIC_KEYWORDS.items():
-        if any(kw in text_lower for kw in keywords):
-            return topic
-    return "gtcc_chung"
-
-# Tên hiển thị topic đẹp hơn
-TOPIC_DISPLAY = {
-    "xe_buyt": "🚌 Xe Buýt",
-    "metro_tau_dien": "🚇 Metro / Tàu Điện",
-    "brt_xe_buyt_nhanh": "🚍 BRT - Xe Buýt Nhanh",
-    "ve_gia_cuoc": "🎫 Vé & Giá Cước",
-    "lich_trinh_tuyen": "🗓️ Lịch Trình / Tuyến",
-    "luat_quy_dinh": "📋 Luật & Quy Định",
-    "giao_thong_duong_thuy": "⛵ Giao Thông Đường Thủy",
-    "ung_dung_tien_ich": "📱 Ứng Dụng & Tiện Ích",
-    "xe_dap_xe_may_chia_se": "🛵 Xe Đạp / Xe Máy Chia Sẻ",
-    "san_bay_ga_tau": "✈️ Sân Bay & Nhà Ga",
-    "gtcc_chung": "🚦 GTCC Chung",
-}
 
 
 # ── Schemas ───────────────────────────────────────────────────────────────────
@@ -225,11 +76,6 @@ HƯỚNG DẪN TRẢ LỜI:
 
 TRẢ LỜI:""")
 
-def format_docs(docs):
-    return "\n\n---\n\n".join(
-        f"[Nguồn: {os.path.basename(d.metadata.get('source', d.metadata.get('file_path', 'GTCC Data')))}]\n{d.page_content}"
-        for d in docs
-    )
 
 
 # ── Upload PDF / DOCX / TXT ───────────────────────────────────────────────────
@@ -455,41 +301,7 @@ async def chat(
 
 
 
-def _get_gtcc_suggestions(topic: str) -> list:
-    """Gợi ý câu hỏi tiếp theo theo chủ đề GTCC."""
-    suggestions_map = {
-        "xe_buyt": [
-            "Giá vé xe buýt TP.HCM là bao nhiêu?",
-            "Học sinh có được giảm giá vé không?",
-            "Làm sao mua vé tháng xe buýt?",
-        ],
-        "metro_tau_dien": [
-            "Metro số 1 TP.HCM có những ga nào?",
-            "Giờ chạy của metro Cát Linh - Hà Đông?",
-            "Giá vé metro là bao nhiêu?",
-        ],
-        "ve_gia_cuoc": [
-            "Ai được miễn phí vé xe buýt?",
-            "Mua vé tháng ở đâu?",
-            "Thanh toán vé điện tử được không?",
-        ],
-        "luat_quy_dinh": [
-            "Vi phạm vượt đèn đỏ bị phạt bao nhiêu?",
-            "Quy định về nồng độ cồn khi lái xe?",
-            "Quy định đi xe buýt có gì?",
-        ],
-        "san_bay_ga_tau": [
-            "Đi từ sân bay Nội Bài vào trung tâm Hà Nội bằng gì?",
-            "Có xe buýt từ sân bay Tân Sơn Nhất không?",
-            "Giá taxi sân bay so với xe buýt?",
-        ],
-    }
-    default = [
-        "Xe buýt tuyến nào đi qua trung tâm?",
-        "Làm thế nào để tra cứu lộ trình GTCC?",
-        "App nào hỗ trợ đi xe buýt tốt nhất?",
-    ]
-    return suggestions_map.get(topic, default)
+
 
 
 # ── Danh sách tài liệu ────────────────────────────────────────────────────────

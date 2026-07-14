@@ -135,21 +135,21 @@ import os
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
-if os.path.exists("public_react"):
-    app.mount("/assets", StaticFiles(directory="public_react/assets"), name="assets")
+# Cấu hình serve thư mục build của React (ví dụ: frontend/dist)
+# Tạm thời để trống hoặc phục vụ thư mục frontend/dist nếu có.
+# Xóa cấu hình Streamlit cũ
+frontend_dist = os.path.join("frontend", "dist")
+if os.path.exists(frontend_dist):
+    app.mount("/assets", StaticFiles(directory=os.path.join(frontend_dist, "assets")), name="assets")
     
     @app.get("/{full_path:path}")
     async def serve_react_app(full_path: str):
-        # Serve index.html for all non-API paths that don't match static files
         if full_path.startswith("api/"):
             return {"error": "Not found"}
-        
-        # Check if the exact file exists (e.g. favicon.ico, manifest.json)
-        file_path = os.path.join("public_react", full_path)
+        file_path = os.path.join(frontend_dist, full_path)
         if os.path.isfile(file_path):
             return FileResponse(file_path)
-            
-        return FileResponse("public_react/index.html")
+        return FileResponse(os.path.join(frontend_dist, "index.html"))
 else:
     @app.get("/")
     async def root(request: Request):

@@ -33,3 +33,14 @@ async def autocomplete(q: str = Query(..., min_length=2)):
                 } for item in data
             ]
         return []
+
+from services.route_planner import find_route
+from fastapi import HTTPException
+
+@router.get("/route")
+async def get_route(origin: str = Query(...), destination: str = Query(...)):
+    """Find fastest transit route between two points."""
+    result = find_route(origin, destination)
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    return result

@@ -52,6 +52,7 @@ langdetect              # Phát hiện ngôn ngữ câu hỏi (VI/EN/...)
 tenacity                # Retry decorator cho LLM timeout
 
 # === Dev & Test ===
+
 pytest
 pytest-asyncio
 
@@ -60,5 +61,4 @@ slowapi
 
 # === Smart Transport & Streaming ===
 networkx
-streamlit
 starlette<0.49.0

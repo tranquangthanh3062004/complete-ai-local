@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, BrowserRouter, NavLink, Link } from 'react-router-dom';
 import Home from '@/pages/Home';
 import MapPage from '@/pages/MapPage';
 import { Toaster } from '@/components/ui/toaster';
@@ -16,8 +16,18 @@ function App() {
                 </span>
               </a>
               <nav className="flex items-center space-x-6 text-sm font-medium">
-                <a className="transition-colors hover:text-foreground/80 text-foreground" href="/">Chat</a>
-                <a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/map">Bản đồ</a>
+                <NavLink 
+                  to="/" 
+                  className={({ isActive }) => `transition-colors hover:text-foreground/80 ${isActive ? 'text-foreground' : 'text-foreground/60'}`}
+                >
+                  Chat
+                </NavLink>
+                <NavLink 
+                  to="/map" 
+                  className={({ isActive }) => `transition-colors hover:text-foreground/80 ${isActive ? 'text-foreground' : 'text-foreground/60'}`}
+                >
+                  Bản đồ
+                </NavLink>
                 <a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/docs">Tài liệu</a>
               </nav>
             </div>

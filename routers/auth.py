@@ -102,6 +102,15 @@ async def require_user(user: Optional[User] = Depends(get_current_user)) -> User
     return user
 
 
+async def require_admin(user: User = Depends(require_user)) -> User:
+    if not user.is_superuser:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Requires admin privileges",
+        )
+    return user
+
+
 # ── Endpoints ─────────────────────────────────────────────────────────────────
 @router.post("/register", response_model=UserOut)
 async def register(user_data: UserCreate, db: AsyncSession = Depends(get_db)):

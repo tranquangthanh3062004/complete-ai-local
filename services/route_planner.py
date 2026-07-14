@@ -158,6 +158,10 @@ def find_route(start_query: str, end_query: str, city: str = None) -> Dict[str, 
                 "line": edge_data["line"],
                 "from": G.nodes[u]["name"],
                 "to": G.nodes[v]["name"],
+                "from_lat": G.nodes[u]["lat"],
+                "from_lng": G.nodes[u]["lng"],
+                "to_lat": G.nodes[v]["lat"],
+                "to_lng": G.nodes[v]["lng"],
                 "duration": edge_data["weight"],
                 "cost": edge_data["cost"]
             })
@@ -166,7 +170,11 @@ def find_route(start_query: str, end_query: str, city: str = None) -> Dict[str, 
             
         return {
             "origin": G.nodes[start_node]["name"],
+            "origin_lat": G.nodes[start_node]["lat"],
+            "origin_lng": G.nodes[start_node]["lng"],
             "destination": G.nodes[end_node]["name"],
+            "dest_lat": G.nodes[end_node]["lat"],
+            "dest_lng": G.nodes[end_node]["lng"],
             "steps": steps,
             "total_time": total_time,
             "total_cost": total_cost,

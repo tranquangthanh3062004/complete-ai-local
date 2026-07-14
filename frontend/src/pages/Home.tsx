@@ -5,9 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card } from '@/components/ui/card';
-import { SendHorizontal, Bot, User, Loader2 } from 'lucide-react';
+import { SendHorizontal, Bot, User, Loader2, Volume2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
+import { playTTS } from '@/services/api';
 
 export default function Home() {
   const { messages, isStreaming } = useChatStore();
@@ -17,7 +18,10 @@ export default function Home() {
 
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      scrollRef.current.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
     }
   }, [messages, isStreaming]);
 
@@ -64,18 +68,35 @@ export default function Home() {
                   {msg.role === 'user' ? <User size={18} /> : <Bot size={18} />}
                 </div>
                 <div className={cn(
-                  "px-4 py-3 rounded-2xl max-w-[85%]",
+                  "px-4 py-3 rounded-2xl max-w-[85%] group",
                   msg.role === 'user' 
                     ? "bg-primary text-primary-foreground" 
-                    : "bg-muted text-foreground"
+                    : "bg-muted text-foreground",
+                  !msg.content && isStreaming ? "animate-pulse" : ""
                 )}>
                   <div className="prose prose-sm dark:prose-invert break-words">
                     {msg.content ? (
-                      <ReactMarkdown>{msg.content}</ReactMarkdown>
+                      <div>
+                        <ReactMarkdown>{msg.content}</ReactMarkdown>
+                        {msg.role !== 'user' && (
+                          <div className="mt-2 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              className="h-6 w-6 p-1 rounded-full text-muted-foreground hover:text-foreground"
+                              onClick={() => playTTS(msg.content)}
+                              title="Nghe câu trả lời"
+                            >
+                              <Volume2 size={14} />
+                            </Button>
+                          </div>
+                        )}
+                      </div>
                     ) : (
                       <div className="flex items-center space-x-2">
-                        <Loader2 className="w-4 h-4 animate-spin opacity-50" />
-                        <span className="opacity-50 text-sm">Đang suy nghĩ...</span>
+                        <div className="w-1.5 h-1.5 bg-foreground/50 rounded-full animate-bounce"></div>
+                        <div className="w-1.5 h-1.5 bg-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                        <div className="w-1.5 h-1.5 bg-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
                       </div>
                     )}
                   </div>
