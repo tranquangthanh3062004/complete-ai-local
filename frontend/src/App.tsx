@@ -1,6 +1,7 @@
 import { Routes, Route, BrowserRouter, NavLink, Link } from 'react-router-dom';
 import Home from '@/pages/Home';
 import MapPage from '@/pages/MapPage';
+import AdminDashboard from '@/pages/AdminDashboard';
 import { Toaster } from '@/components/ui/toaster';
 
 function App() {
@@ -28,6 +29,12 @@ function App() {
                 >
                   Bản đồ
                 </NavLink>
+                <NavLink 
+                  to="/admin" 
+                  className={({ isActive }) => `transition-colors hover:text-foreground/80 ${isActive ? 'text-foreground' : 'text-foreground/60'}`}
+                >
+                  Dashboard
+                </NavLink>
                 <a className="transition-colors hover:text-foreground/80 text-foreground/60" href="/docs">Tài liệu</a>
               </nav>
             </div>
@@ -38,6 +45,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/map" element={<MapPage />} />
+            <Route path="/admin" element={<AdminDashboard />} />
             {/* Additional routes will be added here */}
           </Routes>
         </main>

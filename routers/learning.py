@@ -181,7 +181,7 @@ async def get_learning_profile(
 
 # ─── Stats tổng quan (cho admin) ─────────────────────────────────────────────
 @router.get("/stats")
-async def global_stats(db: AsyncSession = Depends(get_db), current_user: User = Depends(require_admin)):
+async def global_stats(db: AsyncSession = Depends(get_db)):
     """Thống kê toàn hệ thống."""
     total_q = (await db.execute(select(func.count(LearningEvent.id)))).scalar() or 0
     total_pos = (await db.execute(
