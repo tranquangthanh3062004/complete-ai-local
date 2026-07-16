@@ -89,15 +89,16 @@ async def add_request_metadata(request: Request, call_next):
     return response
 
 
-app.include_router(auth.router)
-app.include_router(rag.router)
-app.include_router(agents.router)
-app.include_router(maps.router)
-app.include_router(learning.router)
+app.include_router(auth.router, prefix="/api")
+app.include_router(rag.router, prefix="/api")
+app.include_router(agents.router, prefix="/api")
+app.include_router(maps.router, prefix="/api")
+app.include_router(learning.router, prefix="/api")
 
 
 
 
+@app.get("/api/health", tags=["system"])
 @app.get("/health", tags=["system"])
 async def health():
     """Kiem tra backend co chay khong."""
