@@ -377,7 +377,8 @@ async def stream_chat(
             else:
                 fallback += "\n\n⚠️ *Bot đang gặp lỗi cấu hình trên Vercel.*"
                 
-            yield f"data: {fallback}\n\n"
+            fallback_sse = fallback.replace('\n', '\ndata: ')
+            yield f"data: {fallback_sse}\n\n"
             
     return StreamingResponse(event_generator(), media_type="text/event-stream")
 

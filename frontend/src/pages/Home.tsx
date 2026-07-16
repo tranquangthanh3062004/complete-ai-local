@@ -42,9 +42,9 @@ export default function Home() {
               <div className="flex flex-col items-center justify-center h-full text-muted-foreground mt-20 space-y-4">
                 <Bot className="w-16 h-16 opacity-20" />
                 <h2 className="text-xl font-medium">GTCC Bot</h2>
-                <p className="text-sm">Hỏi tôi về tuyến xe buýt, metro hoặc luật giao thông</p>
+                <p className="text-sm">Hỏi tôi về tuyến xe buýt, metro hoặc luật giao thông tại Hà Nội</p>
                 <div className="flex gap-2 mt-4 flex-wrap justify-center">
-                  {["Từ Bến Thành đi Suối Tiên", "Giá vé Metro số 1", "Mức phạt vượt đèn đỏ"].map(q => (
+                  {["Từ Bến xe Mỹ Đình đi Hồ Gươm", "Giá vé Metro Nhổn - Ga Hà Nội", "Tuyến xe buýt đi sân bay Nội Bài"].map(q => (
                     <Button key={q} variant="outline" size="sm" onClick={() => { setInput(q); }}>
                       {q}
                     </Button>
