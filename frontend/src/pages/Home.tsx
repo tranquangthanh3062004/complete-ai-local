@@ -139,16 +139,6 @@ export default function Home() {
                         <div className="prose prose-sm">
                           <ReactMarkdown>{msg.content}</ReactMarkdown>
                         </div>
-                        {msg.role !== 'user' && (
-                          <button
-                            className="absolute -bottom-3 right-2 opacity-0 group-hover:opacity-100 transition-all duration-200 w-6 h-6 rounded-full bg-muted border border-border flex items-center justify-center text-muted-foreground hover:text-foreground"
-                            onClick={() => playTTS(msg.content)}
-                            title="Nghe câu trả lời"
-                          >
-                            <Volume2 size={11} />
-                          </button>
-                        )}
-                      </>
                     ) : (
                       /* Skeleton pulse when content is empty */
                       <div className="flex gap-1.5 items-center py-0.5">
