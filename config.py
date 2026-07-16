@@ -32,7 +32,7 @@ class Settings(BaseSettings):
 
     # ── AI Engine Configurations ──────────────────────────────────────────────
     llm_engine      : str = "gemini" # 'groq', 'gemini', 'ollama'
-    llm_model_name  : str = "gemini-1.5-flash" 
+    llm_model_name  : str = "gemini-2.0-flash" 
     
     # API Keys
     groq_api_key    : Optional[str] = None
