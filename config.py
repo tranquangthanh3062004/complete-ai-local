@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     debug      : bool = False
 
     # ── Database (SQLite local hoặc PostgreSQL Cloud) ────────────────────────────
-    database_url: str = "sqlite+aiosqlite:///./completeai.db"
+    database_url: str = "sqlite+aiosqlite:////tmp/completeai.db"
 
     from pydantic import field_validator
     @field_validator("database_url", mode="before")
@@ -52,11 +52,11 @@ class Settings(BaseSettings):
     access_token_expire_minutes : int = 1440     # 24 giờ
 
     # ── Vector Store & Logging ───────────────────────────────────────────────
-    chroma_persist_dir: str = "./chroma_db"
-    log_dir           : str = "./logs"
+    chroma_persist_dir: str = "/tmp/chroma_db"
+    log_dir           : str = "/tmp/logs"
 
     # ── Uploads ───────────────────────────────────────────────────────────────
-    upload_dir      : str = "./data/uploads"
+    upload_dir      : str = "/tmp/uploads"
     max_upload_mb   : int = 50               # giới hạn kích thước file upload
     chunk_size      : int = 800             # chunk nhỏ hơn = chính xác hơn
     chunk_overlap   : int = 150              # overlap vừa phải
