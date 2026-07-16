@@ -5,12 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
-  SendHorizontal, Bot, User, Volume2,
+  SendHorizontal, Bot, User,
   Train, Bus, MapPin, FileText, Star
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
-import { playTTS } from '@/services/api';
+
 
 const HANOI_SUGGESTIONS = [
   { label: "Từ Mỹ Đình lên Hồ Gươm", icon: <Bus size={13}/> },
@@ -135,7 +135,6 @@ export default function Home() {
                     msg.role === 'user' ? "bubble-user text-white" : "bubble-bot"
                   )}>
                     {msg.content ? (
-                      <>
                         <div className="prose prose-sm">
                           <ReactMarkdown>{msg.content}</ReactMarkdown>
                         </div>
