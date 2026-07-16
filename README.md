@@ -110,9 +110,28 @@ complete-ai-local/
 
 ## 🌐 Triển khai (Deployment)
 
-Hệ thống được thiết kế tối ưu nhất cho **Railway.app** hoặc **Render.com**.
+Hệ thống được thiết kế tối ưu nhất để chạy tách biệt Frontend trên **Vercel** và Backend trên **Render**.
 
-### Triển khai tự động qua Github Actions (CI/CD)
+### Tùy chọn 1: Deploy Bấm 1 chạm (Khuyên dùng)
+
+**Bước 1: Triển khai Backend (Render.com)**
+Bấm vào nút dưới đây để tạo tự động API Backend (Miễn phí):
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+
+*(Sau khi deploy thành công, hãy copy URL của Backend, ví dụ: `https://gtcc-bot-api.onrender.com`)*
+
+**Bước 2: Triển khai Frontend (Vercel)**
+Bấm nút dưới đây để triển khai giao diện:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Ftranquangthanh3062004%2Fcomplete-ai-local)
+
+👉 **Lưu ý quan trọng**: Khi Vercel hỏi biến môi trường (Environment Variables), hãy thêm biến:
+- `VITE_API_URL` = `[URL Backend của bạn ở Bước 1]`
+
+---
+
+### Tùy chọn 2: Triển khai thủ công qua Github Actions (CI/CD)
 1. Fork / Clone repository này.
 2. Thiết lập biến môi trường `RAILWAY_TOKEN` trong Settings > Secrets and variables > Actions của Github.
 3. Push code lên nhánh `main`, Github Action (`.github/workflows/deploy.yml`) sẽ tự động biên dịch và triển khai dự án.
