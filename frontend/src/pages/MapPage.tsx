@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Search, MapPin, Navigation, Clock, CreditCard, Loader2 } from 'lucide-react';
+import { MapPin, Navigation, Clock, CreditCard, Loader2 } from 'lucide-react';
 import { api } from '@/services/api';
 
 import L from 'leaflet';

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card } from '@/components/ui/card';
-import { SendHorizontal, Bot, User, Loader2, Volume2 } from 'lucide-react';
+import { SendHorizontal, Bot, User, Volume2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
 import { playTTS } from '@/services/api';

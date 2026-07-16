@@ -12,10 +12,19 @@ import bcrypt
 is_sqlite = settings.database_url.startswith("sqlite")
 connect_args = {"check_same_thread": False} if is_sqlite else {}
 
+# Connection pooling optimizations for production
+engine_kwargs = {
+    "echo": False,
+    "connect_args": connect_args,
+}
+
+if not is_sqlite:
+    engine_kwargs["pool_size"] = 10
+    engine_kwargs["max_overflow"] = 20
+
 async_engine = create_async_engine(
     settings.database_url,
-    echo=False,
-    connect_args=connect_args,
+    **engine_kwargs
 )
 
 AsyncSessionLocal = async_sessionmaker(

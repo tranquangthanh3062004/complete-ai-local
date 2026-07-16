@@ -5,6 +5,7 @@ Chatbot hoi dap ve Giao Thong Cong Cong Viet Nam.
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 import uvicorn
@@ -65,6 +66,8 @@ app.add_middleware(
     allow_methods     = ["*"],
     allow_headers     = ["*"],
 )
+
+app.add_middleware(GZipMiddleware, minimum_size=1000)
 
 
 @app.middleware("http")
@@ -176,7 +179,9 @@ async def text_to_speech_endpoint(request: Request):
             text = text[:1500]
 
         from services.tts_service import text_to_speech
-        audio_path = text_to_speech(text, lang=lang)
+        from starlette.concurrency import run_in_threadpool
+        
+        audio_path = await run_in_threadpool(text_to_speech, text, lang)
         if audio_path:
             return FileResponse(
                 path=audio_path,
@@ -197,10 +202,6 @@ async def cache_stats():
         "agent_cache" : get_agent_cache().stats,
         "rag_cache"   : get_rag_cache().stats,
     }
-
-
-# Mount PWA frontend (for local dev)
-app.mount("/", StaticFiles(directory="public", html=True), name="public")
 
 
 if __name__ == "__main__":
