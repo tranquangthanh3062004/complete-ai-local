@@ -15,11 +15,15 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "main.py"
+      "dest": "/main.py/$1"
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "/frontend/assets/$1"
+      "src": "/health",
+      "dest": "/main.py/health"
+    },
+    {
+      "src": "/docs",
+      "dest": "/main.py/docs"
     },
     {
       "src": "/(.*)",
