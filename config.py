@@ -31,8 +31,8 @@ class Settings(BaseSettings):
     supabase_key: Optional[str] = None
 
     # ── AI Engine Configurations ──────────────────────────────────────────────
-    llm_engine      : str = "gemini" # 'groq', 'gemini', 'ollama'
-    llm_model_name  : str = "gemini-2.0-flash" 
+    llm_engine      : str = "groq"  # 'groq', 'gemini', 'ollama'
+    llm_model_name  : str = "llama-3.1-8b-instant" 
     
     # API Keys
     groq_api_key    : Optional[str] = None
