@@ -1,51 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --background: 220 20% 97%;
+    --foreground: 220 25% 10%;
+    --muted: 220 15% 93%;
+    --muted-foreground: 220 10% 45%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 47.4% 11.2%;
+    --popover-foreground: 220 25% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 47.4% 11.2%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 210 40% 98%;
-    --ring: 215 20.2% 65.1%;
-    --radius: 0.5rem;
+    --card-foreground: 220 25% 10%;
+    --border: 220 15% 88%;
+    --input: 220 15% 88%;
+    --primary: 234 89% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 15% 93%;
+    --secondary-foreground: 220 25% 10%;
+    --accent: 234 89% 60%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 234 89% 60%;
+    --radius: 1rem;
   }
 
   .dark {
-    --background: 224 71% 4%;
-    --foreground: 213 31% 91%;
-    --muted: 223 47% 11%;
-    --muted-foreground: 215.4 16.3% 56.9%;
-    --popover: 224 71% 4%;
-    --popover-foreground: 215 20.2% 65.1%;
-    --card: 224 71% 4%;
+    --background: 222 35% 7%;
+    --foreground: 213 31% 94%;
+    --muted: 220 30% 12%;
+    --muted-foreground: 215 20% 55%;
+    --popover: 222 35% 9%;
+    --popover-foreground: 213 31% 91%;
+    --card: 222 35% 9%;
     --card-foreground: 213 31% 91%;
-    --border: 216 34% 17%;
-    --input: 216 34% 17%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 1.2%;
-    --secondary: 222.2 47.4% 11.2%;
-    --secondary-foreground: 210 40% 98%;
-    --accent: 216 34% 17%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --ring: 216 34% 17%;
+    --border: 216 30% 16%;
+    --input: 216 30% 16%;
+    --primary: 234 89% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 30% 14%;
+    --secondary-foreground: 213 31% 91%;
+    --accent: 234 89% 65%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 63% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 234 89% 65%;
   }
 }
 
@@ -53,8 +55,88 @@
   * {
     @apply border-border;
   }
+  html {
+    color-scheme: dark;
+  }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
+
+/* ── Scrollbar Styling ─────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(var(--muted-foreground) / 0.3); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.6); }
+
+/* ── Animations ─────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--primary) / 0); }
+  50% { box-shadow: 0 0 0 8px hsl(var(--primary) / 0.15); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes typing-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+
+.animate-fade-in { animation: fadeIn 0.35s ease-out; }
+.animate-slide-up { animation: slideUp 0.4s ease-out; }
+
+.typing-dot:nth-child(1) { animation: typing-dot 1.2s infinite 0s; }
+.typing-dot:nth-child(2) { animation: typing-dot 1.2s infinite 0.2s; }
+.typing-dot:nth-child(3) { animation: typing-dot 1.2s infinite 0.4s; }
+
+/* ── Glassmorphism ─────────────────────────────────────── */
+.glass {
+  background: hsl(var(--card) / 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid hsl(var(--border) / 0.5);
+}
+
+/* ── Chat Bubbles ──────────────────────────────────────── */
+.bubble-bot {
+  background: hsl(var(--muted));
+  border-radius: 4px 20px 20px 20px;
+}
+.bubble-user {
+  background: linear-gradient(135deg, hsl(234 89% 60%), hsl(258 90% 65%));
+  border-radius: 20px 4px 20px 20px;
+  color: white;
+}
+
+/* ── Suggestion chips ─────────────────────────────────── */
+.chip {
+  @apply text-xs px-3 py-1.5 rounded-full border cursor-pointer transition-all duration-200;
+  border-color: hsl(var(--primary) / 0.4);
+  color: hsl(var(--primary));
+  background: hsl(var(--primary) / 0.06);
+}
+.chip:hover {
+  background: hsl(var(--primary) / 0.15);
+  border-color: hsl(var(--primary) / 0.7);
+  transform: translateY(-1px);
+}
+
+/* ── Prose override for dark mode ─────────────────────── */
+.prose { @apply text-foreground; max-width: none; }
+.prose strong { @apply text-foreground font-semibold; }
+.prose code { @apply bg-muted px-1 py-0.5 rounded text-sm; }
+.prose ul { @apply list-disc pl-4 space-y-1; }
+.prose li { @apply text-foreground; }
+.prose p { @apply mb-2 last:mb-0; }
+.prose h3, .prose h4 { @apply text-foreground font-semibold; }
