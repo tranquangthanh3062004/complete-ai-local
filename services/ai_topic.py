@@ -89,34 +89,34 @@ def _get_gtcc_suggestions(topic: str) -> list:
     """Gợi ý câu hỏi tiếp theo theo chủ đề GTCC."""
     suggestions_map = {
         "xe_buyt": [
-            "Giá vé xe buýt TP.HCM là bao nhiêu?",
-            "Học sinh có được giảm giá vé không?",
-            "Làm sao mua vé tháng xe buýt?",
+            "Giá vé xe buýt Hà Nội là bao nhiêu?",
+            "Làm sao làm vé tháng xe buýt Hà Nội?",
+            "Tuyến xe buýt nào đi qua Hồ Gươm?",
         ],
         "metro_tau_dien": [
-            "Metro số 1 TP.HCM có những ga nào?",
             "Giờ chạy của metro Cát Linh - Hà Đông?",
-            "Giá vé metro là bao nhiêu?",
+            "Giá vé metro Nhổn - Ga Hà Nội?",
+            "Mua vé tháng metro Hà Nội ở đâu?",
         ],
         "ve_gia_cuoc": [
-            "Ai được miễn phí vé xe buýt?",
-            "Mua vé tháng ở đâu?",
-            "Thanh toán vé điện tử được không?",
+            "Sinh viên được giảm giá vé buýt Hà Nội không?",
+            "Làm vé tháng xe buýt liên tuyến hết bao nhiêu?",
+            "Người cao tuổi đi xe buýt có mất tiền không?",
         ],
         "luat_quy_dinh": [
-            "Vi phạm vượt đèn đỏ bị phạt bao nhiêu?",
-            "Quy định về nồng độ cồn khi lái xe?",
-            "Quy định đi xe buýt có gì?",
+            "Lỗi đi vào làn BRT bị phạt bao nhiêu?",
+            "Không đội mũ bảo hiểm phạt bao nhiêu?",
+            "Chạy quá tốc độ trong phố bị phạt thế nào?",
         ],
         "san_bay_ga_tau": [
-            "Đi từ sân bay Nội Bài vào trung tâm Hà Nội bằng gì?",
-            "Có xe buýt từ sân bay Tân Sơn Nhất không?",
-            "Giá taxi sân bay so với xe buýt?",
+            "Đi từ sân bay Nội Bài vào trung tâm bằng xe buýt nào?",
+            "Xe buýt 86 đi từ Ga Hà Nội ra Nội Bài giá bao nhiêu?",
+            "Lịch trình xe buýt 68 từ Cầu Giấy đi Nội Bài?",
         ],
     }
     default = [
-        "Xe buýt tuyến nào đi qua trung tâm?",
-        "Làm thế nào để tra cứu lộ trình GTCC?",
-        "App nào hỗ trợ đi xe buýt tốt nhất?",
+        "Làm sao đi xe buýt từ Mỹ Đình lên Hồ Gươm?",
+        "Tuyến xe buýt BRT 01 chạy đường nào?",
+        "App nào tra cứu xe buýt Hà Nội chuẩn nhất?",
     ]
     return suggestions_map.get(topic, default)

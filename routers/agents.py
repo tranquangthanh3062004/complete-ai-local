@@ -83,23 +83,25 @@ async def _save_chat_event(db, current_user, request, answer: str, elapsed_ms: f
 # ── Fallback thông minh theo topic ────────────────────────────────────────────
 QUICK_FALLBACK = {
     "xe_buyt": (
-        "🚌 **Xe Buýt:** TP.HCM ~100 tuyến (5.000-8.000đ), Hà Nội ~120 tuyến (7.000-9.000đ).\n"
-        "📱 Tra tuyến: App **BusMap** hoặc **Google Maps**.\n"
-        "🎫 HSSV giảm 50% | Người cao tuổi, khuyết tật: miễn phí."
+        "🚌 **Xe Buýt:** Hà Nội có hơn 120 tuyến (giá vé 7.000-9.000đ/lượt).\n"
+        "📱 Tra tuyến: App **BusMap** hoặc **Tìm Buýt**.\n"
+        "🎫 Sinh viên mua vé tháng 100.000đ | Người cao tuổi: miễn phí."
     ),
     "metro_tau_dien": (
-        "🚇 **Metro TP.HCM số 1** (Bến Thành - Suối Tiên): 14 ga, 5:30-22:00, 6.000-20.000đ/lượt.\n"
         "🚇 **Metro Hà Nội 2A** (Cát Linh - Hà Đông): 12 ga, 5:30-22:30, 8.000-15.000đ/lượt.\n"
-        "📱 Mua vé: App HCMC Metro (HCM) | iMaaS (HN)."
+        "🚇 **Metro Nhổn - Ga Hà Nội** (Đoạn trên cao): 8.000-12.000đ/lượt.\n"
+        "📱 Mua vé: Tại nhà ga hoặc dùng vé tháng 200.000đ."
     ),
     "ve_gia_cuoc": (
-        "🎫 **Giá vé:** Xe buýt HCM 5.000-8.000đ | Metro HCM 6.000-20.000đ | Metro HN 8.000-15.000đ.\n"
-        "💳 Vé tháng: Metro HCM 300.000đ (sv: 150.000đ) | Metro HN 200.000đ (sv: 100.000đ).\n"
-        "✅ HSSV giảm 50% | Người cao tuổi, khuyết tật, thương binh: miễn phí."
+        "🎫 **Giá vé:** Xe buýt HN 7.000-9.000đ | Metro HN 8.000-15.000đ.\n"
+        "💳 Vé tháng: Xe buýt liên tuyến 200.000đ (sv: 100.000đ) | Metro 200.000đ (sv: 100.000đ).\n"
+        "✅ Người cao tuổi, người có công: miễn phí."
     ),
     "san_bay_ga_tau": (
-        "✈️ **Sân bay TSN → Trung tâm HCM:** Xe buýt 152 (5.000đ, 30-45ph) hoặc Metro số 1.\n"
-        "✈️ **Sân bay Nội Bài → HN:** Xe buýt 7 → Mỹ Đình (9.000đ, 45ph) hoặc tuyến 86 → Gia Lâm."
+        "✈️ **Sân bay Nội Bài → HN:**\n"
+        "- Tuyến 86 (Ga Hà Nội - Nội Bài): 45.000đ\n"
+        "- Tuyến 68 (Hà Đông/Cầu Giấy - Nội Bài): 50.000đ\n"
+        "- Tuyến 07, 17, 90 (Xe buýt thường): 9.000đ."
     ),
     "luat_quy_dinh": (
         "📋 **Mức phạt chính (NĐ 100/2019):**\n"
@@ -366,8 +368,15 @@ async def stream_chat(
                 # Background task to save event could be used here
                 await _save_chat_event(db, current_user, payload, full_answer, elapsed_ms, clean_query)
         except Exception as e:
-            logger.error(f"Streaming error: {e}")
+            err = str(e)
+            logger.error(f"Streaming error: {err}")
             fallback = QUICK_FALLBACK.get(topic, DEFAULT_FALLBACK)
+            
+            if "api_key" in err.lower() or "401" in err.lower() or "authentication" in err.lower() or "none" in err.lower():
+                fallback += "\n\n⚠️ *Bot đang offline vì thiếu thiết lập GEMINI_API_KEY trên Vercel.*"
+            else:
+                fallback += "\n\n⚠️ *Bot đang gặp lỗi cấu hình trên Vercel.*"
+                
             yield f"data: {fallback}\n\n"
             
     return StreamingResponse(event_generator(), media_type="text/event-stream")
