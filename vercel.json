@@ -18,6 +18,9 @@
       "dest": "main.py"
     },
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/(.*)",
       "dest": "/frontend/index.html"
     }
