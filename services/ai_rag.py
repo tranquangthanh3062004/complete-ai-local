@@ -13,7 +13,7 @@ _embeddings = None
 def get_embeddings():
     global _embeddings
     if _embeddings is None:
-        if settings.embedding_engine == "gemini" and settings.gemini_api_key:
+        if settings.gemini_api_key:
             from langchain_google_genai import GoogleGenerativeAIEmbeddings
             logger.info("Loading Google Gemini Embeddings...")
             _embeddings = GoogleGenerativeAIEmbeddings(
@@ -21,15 +21,7 @@ def get_embeddings():
                 google_api_key=settings.gemini_api_key
             )
         else:
-            try:
-                from langchain_huggingface import HuggingFaceEmbeddings
-                logger.info(f"Loading local embeddings...")
-                _embeddings = HuggingFaceEmbeddings(
-                    model_name="sentence-transformers/all-MiniLM-L6-v2",
-                    model_kwargs={"device": "cpu"}
-                )
-            except ImportError:
-                raise Exception("Missing HuggingFaceEmbeddings. Set gemini_api_key or install sentence-transformers.")
+            raise Exception("Missing Gemini API Key for Embeddings.")
     return _embeddings
 
 # ── Vector Store (Supabase pgvector hoặc Pinecone) ────────────────────────────

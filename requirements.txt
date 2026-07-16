@@ -20,10 +20,8 @@ passlib[bcrypt]
 langchain
 langchain-core
 langchain-community
-langchain-ollama
 langchain-groq
 langchain-google-genai
-langchain-huggingface
 langchain-text-splitters
 # === Cloud Vector Store ===
 pinecone-client

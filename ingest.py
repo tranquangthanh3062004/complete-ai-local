@@ -1,6 +1,5 @@
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 import os
 
@@ -18,9 +17,10 @@ print("Đang chia nhỏ văn bản...")
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 chunks = text_splitter.split_documents(documents)
 
-print("Đang tải mô hình Embedding tiếng Việt...")
-# 4. Sử dụng mô hình chuyển đổi văn bản thành vector (hỗ trợ tiếng Việt nhẹ nhất)
-embeddings = HuggingFaceEmbeddings(model_name="keepitreal/vietnamese-sbert")
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+
+print("Đang tải mô hình Embedding Gemini...")
+embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
 print("Đang lưu vào ChromaDB...")
 # 5. Lưu vào ChromaDB

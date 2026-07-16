@@ -39,7 +39,7 @@ def main():
         print(f"  - {os.path.basename(f)} ({size_kb:.0f} KB)")
 
     print("\n[1/4] Đang khởi tạo mô hình Embedding...")
-    if settings.embedding_engine == "gemini" and settings.gemini_api_key:
+    if settings.gemini_api_key:
         from langchain_google_genai import GoogleGenerativeAIEmbeddings
         embeddings = GoogleGenerativeAIEmbeddings(
             model=settings.embedding_model, 
@@ -47,12 +47,8 @@ def main():
         )
         print("    [+] Sử dụng Google Gemini Embeddings.")
     else:
-        print("    [!] Khuyên dùng Gemini Embeddings cho hệ thống Serverless.")
-        from langchain_huggingface import HuggingFaceEmbeddings
-        embeddings = HuggingFaceEmbeddings(
-            model_name="sentence-transformers/all-MiniLM-L6-v2",
-            model_kwargs={"device": "cpu"}
-        )
+        print("    [!] Yêu cầu phải có GEMINI_API_KEY!")
+        sys.exit(1)
 
     from langchain_text_splitters import RecursiveCharacterTextSplitter
     splitter = RecursiveCharacterTextSplitter(
