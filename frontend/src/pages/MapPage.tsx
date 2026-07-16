@@ -150,12 +150,12 @@ export default function MapPage() {
             <Input 
               value={origin}
               onChange={(e) => setOrigin(e.target.value)}
-              placeholder="Điểm đi (VD: Bến Thành, Sân bay)..."
+              placeholder="Điểm đi (VD: Bến xe Mỹ Đình, Sân bay Nội Bài)..."
             />
             <Input 
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
-              placeholder="Điểm đến (VD: Suối Tiên, Yên Nghĩa)..."
+              placeholder="Điểm đến (VD: Hồ Gươm, Yên Nghĩa)..."
             />
             <Button type="submit" disabled={isLoading} className="w-full">
               {isLoading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Navigation className="w-4 h-4 mr-2" />}
@@ -169,7 +169,7 @@ export default function MapPage() {
         </div>
         
         <MapContainer 
-          center={[10.7769, 106.7009]} 
+          center={[21.0285, 105.8542]} 
           zoom={13} 
           style={{ height: '100%', width: '100%', zIndex: 0 }}
         >
