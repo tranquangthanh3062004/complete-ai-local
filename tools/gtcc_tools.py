@@ -4,7 +4,6 @@ Tập hợp các LangChain Tools (Công cụ) cho GTCC Bot.
 """
 
 from langchain.tools import tool
-from typing import Optional
 
 @tool
 def search_bus_route(route_number_or_name: str, city: str = "TP.HCM") -> str:
@@ -98,7 +97,6 @@ def plan_route(origin: str, destination: str, city: str = "HCM") -> str:
         str: Kế hoạch lộ trình chi tiết.
     """
     from services.route_planner import find_route
-    import json
     
     result = find_route(origin, destination, city)
     if "error" in result:

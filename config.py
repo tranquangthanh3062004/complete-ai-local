@@ -1,7 +1,7 @@
 """Configuration management - Hỗ trợ cả Local Ollama và Free Cloud APIs (Groq/Gemini)."""
 from pydantic_settings import BaseSettings
 from typing import Optional
-
+from pydantic_settings import SettingsConfigDict
 
 class Settings(BaseSettings):
     # ── App ───────────────────────────────────────────────────────────────────
@@ -69,10 +69,7 @@ class Settings(BaseSettings):
     llm_timeout_seconds: int = 120   # timeout cho LLM call
     max_history_messages: int = 10   # số tin nhắn lịch sử giữ lại
 
-    class Config:
-        env_file          = ".env"
-        env_file_encoding = "utf-8"
-        extra             = "ignore"   # Bỏ qua các biến env không khai báo
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
 
 settings = Settings()

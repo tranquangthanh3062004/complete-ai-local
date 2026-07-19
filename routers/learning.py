@@ -3,14 +3,14 @@ Learning Router — Thu thập feedback và trả về hồ sơ học tập cá 
 Đây là lõi của hệ thống cá nhân hóa.
 """
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional, List
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime
 
 from database import get_db
-from routers.auth import get_current_user, require_admin
+from routers.auth import get_current_user
 from models import User, LearningEvent, TopicMastery
 
 router = APIRouter(prefix="/learning", tags=["learning"])
@@ -30,8 +30,7 @@ class TopicMasteryOut(BaseModel):
     negative_feedback : int
     mastery_score     : float   # 0.0–1.0
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class LearningProfileOut(BaseModel):

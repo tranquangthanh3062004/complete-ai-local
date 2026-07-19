@@ -182,7 +182,7 @@ async def direct_chat(
 
         # ── 6. Gọi LLM với Retry (tenacity) ─────────────────────────────────
         try:
-            from tenacity import retry, stop_after_attempt, wait_exponential, RetryError  # type: ignore
+            from tenacity import retry, stop_after_attempt, wait_exponential  # type: ignore
 
             @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=1, max=5))
             def call_llm():
@@ -329,7 +329,7 @@ async def stream_chat(
                     route_context = f"\nLỘ TRÌNH KẾT HỢP GỢI Ý:\nTừ {route_data['origin']} đến {route_data['destination']}: Tổng {route_data['total_time']}phút, {route_data['total_cost']}VNĐ.\n"
                     for s in route_data["steps"]:
                         route_context += f"- Bước {s['step']}: {s['type']} {s['line']} từ {s['from']} đến {s['to']} ({s['duration']}phút, {s['cost']}VNĐ)\n"
-            except Exception as e:
+            except Exception:
                 pass
 
         # RAG context

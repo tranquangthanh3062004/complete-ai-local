@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   SendHorizontal, Bot, User,
-  Train, Bus, MapPin, FileText, Star
+  Train, Bus, MapPin, FileText, Star, Mic, Navigation
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
@@ -39,6 +39,7 @@ export default function Home() {
   const { messages, isStreaming } = useChatStore();
   const { sendMessage } = useChatSSE();
   const [input, setInput] = useState('');
+  const [isRecording, setIsRecording] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -65,12 +66,12 @@ export default function Home() {
         <ScrollArea className="flex-1 px-4 py-5">
           {messages.length === 0 ? (
             /* ── Welcome Screen ── */
-            <div className="flex flex-col items-center justify-center h-full min-h-[380px] text-center space-y-5 animate-slide-up">
-              {/* Glowing orb */}
+            <div className="flex flex-col items-center justify-center h-full min-h-[380px] text-center space-y-6 animate-slide-up">
+              {/* Transit Hero Graphic */}
               <div className="relative">
-                <div className="absolute inset-0 rounded-3xl bg-primary/30 blur-xl scale-110" />
-                <div className="relative w-20 h-20 rounded-3xl bg-gradient-to-br from-primary via-blue-500 to-purple-600 flex items-center justify-center shadow-2xl">
-                  <Train size={36} className="text-white" />
+                <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl scale-125" />
+                <div className="relative w-24 h-24 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-xl border-4 border-background/50">
+                  <Navigation size={42} className="text-white fill-white/20" />
                 </div>
               </div>
 
@@ -118,14 +119,14 @@ export default function Home() {
                 >
                   {/* Avatar */}
                   <div className={cn(
-                    "w-8 h-8 rounded-xl flex items-center justify-center shrink-0 shadow-md",
+                    "w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm border",
                     msg.role === 'user'
-                      ? "bg-gradient-to-br from-slate-600 to-slate-800"
-                      : "bg-gradient-to-br from-primary to-purple-600"
+                      ? "bg-gradient-to-br from-slate-100 to-slate-200 border-slate-300 dark:from-slate-700 dark:to-slate-800 dark:border-slate-600"
+                      : "bg-primary border-primary"
                   )}>
                     {msg.role === 'user'
-                      ? <User size={16} className="text-white" />
-                      : <Bot size={16} className="text-white" />
+                      ? <User size={16} className="text-slate-600 dark:text-slate-300" />
+                      : <Bot size={16} className="text-primary-foreground" />
                     }
                   </div>
 
@@ -176,26 +177,48 @@ export default function Home() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="flex gap-2 items-center">
-            <Input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Nhập câu hỏi về giao thông Hà Nội…"
-              disabled={isStreaming}
-              className="flex-1 rounded-xl h-11 bg-muted/60 border-border/60 focus:bg-muted focus:border-primary/50 transition-all placeholder:text-muted-foreground/50 text-sm"
-            />
+          <form onSubmit={handleSubmit} className="flex gap-2 items-end">
+            <div className="relative flex-1">
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder={isRecording ? "Đang nghe..." : "Hỏi lộ trình, xe buýt, luật giao thông..."}
+                disabled={isStreaming || isRecording}
+                className={cn(
+                  "w-full rounded-2xl min-h-12 bg-muted/60 border-border/60 focus:bg-background focus:border-primary/50 transition-all placeholder:text-muted-foreground/60 text-[15px] pl-4 pr-12 shadow-sm",
+                  isRecording && "animate-pulse-glow border-primary/50 bg-primary/5"
+                )}
+              />
+              {/* Voice Button */}
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsRecording(!isRecording)}
+                disabled={isStreaming}
+                className={cn(
+                  "absolute right-1.5 top-1.5 h-9 w-9 rounded-xl transition-all",
+                  isRecording 
+                    ? "text-destructive hover:text-destructive hover:bg-destructive/10" 
+                    : "text-muted-foreground hover:text-primary hover:bg-primary/10"
+                )}
+              >
+                <Mic size={18} className={cn(isRecording && "animate-pulse")} />
+              </Button>
+            </div>
+            
             <Button
               type="submit"
-              disabled={!input.trim() || isStreaming}
+              disabled={!input.trim() || isStreaming || isRecording}
               size="icon"
               className={cn(
-                "rounded-xl h-11 w-11 shrink-0 transition-all duration-200 shadow-md",
+                "rounded-2xl h-12 w-12 shrink-0 transition-all duration-300 shadow-md",
                 input.trim() && !isStreaming
-                  ? "bg-gradient-to-br from-primary to-purple-600 hover:shadow-primary/30 hover:shadow-lg scale-100"
+                  ? "bg-primary text-primary-foreground hover:shadow-primary/30 hover:shadow-lg hover:-translate-y-0.5"
                   : "bg-muted text-muted-foreground"
               )}
             >
-              <SendHorizontal size={18} />
+              <SendHorizontal size={20} />
             </Button>
           </form>
 

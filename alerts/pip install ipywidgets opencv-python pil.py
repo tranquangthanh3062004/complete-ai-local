@@ -3,11 +3,16 @@
 # UI: ipywidgets; Worker chạy nền; có nút Start/Pause/Stop.
 # ------------------------------------------------------------------------------
 
-import os, sys, time, math, threading, traceback, queue
+import os
+import time
+import math
+import threading
+import traceback
+import queue
 from pathlib import Path
 from collections import deque, OrderedDict, defaultdict
 from dataclasses import dataclass, asdict
-from typing import List, Tuple, Optional, Dict
+from typing import Tuple, Dict
 
 import numpy as np
 from PIL import Image
@@ -37,7 +42,7 @@ except Exception:
     pass
 
 import ipywidgets as w
-from IPython.display import display, clear_output
+from IPython.display import display
 
 # ============================== CONFIG MẶC ĐỊNH ==============================
 HF_DETR_ID_DEFAULT = "hilmantm/detr-traffic-accident-detection"
@@ -193,7 +198,7 @@ class DetrDetector(BaseDetector):
         results = self.proc.post_process_object_detection(outputs, target_sizes=target_sizes, threshold=threshold)[0]
         boxes, labels, scores = [], [], []
         for s,l,b in zip(results["scores"], results["labels"], results["boxes"]):
-            sc=float(s); 
+            sc=float(s) 
             if sc < threshold: continue
             x1,y1,x2,y2 = [int(v) for v in b.tolist()]
             name = self.net.config.id2label.get(int(l.item()), str(int(l.item())))

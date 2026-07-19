@@ -3,7 +3,7 @@ Main FastAPI application entry point — GTCC Bot v5.1
 Chatbot hoi dap ve Giao Thong Cong Cong Viet Nam.
 """
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Request, Query
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse, FileResponse
@@ -136,8 +136,6 @@ async def list_models():
 
 # ── Mount Static React Build ────────────────────────────────────────────
 import os
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
 
 # Cấu hình serve thư mục build của React (ví dụ: frontend/dist)
 # Tạm thời để trống hoặc phục vụ thư mục frontend/dist nếu có.

@@ -13,13 +13,13 @@ from pydantic import BaseModel
 from typing import Optional
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-import os, shutil, time
+import os
+import time
 
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough
 
 from rate_limiter import limiter
 from config import settings
@@ -32,7 +32,7 @@ from logger import get_logger
 router = APIRouter(prefix="/documents", tags=["rag"])
 logger = get_logger("rag")
 
-from services.ai_topic import detect_topic, TOPIC_DISPLAY
+from services.ai_topic import detect_topic, TOPIC_DISPLAY, _get_gtcc_suggestions
 from services.ai_rag import get_vector_store, format_docs
 
 # ── Supported file types ──────────────────────────────────────────────────────

@@ -3,9 +3,7 @@ TTS Service v1.0 — Text-to-Speech cho GTCC Bot
 Dùng gTTS (Google TTS) để đọc câu trả lời tiếng Việt.
 Fallback: pyttsx3 nếu không có internet.
 """
-import os
 import hashlib
-import tempfile
 from pathlib import Path
 from logger import get_logger
 

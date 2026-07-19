@@ -15,8 +15,6 @@ from collections import deque, OrderedDict
 import cv2
 import numpy as np
 from PIL import Image
-import base64
-import io
 
 # ...existing code...
 import sys

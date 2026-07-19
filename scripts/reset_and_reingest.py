@@ -2,7 +2,8 @@
 reset_and_reingest.py — Xoa ChromaDB cu va nap lai toan bo du lieu GTCC moi.
 Chay: venv\Scripts\python reset_and_reingest.py
 """
-import os, shutil
+import os
+import shutil
 
 CHROMA_DIR = "./chroma_db"
 

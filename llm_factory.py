@@ -3,7 +3,6 @@ LLM Factory v5.1 — Hỗ trợ Cloud APIs (Groq, Gemini) và Local Ollama.
 V5.1: Chuẩn hóa output (str), health check mạnh, available_models thực tế.
 """
 from langchain_core.language_models import BaseLanguageModel
-from langchain_core.output_parsers import StrOutputParser
 from config import settings
 
 # System prompt chuyên biệt cho GTCC
@@ -81,7 +80,7 @@ def safe_invoke(llm, prompt: str) -> str:
         if hasattr(result, "content"):
             return str(result.content).strip()
         return str(result).strip()
-    except Exception as e:
+    except Exception:
         return ""
 
 
@@ -108,7 +107,8 @@ def check_health() -> dict:
         }
     else:
         # Ollama: ping /api/tags
-        import httpx, time
+        import httpx
+        import time
         try:
             t0 = time.time()
             resp = httpx.get(f"{settings.ollama_base_url}/api/tags", timeout=3)
