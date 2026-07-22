@@ -12,6 +12,11 @@ import bcrypt
 is_sqlite = settings.database_url.startswith("sqlite")
 connect_args = {"check_same_thread": False} if is_sqlite else {}
 
+import os
+import logging
+if is_sqlite and os.environ.get("VERCEL"):
+    logging.warning("CRITICAL WARNING: You are running SQLite on Vercel (Serverless). All database changes will be lost after the request ends! Please configure a PostgreSQL database (e.g. Supabase) via the DATABASE_URL environment variable.")
+
 # Connection pooling optimizations for production
 engine_kwargs = {
     "echo": False,

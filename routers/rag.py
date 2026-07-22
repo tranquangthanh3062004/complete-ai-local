@@ -36,7 +36,7 @@ from services.ai_topic import detect_topic, TOPIC_DISPLAY, _get_gtcc_suggestions
 from services.ai_rag import get_vector_store, format_docs
 
 # ── Supported file types ──────────────────────────────────────────────────────
-SUPPORTED_TYPES = {".pdf", ".txt", ".docx"}
+SUPPORTED_TYPES = {".pdf", ".txt", ".docx", ".csv", ".xlsx"}
 
 
 
@@ -111,6 +111,8 @@ async def upload_document(
             content.decode("utf-8")
         except UnicodeDecodeError:
             raise HTTPException(status_code=400, detail="File TXT phải ở định dạng UTF-8.")
+    elif ext == ".xlsx" and not content.startswith(b"PK\x03\x04"):
+        raise HTTPException(status_code=400, detail="File XLSX không hợp lệ (Sai định dạng).")
 
     os.makedirs(settings.upload_dir, exist_ok=True)
     file_path = os.path.join(settings.upload_dir, file.filename)
@@ -128,16 +130,28 @@ async def upload_document(
             docs   = loader.load()
         elif ext == ".docx":
             try:
-                from langchain_community.document_loaders import Docx2txtLoader
-                loader = Docx2txtLoader(file_path)
-                docs   = loader.load()
+                import docx2txt
+                from langchain_core.documents import Document as LCDocument
+                text = docx2txt.process(file_path)
+                docs = [LCDocument(page_content=text, metadata={"source": file.filename})]
             except ImportError:
-                raise HTTPException(
-                    status_code=400,
-                    detail="Cần cài thêm: pip install docx2txt"
-                )
+                raise HTTPException(status_code=500, detail="Thiếu thư viện docx2txt")
+        elif ext in [".csv", ".xlsx"]:
+            import pandas as pd
+            from langchain_core.documents import Document as LCDocument
+            if ext == ".csv":
+                df = pd.read_csv(file_path)
+            else:
+                df = pd.read_excel(file_path)
+            
+            # Convert DataFrame to Markdown string representation
+            text = df.to_markdown(index=False)
+            if not text:
+                text = df.to_string(index=False)
+                
+            docs = [LCDocument(page_content=f"Nội dung bảng {file.filename}:\n" + text, metadata={"source": file.filename})]
         else:
-            raise HTTPException(status_code=400, detail="Loại file không hỗ trợ")
+            raise HTTPException(status_code=400, detail="Loại file chưa được hỗ trợ.")
 
         splitter = RecursiveCharacterTextSplitter(
             chunk_size    = settings.chunk_size,

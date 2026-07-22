@@ -32,21 +32,7 @@ def get_vector_store():
     if _vector_store_instance is None:
         embeddings = get_embeddings()
         
-        # 1. Pinecone
-        if settings.pinecone_api_key:
-            try:
-                from langchain_pinecone import PineconeVectorStore
-                logger.info("Initializing Pinecone Vector Store...")
-                _vector_store_instance = PineconeVectorStore(
-                    index_name=settings.pinecone_index_name,
-                    embedding=embeddings,
-                    pinecone_api_key=settings.pinecone_api_key
-                )
-                return _vector_store_instance
-            except ImportError:
-                logger.error("Missing pinecone packages.")
-
-        # 2. Supabase pgvector
+        # 1. Supabase pgvector (Ưu tiên số 1 cho Production)
         if settings.supabase_url and settings.supabase_key:
             try:
                 from supabase.client import create_client
@@ -61,7 +47,21 @@ def get_vector_store():
                 )
                 return _vector_store_instance
             except ImportError:
-                logger.error("Missing supabase package.")
+                logger.error("Missing supabase package. Run: pip install supabase")
+
+        # 2. Pinecone (Lựa chọn thay thế)
+        if settings.pinecone_api_key:
+            try:
+                from langchain_pinecone import PineconeVectorStore
+                logger.info("Initializing Pinecone Vector Store...")
+                _vector_store_instance = PineconeVectorStore(
+                    index_name=settings.pinecone_index_name,
+                    embedding=embeddings,
+                    pinecone_api_key=settings.pinecone_api_key
+                )
+                return _vector_store_instance
+            except ImportError:
+                logger.error("Missing pinecone packages.")
                 
         # 3. Fallback (không dùng Chroma trên serverless)
         raise Exception("Không tìm thấy cấu hình Vector Database (Pinecone/Supabase)!")

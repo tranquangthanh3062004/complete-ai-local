@@ -31,8 +31,8 @@ class Settings(BaseSettings):
     supabase_key: Optional[str] = None
 
     # ── AI Engine Configurations ──────────────────────────────────────────────
-    llm_engine      : str = "groq"  # 'groq', 'gemini', 'ollama'
-    llm_model_name  : str = "llama-3.1-8b-instant" 
+    llm_engine      : str = "gemini"  # 'groq', 'gemini', 'ollama'
+    llm_model_name  : str = "gemini-2.5-flash" 
     
     # API Keys
     groq_api_key    : Optional[str] = None
@@ -45,7 +45,7 @@ class Settings(BaseSettings):
 
     # Embeddings
     embedding_engine: str = "gemini" # 'huggingface' or 'gemini'
-    embedding_model : str = "models/text-embedding-004"
+    embedding_model : str = "models/gemini-embedding-2"
 
     # ── Auth ──────────────────────────────────────────────────────────────────
     secret_key                  : str

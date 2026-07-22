@@ -92,7 +92,7 @@ class SemanticCache:
 
     def get(self, query: str) -> str | None:
         try:
-            from routers.rag import get_embeddings
+            from services.ai_rag import get_embeddings
             embedder = get_embeddings()
             if not embedder: return None
             
@@ -121,7 +121,7 @@ class SemanticCache:
 
     def set(self, query: str, value: str):
         try:
-            from routers.rag import get_embeddings
+            from services.ai_rag import get_embeddings
             embedder = get_embeddings()
             if not embedder: return
             

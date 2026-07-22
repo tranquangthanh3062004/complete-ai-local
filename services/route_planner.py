@@ -2,7 +2,9 @@
 Route Planner Service - Smart Transport Graph Engine
 """
 import networkx as nx
-from typing import Dict, Any
+from typing import Dict, Any, List
+import httpx
+import math
 
 # Mock Transit Graph Data (Expanded to 50+ nodes)
 TRANSIT_NODES = {
@@ -121,14 +123,97 @@ def build_graph() -> nx.DiGraph:
 
 G = build_graph()
 
+import math
+import re
+import httpx
+
+def haversine(lat1, lon1, lat2, lon2):
+    R = 6371.0
+    dlat = math.radians(lat2 - lat1)
+    dlon = math.radians(lon2 - lon1)
+    a = math.sin(dlat/2) * math.sin(dlat/2) + math.cos(math.radians(lat1)) \
+        * math.cos(math.radians(lat2)) * math.sin(dlon/2) * math.sin(dlon/2)
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+    return R * c
+
+def geocode_address(query: str):
+    if not query or not query.strip():
+        return None
+        
+    query = query.strip()
+    
+    # 1. Direct regex match for lat,lng coordinates (e.g. "21.0285,105.8542")
+    coords_match = re.match(r"^\s*(-?\d+\.?\d*)\s*,\s*(-?\d+\.?\d*)\s*$", query)
+    if coords_match:
+        try:
+            lat = float(coords_match.group(1))
+            lng = float(coords_match.group(2))
+            return {
+                "name": f"Vị trí GPS ({lat:.4f}, {lng:.4f})",
+                "lat": lat,
+                "lng": lng
+            }
+        except ValueError:
+            pass
+
+    # 2. OpenStreetMap Nominatim Geocoding (Hanoi Priority)
+    url = "https://nominatim.openstreetmap.org/search"
+    search_q = query if "hà nội" in query.lower() or "hanoi" in query.lower() else f"{query}, Hà Nội, Việt Nam"
+    
+    headers = {"User-Agent": "GTCC-Bot-App/3.0"}
+    try:
+        response = httpx.get(url, params={"q": search_q, "format": "json", "countrycodes": "vn", "limit": 1}, headers=headers, timeout=5.0)
+        data = response.json() if response.status_code == 200 else []
+        
+        if not data and search_q != query:
+            response = httpx.get(url, params={"q": query, "format": "json", "countrycodes": "vn", "limit": 1}, headers=headers, timeout=5.0)
+            data = response.json() if response.status_code == 200 else []
+
+        if data and len(data) > 0:
+            return {
+                "name": data[0].get("display_name"),
+                "lat": float(data[0].get("lat")),
+                "lng": float(data[0].get("lon"))
+            }
+    except Exception:
+        pass
+    return None
+
+def fetch_osrm_geometry(lat1: float, lon1: float, lat2: float, lon2: float) -> List[List[float]]:
+    """Fetch detailed road geometry from OSRM for real road polylines."""
+    try:
+        url = f"http://router.project-osrm.org/route/v1/driving/{lon1},{lat1};{lon2},{lat2}?overview=full&geometries=geojson"
+        res = httpx.get(url, timeout=3.0)
+        if res.status_code == 200:
+            data = res.json()
+            if data.get("routes") and len(data["routes"]) > 0:
+                coords = data["routes"][0]["geometry"]["coordinates"]
+                return [[c[1], c[0]] for c in coords]
+    except Exception:
+        pass
+    return [[lat1, lon1], [lat2, lon2]]
+
+def find_nearest_node(lat, lng, city=None):
+    best_node = None
+    min_dist = float('inf')
+    for node_id, data in G.nodes(data=True):
+        if city and data.get("city") != city:
+            continue
+        dist = haversine(lat, lng, data["lat"], data["lng"])
+        if dist < min_dist:
+            min_dist = dist
+            best_node = node_id
+    return best_node, min_dist
+
 def find_route(start_query: str, end_query: str, city: str = None) -> Dict[str, Any]:
-    """Find the fastest route between two locations using Dijkstra."""
+    """Find the fastest route between two locations using Dijkstra with Geocoding Fallback."""
     start_node = None
     end_node = None
     
     start_q_lower = start_query.lower()
     end_q_lower = end_query.lower()
     
+    # 1. Exact or Substring match
     for node_id, data in G.nodes(data=True):
         if city and data.get("city") != city:
             continue
@@ -138,8 +223,22 @@ def find_route(start_query: str, end_query: str, city: str = None) -> Dict[str, 
         if not end_node and (end_q_lower in name_lower or name_lower in end_q_lower):
             end_node = node_id
             
+    # 2. Geocoding Fallback
+    start_geo = None
+    end_geo = None
+    
+    if not start_node:
+        start_geo = geocode_address(start_query)
+        if start_geo:
+            start_node, _ = find_nearest_node(start_geo["lat"], start_geo["lng"], city)
+            
+    if not end_node:
+        end_geo = geocode_address(end_query)
+        if end_geo:
+            end_node, _ = find_nearest_node(end_geo["lat"], end_geo["lng"], city)
+            
     if not start_node or not end_node:
-        return {"error": "Không tìm thấy điểm khởi hành hoặc điểm đến trong hệ thống dữ liệu."}
+        return {"error": "Không tìm thấy điểm khởi hành hoặc điểm đến trong hệ thống dữ liệu. Vui lòng nhập địa chỉ cụ thể hơn."}
         
     try:
         path = nx.dijkstra_path(G, start_node, end_node, weight='weight')
@@ -147,38 +246,93 @@ def find_route(start_query: str, end_query: str, city: str = None) -> Dict[str, 
         total_time = 0
         total_cost = 0
         
+        # Add walking step from Origin to start_node if geocoded
+        if start_geo and start_node:
+            s_lat, s_lng = G.nodes[start_node]["lat"], G.nodes[start_node]["lng"]
+            dist_km = haversine(start_geo["lat"], start_geo["lng"], s_lat, s_lng)
+            duration_mins = int(dist_km / 5.0 * 60) # 5 km/h walking speed
+            if duration_mins > 0:
+                steps.append({
+                    "step": 0,
+                    "type": "walk",
+                    "line": "Đi bộ",
+                    "from": start_geo["name"].split(',')[0],
+                    "to": G.nodes[start_node]["name"],
+                    "from_lat": start_geo["lat"],
+                    "from_lng": start_geo["lng"],
+                    "to_lat": s_lat,
+                    "to_lng": s_lng,
+                    "duration": duration_mins,
+                    "cost": 0
+                })
+                total_time += duration_mins
+            
         for i in range(len(path) - 1):
             u = path[i]
             v = path[i+1]
             edge_data = G[u][v]
             
+            u_lat, u_lng = G.nodes[u]["lat"], G.nodes[u]["lng"]
+            v_lat, v_lng = G.nodes[v]["lat"], G.nodes[v]["lng"]
+            poly = fetch_osrm_geometry(u_lat, u_lng, v_lat, v_lng)
+            
             steps.append({
-                "step": i + 1,
+                "step": len(steps) + 1,
                 "type": edge_data["mode"],
                 "line": edge_data["line"],
                 "from": G.nodes[u]["name"],
                 "to": G.nodes[v]["name"],
-                "from_lat": G.nodes[u]["lat"],
-                "from_lng": G.nodes[u]["lng"],
-                "to_lat": G.nodes[v]["lat"],
-                "to_lng": G.nodes[v]["lng"],
+                "from_lat": u_lat,
+                "from_lng": u_lng,
+                "to_lat": v_lat,
+                "to_lng": v_lng,
+                "polyline_coords": poly,
                 "duration": edge_data["weight"],
                 "cost": edge_data["cost"]
             })
             total_time += edge_data["weight"]
             total_cost += edge_data["cost"]
             
+        # Add walking step from end_node to Destination if geocoded
+        if end_geo and end_node:
+            e_lat, e_lng = G.nodes[end_node]["lat"], G.nodes[end_node]["lng"]
+            dist_km = haversine(end_geo["lat"], end_geo["lng"], e_lat, e_lng)
+            duration_mins = int(dist_km / 5.0 * 60)
+            if duration_mins > 0:
+                steps.append({
+                    "step": len(steps) + 1,
+                    "type": "walk",
+                    "line": "Đi bộ",
+                    "from": G.nodes[end_node]["name"],
+                    "to": end_geo["name"].split(',')[0],
+                    "from_lat": e_lat,
+                    "from_lng": e_lng,
+                    "to_lat": end_geo["lat"],
+                    "to_lng": end_geo["lng"],
+                    "duration": duration_mins,
+                    "cost": 0
+                })
+                total_time += duration_mins
+            
+        origin_name = start_geo["name"].split(',')[0] if start_geo else G.nodes[start_node]["name"]
+        origin_lat = start_geo["lat"] if start_geo else G.nodes[start_node]["lat"]
+        origin_lng = start_geo["lng"] if start_geo else G.nodes[start_node]["lng"]
+        
+        dest_name = end_geo["name"].split(',')[0] if end_geo else G.nodes[end_node]["name"]
+        dest_lat = end_geo["lat"] if end_geo else G.nodes[end_node]["lat"]
+        dest_lng = end_geo["lng"] if end_geo else G.nodes[end_node]["lng"]
+            
         return {
-            "origin": G.nodes[start_node]["name"],
-            "origin_lat": G.nodes[start_node]["lat"],
-            "origin_lng": G.nodes[start_node]["lng"],
-            "destination": G.nodes[end_node]["name"],
-            "dest_lat": G.nodes[end_node]["lat"],
-            "dest_lng": G.nodes[end_node]["lng"],
+            "origin": origin_name,
+            "origin_lat": origin_lat,
+            "origin_lng": origin_lng,
+            "destination": dest_name,
+            "dest_lat": dest_lat,
+            "dest_lng": dest_lng,
             "steps": steps,
             "total_time": total_time,
             "total_cost": total_cost,
-            "transfers": max(0, len(steps) - 1)
+            "transfers": max(0, len(path) - 1)
         }
         
     except nx.NetworkXNoPath:

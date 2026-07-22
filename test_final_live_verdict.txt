@@ -1,0 +1,9 @@
+{
+  "result": "**Quãng đường từ Triều Khúc đến Giáp Bát**\n\nĐể đi từ Triều Khúc đến Giáp Bát, bạn có thể tham khảo các bước sau:\n\n* **Bước 1:** Từ Triều Khúc, bạn có thể đi xe buýt số 34 đến bến Giáp Bát 🚌\n + Xe buýt số 34 chạy theo tuyến: Triều Khúc - Giáp Bát\n + Thời gian di chuyển khoảng 30-40 phút\n* **Bước 2:** Khi đến bến Giáp Bát, bạn có thể đi bộ hoặc đi xe đạp công cộng (nếu khoảng cách phù hợp) đến điểm đến 📍\n + Khoảng cách từ bến Giáp Bát đến Giáp Bát khoảng 1-2km\n + Bạn có thể sử dụng dịch vụ xe đạp công cộng như TNGO hoặc Trí Nam để đi đến điểm đến 🚲\n\n**Lưu ý:** Bạn có thể sử dụng ứng dụng BusMap hoặc Google Maps để tra cứu lộ trình và thời gian di chuyển chính xác hơn 📍\n\n**Thời gian di chuyển ước tính:** khoảng 40-60 phút 🕒",
+  "event_id": 1,
+  "response_ms": 3080.1,
+  "model": "llama-3.1-8b-instant",
+  "topic": "📱 Ứng Dụng & Tiện Ích",
+  "suggestions": [],
+  "cached": false
+}

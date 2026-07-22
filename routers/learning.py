@@ -201,10 +201,21 @@ async def global_stats(db: AsyncSession = Depends(get_db)):
 
     satisfaction = round(total_pos / max(total_pos + total_neg, 1) * 100, 1)
 
+    # Generate AI Insight
+    ai_insight = "Đang phân tích..."
+    try:
+        from llm_factory import get_llm
+        llm = get_llm()
+        prompt = f"Phân tích ngắn gọn (1-2 câu) về tình hình hệ thống GTCC. Tổng câu hỏi: {total_q}, Hài lòng: {satisfaction}%, Chủ đề hot: {', '.join([t['topic'] for t in top_topics])}. Nhận xét gì về xu hướng?"
+        ai_insight = (await llm.ainvoke(prompt)).content
+    except Exception as e:
+        ai_insight = "Không thể tạo nhận định AI lúc này."
+
     return {
         "total_questions" : total_q,
         "positive_feedback": total_pos,
         "negative_feedback": total_neg,
         "satisfaction_rate": f"{satisfaction}%",
         "top_topics"       : top_topics,
+        "ai_insight"       : ai_insight,
     }

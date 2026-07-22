@@ -1,0 +1,17 @@
+data: Chào
+
+data:  bạn! 👋 Tôi là Trợ lý AI Giao Thông Công Cộng Việt Nam.
+data: 
+data: Tôi có thể giúp bạn với các thông tin về:
+data: *   **Xe buýt** 🚌
+data: *   **Metro** 🚇
+data: 
+
+data: *   **Lộ trình** 📍
+data: *   **Giá vé** 🎫
+data: *   **Luật giao thông** 🚦
+data: 
+data: Hãy cho tôi biết bạn cần hỗ trợ gì nhé!
+
+data: 
+

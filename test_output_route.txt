@@ -1,0 +1,15 @@
+ReqMap: True, Orig: triều khúc, Dest: giáp bát
+
+🗺️ **Lộ trình thực tế (OpenStreetMap / OSRM):**
+📍 **Điểm đi:** Triều Khúc
+🏁 **Điểm đến:** Giáp Bát
+📏 **Quãng đường:** 6.4 km
+⏱️ **Thời gian ước tính:** ~10 phút
+🌱 **Phát thải CO2:** 435g CO2
+
+**Chi tiết di chuyển:**
+- Đi theo Đường Tân Triều (423m)
+- Đi theo Ngõ 300 Đường Nguyễn Xiển (437m)
+- Đi theo Đường Nguyễn Xiển (503m)
+
+💡 *Gợi ý:* Bạn có thể đón xe buýt kết hợp đi bộ 5-10 phút để tối ưu chi phí.

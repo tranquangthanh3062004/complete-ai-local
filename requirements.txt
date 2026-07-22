@@ -23,6 +23,64 @@ langchain-community
 langchain-groq
 langchain-google-genai
 langchain-text-splitters
+langgraph
+googlemaps
+# === Cloud Vector Store ===
+pinecone-client
+langchain-pinecone
+
+# === Document Processing ===
+pypdf
+docx2txt
+
+# === Pydantic ===
+pydantic
+pydantic-settings
+
+# === HTTP ===
+httpx
+requests
+
+# === Text-to-Speech (TTS) ===
+edge-tts                # Microsoft Edge TTS — online, giọng Tiếng Việt cực hay, tự nhiên
+nest-asyncio            # Để chạy asyncio trong synchronous code của FastAPI/Streamlit
+
+# === Language Detection ===
+langdetect              # Phát hiện ngôn ngữ câu hỏi (VI/EN/...)
+
+# === Retry Logic ===
+tenacity                # Retry decorator cho LLM timeout
+
+# === Dev & Test ===
+
+pytest
+pytest-asyncio
+
+# === Core Backend ===
+fastapi
+uvicorn[standard]
+python-multipart
+python-dotenv
+
+# === Database ===
+sqlalchemy
+aiosqlite
+asyncpg
+psycopg2-binary
+alembic
+supabase
+
+# === Auth ===
+python-jose[cryptography]
+passlib[bcrypt]
+
+# === LLM & AI Cloud APIs ===
+langchain
+langchain-core
+langchain-community
+langchain-groq
+langchain-google-genai
+langchain-text-splitters
 # === Cloud Vector Store ===
 pinecone-client
 langchain-pinecone
@@ -60,3 +118,11 @@ slowapi
 # === Smart Transport & Streaming ===
 networkx
 starlette<0.49.0
+playwright==1.42.0
+pandas==2.2.0
+openpyxl==3.1.2
+tabulate==0.9.0
+
+# === Testing Mocks ===
+pytest-mock
+pytest-env

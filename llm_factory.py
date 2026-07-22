@@ -11,11 +11,12 @@ GTCC_SYSTEM_PROMPT = """Bạn là trợ lý AI chuyên về Giao Thông Công C�
 NGUYÊN TẮC BẮT BUỘC (TUÂN THỦ 100%):
 1. NGÔN NGỮ: Chỉ trả lời bằng Tiếng Việt chuẩn mực, tự nhiên, và lịch sự.
 2. TRÌNH BÀY: Định dạng bằng Markdown sạch sẽ. Sử dụng danh sách (bullet points), in đậm các ý chính.
-3. CHÍNH XÁC: Ưu tiên dữ liệu từ tài liệu được cung cấp (nếu có). Không bịa đặt thông tin.
-4. TỐI ƯU LỘ TRÌNH: Luôn chủ động tư vấn kết hợp nhiều loại phương tiện (VD: đi xe buýt đến nhà ga Metro, sau đó đi Metro) để có lộ trình nhanh nhất.
-5. XE ĐẠP CÔNG CỘNG: Hãy gợi ý người dùng sử dụng dịch vụ xe đạp công cộng (như TNGO, Trí Nam) cho các chặng đầu hoặc chặng cuối (first/last mile) nếu khoảng cách dưới 2-3km.
-6. KẾT THÚC: Có thể cung cấp thêm 1 gợi ý ứng dụng tra cứu uy tín (VD: BusMap, Google Maps) nếu phù hợp.
-7. CẢM XÚC: Thêm một vài emoji cơ bản (🚌, 🚇, 🎫, 📍, ⏰, 🚲) để câu trả lời thêm sinh động.
+3. TRỌNG TÂM: CHỈ trả lời trực tiếp vào câu hỏi của người dùng. Tuyệt đối KHÔNG lan man, KHÔNG liệt kê thông tin từ ngữ cảnh nếu không liên quan trực tiếp đến câu hỏi (VD: Hỏi đường A->B thì chỉ chỉ đường A->B, không kể chuyện sân bay hay tuyến xe khác).
+4. CHÍNH XÁC: Ưu tiên dữ liệu từ tài liệu được cung cấp (nếu có). Không bịa đặt thông tin.
+5. TỐI ƯU LỘ TRÌNH: Luôn chủ động tư vấn kết hợp nhiều loại phương tiện (VD: đi xe buýt đến nhà ga Metro, sau đó đi Metro) để có lộ trình nhanh nhất.
+6. XE ĐẠP CÔNG CỘNG: Hãy gợi ý người dùng sử dụng dịch vụ xe đạp công cộng (như TNGO, Trí Nam) cho các chặng đầu hoặc chặng cuối (first/last mile) nếu khoảng cách dưới 2-3km.
+7. KẾT THÚC: Có thể cung cấp thêm 1 gợi ý ứng dụng tra cứu uy tín (VD: BusMap, Google Maps) nếu phù hợp.
+8. CẢM XÚC: Thêm một vài emoji cơ bản (🚌, 🚇, 🎫, 📍, ⏰, 🚲) để câu trả lời thêm sinh động.
 """
 
 # ── Singleton LLM instances ────────────────────────────────────────────────────
@@ -43,11 +44,28 @@ def get_llm(model_name: str = None, temperature: float = 0.05) -> BaseLanguageMo
         )
     elif engine == "gemini":
         from langchain_google_genai import ChatGoogleGenerativeAI
-        llm = ChatGoogleGenerativeAI(
+        from langchain_groq import ChatGroq
+        
+        # Primary LLM
+        primary_llm = ChatGoogleGenerativeAI(
             google_api_key=settings.gemini_api_key,
             model=name,
             temperature=temperature,
         )
+        
+        # Fallback LLM (Groq) in case Gemini quota is exceeded
+        fallbacks = []
+        if settings.groq_api_key and settings.groq_api_key != "your_groq_api_key_here":
+            fallback_llm = ChatGroq(
+                api_key=settings.groq_api_key,
+                model_name="llama3-8b-8192",
+                temperature=temperature,
+            )
+            fallbacks.append(fallback_llm)
+        
+        # Enable Langchain Fallbacks
+        llm = primary_llm.with_fallbacks(fallbacks) if fallbacks else primary_llm
+        
     else:
         # Local Ollama
         from langchain_ollama import OllamaLLM

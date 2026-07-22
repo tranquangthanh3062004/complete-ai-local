@@ -10,6 +10,7 @@ interface Stats {
   negative_feedback: number;
   satisfaction_rate: string;
   top_topics: { topic: string; count: number }[];
+  ai_insight?: string;
 }
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
@@ -92,6 +93,19 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      {stats.ai_insight && (
+        <Card className="border-primary/50 bg-primary/5">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium flex items-center gap-2 text-primary">
+              <Activity className="h-4 w-4" /> AI Insights (Nhận định tự động)
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm">{stats.ai_insight}</p>
+          </CardContent>
+        </Card>
+      )}
 
       <div className="grid gap-4 md:grid-cols-2">
         <Card className="col-span-1">

@@ -5,10 +5,12 @@ import AdminDashboard from '@/pages/AdminDashboard';
 import { Toaster } from '@/components/ui/toaster';
 import { Bot, Map, LayoutDashboard, Train } from 'lucide-react';
 
+import { ThemeToggle } from '@/components/ThemeToggle';
+
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-background text-foreground flex flex-col font-sans dark">
+      <div className="min-h-screen bg-background text-foreground flex flex-col font-sans">
         {/* Background gradient blobs */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
           <div className="absolute -top-40 -left-40 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
@@ -69,10 +71,13 @@ function App() {
               </NavLink>
             </nav>
 
-            {/* Status badge */}
-            <div className="ml-auto flex items-center gap-1.5 text-xs text-muted-foreground">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="hidden sm:block">Online</span>
+            {/* Status badge & Theme Toggle */}
+            <div className="ml-auto flex items-center gap-3">
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="hidden sm:block">Online</span>
+              </div>
+              <ThemeToggle />
             </div>
           </div>
         </header>

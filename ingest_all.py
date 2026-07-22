@@ -56,16 +56,8 @@ def main():
         chunk_overlap=CHUNK_OVERLAP,
     )
 
-    if settings.pinecone_api_key:
-        print("    [+] Kết nối Pinecone Vector Store...")
-        from langchain_pinecone import PineconeVectorStore
-        vectordb = PineconeVectorStore(
-            index_name=settings.pinecone_index_name,
-            embedding=embeddings,
-            pinecone_api_key=settings.pinecone_api_key
-        )
-    elif settings.supabase_url and settings.supabase_key:
-        print("    [+] Kết nối Supabase Vector Store...")
+    if settings.supabase_url and settings.supabase_key:
+        print("    [+] Kết nối Supabase Vector Store (Ưu tiên Production)...")
         from supabase.client import create_client
         from langchain_community.vectorstores import SupabaseVectorStore
         supabase_client = create_client(settings.supabase_url, settings.supabase_key)
@@ -74,6 +66,14 @@ def main():
             client=supabase_client,
             table_name="documents",
             query_name="match_documents"
+        )
+    elif settings.pinecone_api_key:
+        print("    [+] Kết nối Pinecone Vector Store...")
+        from langchain_pinecone import PineconeVectorStore
+        vectordb = PineconeVectorStore(
+            index_name=settings.pinecone_index_name,
+            embedding=embeddings,
+            pinecone_api_key=settings.pinecone_api_key
         )
     else:
         print("    [LỖI] Bạn cần khai báo pinecone_api_key trong .env để chạy!")
