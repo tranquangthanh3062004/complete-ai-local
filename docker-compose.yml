@@ -9,7 +9,6 @@ services:
     depends_on:
       - db
       - redis
-      - weaviate
       - ollama
     volumes:
       - .:/app
@@ -43,22 +42,8 @@ services:
     volumes:
       - redis_data:/data
 
-  weaviate:
-    image: cr.weaviate.io/semitechnologies/weaviate:1.26.1
-    ports:
-      - "8080:8080"
-      - "50051:50051"
-    environment:
-      QUERY_DEFAULTS_LIMIT: 25
-      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
-      PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
-      DEFAULT_VECTORIZER_MODULE: 'none'
-      CLUSTER_HOSTNAME: 'node1'
-    volumes:
-      - weaviate_data:/var/lib/weaviate
 
 volumes:
   postgres_data:
   redis_data:
-  weaviate_data:
   ollama_data:

@@ -8,10 +8,24 @@ import hashlib
 from collections import OrderedDict
 from threading import Lock
 from logger import get_logger
+import os
+import json
 
 logger = get_logger("cache_service")
+REDIS_URL = os.environ.get("REDIS_URL", None)
 
-
+try:
+    if REDIS_URL:
+        import redis
+        redis_client = redis.Redis.from_url(REDIS_URL, decode_responses=True)
+        # Test connection
+        redis_client.ping()
+        logger.info(f"✅ Redis Cache enabled at {REDIS_URL}")
+    else:
+        redis_client = None
+except Exception as e:
+    logger.warning(f"⚠️ Redis connection failed, falling back to in-memory TTLCache: {e}")
+    redis_client = None
 class TTLCache:
     """Thread-safe LRU cache với tự động expire theo thời gian."""
 
@@ -28,6 +42,17 @@ class TTLCache:
 
     def get(self, key: str) -> str | None:
         hk = self._make_key(key)
+        if redis_client:
+            try:
+                val = redis_client.get(hk)
+                if val:
+                    self.hits += 1
+                    return val
+                self.misses += 1
+                return None
+            except Exception:
+                pass # fallback to memory lookup if redis throws mid-flight
+                
         with self._lock:
             if hk not in self._cache:
                 self.misses += 1
@@ -45,6 +70,13 @@ class TTLCache:
 
     def set(self, key: str, value: str):
         hk = self._make_key(key)
+        if redis_client:
+            try:
+                redis_client.setex(hk, self._ttl, value)
+                return
+            except Exception:
+                pass
+                
         with self._lock:
             if hk in self._cache:
                 self._cache.move_to_end(hk)

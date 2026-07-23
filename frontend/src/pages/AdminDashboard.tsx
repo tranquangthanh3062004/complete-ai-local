@@ -22,7 +22,8 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await axios.get('/api/learning/stats');
+        const baseUrl = import.meta.env.VITE_API_URL || '';
+        const response = await axios.get(`${baseUrl}/api/learning/stats`);
         setStats(response.data);
       } catch (error) {
         console.error("Failed to fetch stats:", error);
