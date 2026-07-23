@@ -268,10 +268,6 @@ async def chat(
             context_text = lang_instruction + "\n\n" + context_text
 
         # Build chain dùng context đã có (không gọi retriever thêm lần nữa)
-        from langchain_core.prompts import ChatPromptTemplate
-        prompt_with_context = ChatPromptTemplate.from_template(
-            RAG_PROMPT.messages[0].prompt.template if hasattr(RAG_PROMPT, 'messages') else str(RAG_PROMPT)
-        )
         answer = (RAG_PROMPT | llm | StrOutputParser()).invoke({
             "context" : context_text,
             "question": clean_query,

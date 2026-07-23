@@ -54,6 +54,10 @@ TRANSIT_NODES = {
     "MY_DINH": {"name": "Bến xe Mỹ Đình", "city": "HN", "type": "bus_hub", "lat": 21.0289, "lng": 105.7783},
     "GIAP_BAT": {"name": "Bến xe Giáp Bát", "city": "HN", "type": "bus_hub", "lat": 20.9808, "lng": 105.8414},
     "NUOC_NGAM": {"name": "Bến xe Nước Ngầm", "city": "HN", "type": "bus_hub", "lat": 20.9634, "lng": 105.8427},
+    "BACH_KHOA": {"name": "Đại học Bách Khoa", "city": "HN", "type": "university", "lat": 21.0044, "lng": 105.8456},
+    "TRIEU_KHUC": {"name": "Triều Khúc", "city": "HN", "type": "bus_stop", "lat": 20.9847, "lng": 105.7993},
+    "THANH_XUAN": {"name": "Thanh Xuân", "city": "HN", "type": "district", "lat": 20.9935, "lng": 105.8024},
+    "LONG_BIEN": {"name": "Bến xe Long Biên", "city": "HN", "type": "bus_hub", "lat": 21.0448, "lng": 105.8574},
 }
 
 TRANSIT_EDGES = [
@@ -101,8 +105,13 @@ TRANSIT_EDGES = [
     ("HAN", "KIM_MA", "bus", "90", 50, 9000),
     ("HAN", "CAU_GIAY", "bus", "109", 45, 8000),
     ("MY_DINH", "KIM_MA", "bus", "34", 25, 7000),
-    ("GA_HA_NOI", "GIAP_BAT", "bus", "08", 20, 7000),
-    ("GIAP_BAT", "NUOC_NGAM", "bus", "08", 10, 7000),
+    ("GA_HA_NOI", "GIAP_BAT", "bus", "08A", 20, 7000),
+    ("GIAP_BAT", "NUOC_NGAM", "bus", "08A", 10, 7000),
+    ("TRIEU_KHUC", "THANH_XUAN", "bus", "Xe buýt 01 / 02", 8, 7000),
+    ("THANH_XUAN", "KHTN", "bus", "Xe buýt 01 / 21A", 7, 0),
+    ("KHTN", "BACH_KHOA", "bus", "Xe buýt 31 / 26", 12, 7000),
+    ("GIAP_BAT", "BACH_KHOA", "bus", "Xe buýt 26 / 08A", 10, 7000),
+    ("GA_HA_NOI", "BACH_KHOA", "bus", "Xe buýt 31", 10, 7000),
 ]
 
 # Thêm edge ngược lại để đồ thị vô hướng (hoặc 2 chiều)

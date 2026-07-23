@@ -29,6 +29,12 @@ export function useChatSSE() {
     try {
       const endpoint = `${BASE_URL}/api/agents/stream`;
 
+      let sessionId = sessionStorage.getItem('gtcc_session_id');
+      if (!sessionId) {
+        sessionId = 'web-' + crypto.randomUUID().slice(0, 8);
+        sessionStorage.setItem('gtcc_session_id', sessionId);
+      }
+
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -39,7 +45,7 @@ export function useChatSSE() {
           query: content,
           messages: recentMessages,
           suggest: true,
-          session_id: 'web-' + (token ? 'auth' : 'anon'),
+          session_id: sessionId,
         }),
       });
 

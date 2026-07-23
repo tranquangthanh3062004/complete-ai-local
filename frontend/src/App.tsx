@@ -3,11 +3,14 @@ import Home from '@/pages/Home';
 import MapPage from '@/pages/MapPage';
 import AdminDashboard from '@/pages/AdminDashboard';
 import { Toaster } from '@/components/ui/toaster';
-import { Bot, Map, LayoutDashboard, Train } from 'lucide-react';
+import { Bot, Map, LayoutDashboard, Train, Wifi, WifiOff } from 'lucide-react';
 
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { useNetworkStatus } from '@/hooks/useNetworkStatus';
 
 function App() {
+  const isOnline = useNetworkStatus();
+
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-background text-foreground flex flex-col font-sans">
@@ -73,9 +76,18 @@ function App() {
 
             {/* Status badge & Theme Toggle */}
             <div className="ml-auto flex items-center gap-3">
-              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="hidden sm:block">Online</span>
+              <div className={`flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full ${isOnline ? 'bg-emerald-500/10 text-emerald-500' : 'bg-destructive/10 text-destructive'}`}>
+                {isOnline ? (
+                  <>
+                    <Wifi size={12} className="animate-pulse" />
+                    <span className="hidden sm:block">Online</span>
+                  </>
+                ) : (
+                  <>
+                    <WifiOff size={12} />
+                    <span className="hidden sm:block">Offline</span>
+                  </>
+                )}
               </div>
               <ThemeToggle />
             </div>

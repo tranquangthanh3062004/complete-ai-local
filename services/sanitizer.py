@@ -7,30 +7,50 @@ from logger import get_logger
 
 logger = get_logger("sanitizer")
 
-# ── Danh sách pattern injection phổ biến ─────────────────────────────────────
+# ── Danh sách pattern injection phổ biến (Đa ngôn ngữ & Tiếng Việt) ────────────
 INJECTION_PATTERNS = [
-    # Classic prompt injection
+    # Classic prompt injection & English Jailbreak
     r"ignore\s+(?:all\s+)?(?:previous|above)\s+instructions?",
     r"forget\s+(?:everything|all)\s+(?:above|previous|you)",
     r"disregard\s+(?:all\s+)?(?:previous|above|your)\s+instructions?",
     r"do\s+not\s+follow\s+(?:the\s+)?(?:previous|above)\s+instructions?",
     r"override\s+(?:all\s+)?(?:previous\s+)?(?:instructions?|rules?|guidelines?)",
     r"you\s+are\s+now\s+(?:a\s+)?(?:different|new|evil|jailbroken|DAN)",
-    # DAN / Jailbreak
     r"\bDAN\b",
     r"jailbreak",
     r"pretend\s+you\s+(?:are|have\s+no)\s+(?:restrictions?|rules?|guidelines?)",
     r"as\s+an?\s+(?:ai|llm)\s+without\s+(?:any\s+)?restrictions?",
     r"act\s+as\s+if\s+you\s+(?:have\s+no|were\s+not)\s+(?:trained|restricted)",
-    # System prompt leak
+
+    # Prompt Injection Tiếng Việt
+    r"bỏ\s+qua\s+(?:tất\s+cả\s+)?(?:các\s+)?(?:hướng\s+dẫn|quy\s+tắc|chỉ\s+dẫn)\s+(?:trước|trên)",
+    r"quên\s+(?:đi\s+)?(?:tất\s+cả|mọi)\s+(?:quy\s+tắc|chỉ\s+dẫn|hướng\s+dẫn)",
+    r"không\s+tuân\s+theo\s+(?:quy\s+tắc|hướng\s+dẫn)\s+trước",
+    r"từ\s+bây\s+giờ\s+hãy\s+(?:đóng\s+vai|làm|trở\s+thành)",
+    r"hãy\s+đóng\s+vai",
+    r"bắt\s+đầu\s+chế\s+độ\s+(?:god|admin|developer|thần\s+thánh)",
+
+    # System prompt leak (Anh & Việt)
     r"reveal\s+your\s+(?:system\s+)?(?:prompt|instructions?)",
     r"print\s+your\s+(?:initial|system)\s+(?:prompt|instructions?)",
     r"what\s+(?:are|is)\s+your\s+(?:system\s+)?prompt",
     r"show\s+me\s+your\s+(?:system\s+)?(?:prompt|instructions?)",
+    r"repeat\s+the\s+words\s+above",
+    r"hiển\s+thị\s+(?:system\s+)?prompt",
+    r"cho\s+tôi\s+xem\s+(?:prompt|hướng\s+dẫn\s+hệ\s+thống|chỉ\s+dẫn\s+ban\s+đầu)",
+    r"cho\s+biết\s+câu\s+lệnh\s+hệ\s+thống",
+    r"lặp\s+lại\s+(?:toàn\s+bộ\s+)?(?:lời\s+nhắc|prompt)",
+
+    # Context boundary hijacking & XML tag injection
+    r"</?(?:system_context|rag_docs|system_prompt|instructions|maps_data|smart_routes)>",
+    r"\[SYSTEM_PROMPT\]",
+    r"\[INSTRUCTION\]",
+
     # Role manipulation
     r"from\s+now\s+on(?:\s+you\s+(?:are|will\s+be))?",
     r"you\s+will\s+(?:no\s+longer|not)\s+(?:act\s+as|be)",
     r"switch\s+(?:to\s+)?(?:evil|developer|admin|god)\s+mode",
+
     # SQL/code injection (đề phòng)
     r"(?:DROP|DELETE|INSERT|UPDATE|SELECT\s+\*)\s+(?:TABLE|FROM|INTO)",
     r"<script[^>]*>",

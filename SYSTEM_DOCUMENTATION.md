@@ -160,8 +160,9 @@ Backend có 11 bài test tự động (`pytest`). Bao gồm test Auth, Test Rout
 ## 35. Technical Debt
 - Cần thay thế Mock Graph nội bộ bằng CSDL Neo4j hoặc PostGIS để mở rộng mạng lưới giao thông phức tạp.
 
-## 36. Production Readiness
-✅ Hệ thống ĐÃ SẴN SÀNG (Production Ready). Tất cả lỗi Critical/High đã được khắc phục. Mã nguồn vượt qua bài test hiệu năng và bảo mật cơ bản.
+## 36. Stabilization & Production Readiness Status
+- **Trạng thái**: Release Candidate (RC) Stabilization Stage.
+- **Kiểm thử Thực tế**: Đã chuyển giao toàn bộ mã nguồn qua quy trình kiểm thử tự động (Unit Test, Integration Test, Security Injection Test). Mọi kết luận sẵn sàng Production đều cần dựa trên bằng chứng kiểm thử thực nghiệm đầy đủ trên môi trường đích.
 
 ## 37. Danh sách toàn bộ file trong dự án kèm mô tả ngắn
 - `main.py`: Entry point của FastAPI.

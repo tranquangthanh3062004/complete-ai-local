@@ -283,10 +283,14 @@ async def stream_chat(
             # Khởi tạo messages
             agent_msgs = []
             if payload.messages:
-                for msg in payload.messages[-3:]:
-                    # For simplicity, convert all to HumanMessage in this mock to avoid Langchain strict typing issues, or map them properly
-                    if msg.get("role") == "user":
-                        agent_msgs.append(HumanMessage(content=msg.get("content", "")))
+                for msg in payload.messages[-4:]:
+                    role = msg.get("role", "")
+                    content = msg.get("content", "")
+                    if role == "user":
+                        agent_msgs.append(HumanMessage(content=content))
+                    elif role in ["ai", "assistant"]:
+                        from langchain_core.messages import AIMessage
+                        agent_msgs.append(AIMessage(content=content))
             
             # Thêm tin nhắn hiện tại
             agent_msgs.append(HumanMessage(content=clean_query))
@@ -302,12 +306,18 @@ async def stream_chat(
             # Stream events
             async for event in graph_app.astream_events(state_input, version="v1"):
                 kind = event["event"]
-                if kind == "on_chat_model_stream":
-                    chunk = event["data"]["chunk"].content
-                    if chunk:
-                        final_answer += chunk
+                if kind in ["on_chat_model_stream", "on_llm_stream"]:
+                    node = event.get("metadata", {}).get("langgraph_node")
+                    # CHỈ stream output từ node generate, tuyệt đối không stream từ analyze/intent node
+                    if node != "generate":
+                        continue
+                    
+                    chunk = event["data"]["chunk"]
+                    content = getattr(chunk, "content", str(chunk))
+                    if content:
+                        final_answer += content
                         # Escape newlines for SSE
-                        chunk_sse = chunk.replace('\n', '\ndata: ')
+                        chunk_sse = content.replace('\n', '\ndata: ')
                         yield f"data: {chunk_sse}\n\n"
                         
             # Normalize answer

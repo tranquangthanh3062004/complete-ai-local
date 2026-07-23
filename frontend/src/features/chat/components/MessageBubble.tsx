@@ -80,10 +80,13 @@ export function MessageBubble({
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
             </div>
           ) : isTyping ? (
-            <div className="flex gap-1.5 items-center py-0.5 h-5">
-              <div className="typing-dot w-1.5 h-1.5 bg-muted-foreground rounded-full" />
-              <div className="typing-dot w-1.5 h-1.5 bg-muted-foreground rounded-full" />
-              <div className="typing-dot w-1.5 h-1.5 bg-muted-foreground rounded-full" />
+            <div className="flex gap-2 items-center py-0.5 h-5 opacity-70">
+              <span className="text-xs italic text-muted-foreground">Đang phân tích & tìm kiếm...</span>
+              <div className="flex gap-1">
+                <div className="typing-dot w-1.5 h-1.5 bg-muted-foreground rounded-full" />
+                <div className="typing-dot w-1.5 h-1.5 bg-muted-foreground rounded-full" />
+                <div className="typing-dot w-1.5 h-1.5 bg-muted-foreground rounded-full" />
+              </div>
             </div>
           ) : null}
         </div>

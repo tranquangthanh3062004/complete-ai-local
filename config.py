@@ -5,8 +5,8 @@ from pydantic_settings import SettingsConfigDict
 
 class Settings(BaseSettings):
     # ── App ───────────────────────────────────────────────────────────────────
-    app_name   : str = "CompleteAI"
-    app_version: str = "3.0.0"
+    app_name   : str = "COMPLETE AI"
+    app_version: str = "5.10.0"
     debug      : bool = False
 
     # ── Database (SQLite local hoặc PostgreSQL Cloud) ────────────────────────────
@@ -52,11 +52,11 @@ class Settings(BaseSettings):
     access_token_expire_minutes : int = 1440     # 24 giờ
 
     # ── Vector Store & Logging ───────────────────────────────────────────────
-    chroma_persist_dir: str = "/tmp/chroma_db"
-    log_dir           : str = "/tmp/logs"
+    chroma_persist_dir: str = "./chroma_db"
+    log_dir           : str = "./logs"
 
     # ── Uploads ───────────────────────────────────────────────────────────────
-    upload_dir      : str = "/tmp/uploads"
+    upload_dir      : str = "./uploads"
     max_upload_mb   : int = 50               # giới hạn kích thước file upload
     chunk_size      : int = 800             # chunk nhỏ hơn = chính xác hơn
     chunk_overlap   : int = 150              # overlap vừa phải

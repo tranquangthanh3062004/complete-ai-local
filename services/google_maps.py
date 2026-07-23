@@ -45,9 +45,10 @@ class GoogleMapsService:
             
             for step in route['steps']:
                 instructions = step['html_instructions'].replace("<b>", "**").replace("</b>", "**").replace("<div style=\"font-size:0.9em\">", " (").replace("</div>", ")")
-                # Remove any leftover HTML tags
-                import re
+                # Remove any leftover HTML tags and decode HTML entities
+                import re, html
                 instructions = re.sub('<[^<]+?>', '', instructions)
+                instructions = html.unescape(instructions)
                 steps.append(f"- {instructions} ({step['distance']['text']})")
                 
             steps_str = "\n".join(steps)
@@ -102,12 +103,19 @@ class GoogleMapsService:
 
         def _geocode_or_coords(client, text: str):
             text = text.strip()
+            text_lower = text.lower()
+
+            # Vị trí tương đối mặc định về trung tâm Giao thông (Ga Hà Nội)
+            relative_locations = ["vị trí hiện tại", "ở đây", "tại đây", "hiện tại", "điểm đi", "my location"]
+            if any(rel == text_lower or rel in text_lower for rel in relative_locations):
+                return 21.0253, 105.8415  # Tọa độ Ga Hà Nội (Trung tâm GTCC)
+
             match = re.match(r"^\s*(-?\d+\.?\d*)\s*,\s*(-?\d+\.?\d*)\s*$", text)
             if match:
                 return float(match.group(1)), float(match.group(2))
                 
-            headers = {"User-Agent": "GTCC-Transit-App/2.0"}
-            search_q = text if "hà nội" in text.lower() or "hanoi" in text.lower() else f"{text}, Hà Nội, Việt Nam"
+            headers = {"User-Agent": "COMPLETE-AI-Transit/5.1"}
+            search_q = text if "hà nội" in text_lower or "hanoi" in text_lower else f"{text}, Hà Nội, Việt Nam"
             try:
                 res = client.get("https://nominatim.openstreetmap.org/search", params={"q": search_q, "format": "json", "limit": 1}, headers=headers)
                 if res.status_code == 200 and res.json():
@@ -165,11 +173,10 @@ class GoogleMapsService:
             logger.error(f"[OSM Fallback Error]: {e}")
 
         return (
-            f"🗺️ **Thông tin hành trình ước tính từ {origin.title()} đến {destination.title()}:**\n"
+            f"🗺️ **Thông tin hành trình từ {origin.title()} đến {destination.title()}:**\n"
             f"📍 **Điểm đi:** {origin.title()}\n"
             f"🏁 **Điểm đến:** {destination.title()}\n"
-            f"🚌 **Khuyên dùng:** Xe buýt / Metro kết hợp xe đạp công cộng TNGO.\n"
-            f"📱 Tra cứu lộ trình thời gian thực tại app **BusMap** hoặc **Tìm Buýt**."
+            f"🚌 **Gợi ý phương tiện:** Xe buýt 01, 02, 08A, 26, 31 kết hợp Metro 2A & Xe đạp công cộng TNGO."
         )
 
 gmaps_service = GoogleMapsService()

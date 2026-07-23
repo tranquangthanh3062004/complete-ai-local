@@ -52,7 +52,10 @@ def find_multiple_routes(start_query: str, end_query: str, city: str = None) -> 
                 
                 u_lat, u_lng = G.nodes[u]["lat"], G.nodes[u]["lng"]
                 v_lat, v_lng = G.nodes[v]["lat"], G.nodes[v]["lng"]
-                poly = fetch_osrm_geometry(u_lat, u_lng, v_lat, v_lng)
+                try:
+                    poly = fetch_osrm_geometry(u_lat, u_lng, v_lat, v_lng)
+                except Exception:
+                    poly = [[u_lat, u_lng], [v_lat, v_lng]]
                 
                 steps.append({
                     "mode": edge_data["mode"],
@@ -129,11 +132,19 @@ def build_osrm_fallback_options(start_query: str, end_query: str, start_geo: dic
     start_name = start_geo.get("name", start_query).split(',')[0]
     end_name = end_geo.get("name", end_query).split(',')[0]
     
+    suggested_line = "Xe buýt 01 / 02 / 21A / 26 / 31"
+    s_low = start_query.lower()
+    e_low = end_query.lower()
+    if "nội bài" in s_low or "nội bài" in e_low:
+        suggested_line = "Xe buýt 86 / 68 / 07 / 90"
+    elif "cát linh" in s_low or "hà đông" in s_low:
+        suggested_line = "Metro 2A (Cát Linh - Hà Đông) kết hợp Xe buýt"
+
     step_bus = {
         "step": 1,
         "mode": "bus",
         "type": "bus",
-        "line": "Xe buýt / OSRM",
+        "line": suggested_line,
         "from": start_name,
         "to": end_name,
         "from_lat": lat1,

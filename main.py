@@ -1,5 +1,5 @@
 """
-Main FastAPI application entry point — GTCC Bot v5.1
+Main FastAPI application entry point — COMPLETE AI v5.1
 Chatbot hoi dap ve Giao Thong Cong Cong Viet Nam.
 """
 from contextlib import asynccontextmanager
@@ -13,7 +13,7 @@ import time
 import uuid
 
 from database import create_tables, seed_superuser
-from routers import auth, rag, agents, maps, learning
+from routers import auth, rag, agents, maps, learning, sync
 from logger import get_logger
 
 from slowapi import _rate_limit_exceeded_handler
@@ -25,7 +25,7 @@ logger = get_logger("main")
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Khoi dong app: tao bang DB, seed admin, kiem tra Ollama."""
-    logger.info("🚌 Dang khoi dong GTCC Bot v4.0...")
+    logger.info("🚌 Dang khoi dong COMPLETE AI v5.1...")
     await create_tables()
     await seed_superuser()
 
@@ -38,15 +38,15 @@ async def lifespan(app: FastAPI):
         logger.warning(f"⚠️  {engine} offline / Lỗi API: {health['error']}")
         logger.warning("   Bot van hoat dong voi fallback GTCC co ban.")
 
-    logger.info("✅ GTCC Bot san sang phuc vu!")
+    logger.info("✅ COMPLETE AI san sang phuc vu!")
     yield
-    logger.info("👋 Dang tat GTCC Bot...")
+    logger.info("👋 Dang tat COMPLETE AI...")
 
 
 app = FastAPI(
-    title       = "GTCC Bot - Chatbot Giao Thong Cong Cong Viet Nam",
-    description = "He thong AI hoi dap ve Giao Thong Cong Cong: Xe Buyt, Metro, BRT, Luat GT...",
-    version     = "5.1.0",
+    title       = "COMPLETE AI - Hệ thống Trợ lý Giao thông Toàn diện",
+    description = "Hệ thống AI Trợ lý Giao Thông Công Cộng Việt Nam — Xe Buýt, Metro, Xe Đạp Công Cộng, Luật Giao Thông.",
+    version     = "5.10.0",
     lifespan    = lifespan,
     docs_url    = "/docs",
     redoc_url   = "/redoc",
@@ -94,6 +94,7 @@ app.include_router(rag.router, prefix="/api")
 app.include_router(agents.router, prefix="/api")
 app.include_router(maps.router, prefix="/api")
 app.include_router(learning.router, prefix="/api")
+app.include_router(sync.router, prefix="/api")
 
 
 
@@ -108,7 +109,7 @@ async def health():
     return {
         "status"        : "healthy",
         "version"       : "5.1.0",
-        "app_name"      : "GTCC Bot v5.1 — Giao Thong Cong Cong",
+        "app_name"      : "COMPLETE AI v5.1 — Giao Thong Cong Cong",
         "engine"        : h.get("engine", "Ollama"),
         "llm_online"    : h["online"],
         "ollama_online" : h["online"],   # backward compat
@@ -156,7 +157,7 @@ else:
     @app.get("/")
     async def root(request: Request):
         return {
-            "app": "GTCC Bot Backend",
+            "app": "COMPLETE AI Backend",
             "status": "running",
             "docs": str(request.base_url) + "docs",
             "message": "Frontend build not found. Running in API-only mode."

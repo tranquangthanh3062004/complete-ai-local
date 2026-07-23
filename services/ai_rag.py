@@ -7,22 +7,40 @@ from logger import get_logger
 
 logger = get_logger("ai_rag")
 
-# ── Embeddings (lazy load + cache) ────────────────────────────────────────────
-_embeddings = None
+_embeddings_cache = {}
 
-def get_embeddings():
-    global _embeddings
-    if _embeddings is None:
-        if settings.gemini_api_key:
+def get_embeddings(engine: str = None):
+    engine_type = engine or getattr(settings, "embedding_engine", "gemini")
+    if engine_type in _embeddings_cache:
+        return _embeddings_cache[engine_type]
+
+    if engine_type == "huggingface" or not settings.gemini_api_key:
+        try:
+            from langchain_community.embeddings import HuggingFaceEmbeddings
+            logger.info("Loading Local HuggingFace Embeddings (all-MiniLM-L6-v2)...")
+            emb = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+            _embeddings_cache[engine_type] = emb
+            return emb
+        except Exception as e:
+            logger.warning(f"HuggingFace embeddings error: {e}")
+            
+    if settings.gemini_api_key:
+        try:
             from langchain_google_genai import GoogleGenerativeAIEmbeddings
             logger.info("Loading Google Gemini Embeddings...")
-            _embeddings = GoogleGenerativeAIEmbeddings(
+            emb = GoogleGenerativeAIEmbeddings(
                 model=settings.embedding_model, 
                 google_api_key=settings.gemini_api_key
             )
-        else:
-            raise Exception("Missing Gemini API Key for Embeddings.")
-    return _embeddings
+            _embeddings_cache[engine_type] = emb
+            return emb
+        except Exception as e:
+            logger.warning(f"Gemini embeddings error: {e}")
+            
+    from langchain_community.embeddings import HuggingFaceEmbeddings
+    emb = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    _embeddings_cache[engine_type] = emb
+    return emb
 
 # ── Vector Store (Supabase pgvector hoặc Pinecone) ────────────────────────────
 _vector_store_instance = None
@@ -60,11 +78,28 @@ def get_vector_store():
                     pinecone_api_key=settings.pinecone_api_key
                 )
                 return _vector_store_instance
-            except ImportError:
-                logger.error("Missing pinecone packages.")
+            except Exception as e:
+                logger.warning(f"Pinecone vector store error or index not found: {e}. Falling back to local ChromaDB.")
                 
-        # 3. Fallback (không dùng Chroma trên serverless)
-        raise Exception("Không tìm thấy cấu hình Vector Database (Pinecone/Supabase)!")
+        # 3. Local ChromaDB Fallback for Dev & Offline
+        try:
+            from langchain_community.vectorstores import Chroma
+            logger.info("Initializing Local ChromaDB Vector Store...")
+            chroma_dir = getattr(settings, 'chroma_persist_dir', './chroma_db')
+            os.makedirs(chroma_dir, exist_ok=True)
+            # Dùng HuggingFace embeddings cho local ChromaDB để 100% không phụ thuộc API key và 0% rate limit
+            local_embeddings = get_embeddings(engine="huggingface")
+            _vector_store_instance = Chroma(
+                collection_name="gtcc_docs",
+                embedding_function=local_embeddings,
+                persist_directory=chroma_dir
+            )
+            return _vector_store_instance
+        except Exception as e:
+            logger.warning(f"ChromaDB local fallback failed: {e}. Falling back to InMemoryVectorStore.")
+            from langchain_core.vectorstores import InMemoryVectorStore
+            _vector_store_instance = InMemoryVectorStore(embedding=embeddings)
+            return _vector_store_instance
             
     return _vector_store_instance
 

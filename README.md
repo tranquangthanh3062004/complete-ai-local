@@ -1,12 +1,12 @@
-# 🚌 GTCC Bot v5.1 — Nền tảng AI Trợ lý Giao Thông Công Cộng Việt Nam
+# 🚌 COMPLETE AI — Nền tảng AI Trợ lý Giao Thông Công Cộng Việt Nam
 
-![Version](https://img.shields.io/badge/version-5.1.0-blue)
+![Version](https://img.shields.io/badge/version-5.10.0-blue)
 ![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python&logoColor=white)
 ![React](https://img.shields.io/badge/React-18.x-blue?logo=react&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.109-green?logo=fastapi&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Ready-blue?logo=docker&logoColor=white)
 
-**GTCC Bot** là một Hệ thống Trí tuệ Nhân tạo toàn diện hỗ trợ hỏi đáp, tư vấn, và tra cứu thông tin Giao Thông Công Cộng tại Việt Nam. Sản phẩm được thiết kế theo tiêu chuẩn Production, tích hợp RAG (Retrieval-Augmented Generation), Tìm đường thông minh, và Dashboard phân tích dữ liệu.
+**COMPLETE AI** là Hệ thống Trợ lý Trí tuệ Nhân tạo Toàn diện hỗ trợ hỏi đáp, tư vấn, và tra cứu thông tin Giao Thông Công Cộng tại Việt Nam. Sản phẩm được chuẩn hóa giai đoạn Release Candidate (RC), tích hợp RAG (Retrieval-Augmented Generation), Định tuyến đa phương thức, và Edge Offline Gateway.
 
 ---
 
