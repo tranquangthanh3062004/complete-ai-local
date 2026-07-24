@@ -1,18 +1,22 @@
 """Configuration management - Hỗ trợ cả Local Ollama và Free Cloud APIs (Groq/Gemini)."""
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import Field, field_validator
 from typing import Optional
-from pydantic_settings import SettingsConfigDict
+
+from core.constants import APP_NAME, APP_VERSION
+from core.enums import OperationMode
 
 class Settings(BaseSettings):
     # ── App ───────────────────────────────────────────────────────────────────
-    app_name   : str = "COMPLETE AI"
-    app_version: str = "5.10.0"
+    app_name   : str = Field(default=APP_NAME)
+    app_version: str = Field(default=APP_VERSION)
     debug      : bool = False
+    operation_mode: OperationMode = Field(default=OperationMode.ONLINE)
+    edge_gateway_port: int = 8080
 
     # ── Database (SQLite local hoặc PostgreSQL Cloud) ────────────────────────────
     database_url: str = "sqlite+aiosqlite:////tmp/completeai.db"
 
-    from pydantic import field_validator
     @field_validator("database_url", mode="before")
     @classmethod
     def fix_database_url(cls, v: str) -> str:
@@ -39,13 +43,18 @@ class Settings(BaseSettings):
     gemini_api_key  : Optional[str] = None
     pinecone_api_key: Optional[str] = None
     pinecone_index_name: str = "gtcc-index"
+    google_maps_api_key: Optional[str] = None
     
     # Ollama (Nếu dùng local)
     ollama_base_url : str = "http://localhost:11434"
+    offline_model_name: str = "qwen2.5:3b"
+    offline_fallback_model: str = "gemma2:2b"
 
     # Embeddings
-    embedding_engine: str = "gemini" # 'huggingface' or 'gemini'
-    embedding_model : str = "models/gemini-embedding-2"
+    embedding_engine: str = "bge-m3" # Primary is bge-m3
+    embedding_model : str = "BAAI/bge-m3"
+    embedding_engine_offline: str = "huggingface"
+    embedding_model_offline: str = "intfloat/multilingual-e5-small"
 
     # ── Auth ──────────────────────────────────────────────────────────────────
     secret_key                  : str

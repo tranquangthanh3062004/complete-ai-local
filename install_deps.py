@@ -24,7 +24,8 @@ packages_core = [
     "alembic",
 ]
 
-dl    "langchain",
+packages_llm = [
+    "langchain",
     "langchain-core",
     "langchain-community",
     "langchain-ollama",
