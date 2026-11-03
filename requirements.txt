@@ -14,7 +14,7 @@ supabase
 
 # === Auth ===
 python-jose[cryptography]
-passlib[bcrypt]
+bcrypt
 
 # === LLM & AI Cloud APIs ===
 langchain

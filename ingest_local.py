@@ -32,8 +32,8 @@ if os.path.exists(CHROMA_DIR):
         print(f"    [WARN] Khong the xoa: {e}")
 
 # 2. Init Embeddings
-print("[2/4] Khoi tao mo hinh Local Embedding (all-MiniLM-L6-v2)...")
-embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+print("[2/4] Khoi tao mo hinh Local Embedding (intfloat/multilingual-e5-small)...")
+embeddings = HuggingFaceEmbeddings(model_name="intfloat/multilingual-e5-small")
 
 # 3. Collect files
 print(f"[3/4] Quet file trong: {DATA_DIR}...")
