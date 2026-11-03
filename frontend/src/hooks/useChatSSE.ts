@@ -94,10 +94,30 @@ export function useChatSSE() {
       }
 
     } catch (err: any) {
-      console.error('[Chat SSE Error]', err);
+      console.warn('[Chat SSE Error] SSE stream failed, attempting Offline Edge Gateway fallback...', err);
+      try {
+        // Fallback to Edge Offline Gateway (/api/edge/chat)
+        const edgeEndpoint = `${BASE_URL}/api/edge/chat`;
+        const fbRes = await fetch(edgeEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: content, query: content }),
+        });
+        if (fbRes.ok) {
+          const fbData = await fbRes.json();
+          const reply = fbData.reply || fbData.result || fbData.answer || '';
+          if (reply) {
+            appendChunk(botMsgId, reply);
+            return;
+          }
+        }
+      } catch (fbErr) {
+        console.error('[Offline Edge Fallback Error]', fbErr);
+      }
+
       appendChunk(
         botMsgId,
-        `\n\n**⚠️ Lỗi kết nối:** ${err.message || 'Không thể kết nối với máy chủ.'}`
+        `\n\n**⚠️ Lỗi kết nối:** Không thể kết nối với máy chủ. Vui lòng kiểm tra lại dịch vụ Backend.`
       );
     } finally {
       setStreaming(false);
