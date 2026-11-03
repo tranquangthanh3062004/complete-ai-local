@@ -58,6 +58,12 @@ TRANSIT_NODES = {
     "TRIEU_KHUC": {"name": "Triều Khúc", "city": "HN", "type": "bus_stop", "lat": 20.9847, "lng": 105.7993},
     "THANH_XUAN": {"name": "Thanh Xuân", "city": "HN", "type": "district", "lat": 20.9935, "lng": 105.8024},
     "LONG_BIEN": {"name": "Bến xe Long Biên", "city": "HN", "type": "bus_hub", "lat": 21.0448, "lng": 105.8574},
+    # Extra HCM Bus Stops & Landmarks
+    "BV_CHO_RAY": {"name": "Bệnh viện Chợ Rẫy", "city": "HCM", "type": "hospital", "lat": 10.7578, "lng": 106.6595},
+    "BX_NGA_TU_GA": {"name": "Bến xe Ngã Tư Ga", "city": "HCM", "type": "bus_hub", "lat": 10.8647, "lng": 106.6844},
+    "CV_LE_VAN_TAM": {"name": "Công viên Lê Văn Tám", "city": "HCM", "type": "park", "lat": 10.7892, "lng": 106.6942},
+    "BV_175": {"name": "Bệnh viện 175", "city": "HCM", "type": "hospital", "lat": 10.8197, "lng": 106.6789},
+    "DH_SPKT": {"name": "Đại học Sư phạm Kỹ thuật", "city": "HCM", "type": "university", "lat": 10.8512, "lng": 106.7720},
 }
 
 TRANSIT_EDGES = [
@@ -169,7 +175,7 @@ def geocode_address(query: str):
     url = "https://nominatim.openstreetmap.org/search"
     search_q = query if "hà nội" in query.lower() or "hanoi" in query.lower() else f"{query}, Hà Nội, Việt Nam"
     
-    headers = {"User-Agent": "GTCC-Bot-App/3.0"}
+    headers = {"User-Agent": "COMPLETE AI/5.10.0"}
     try:
         response = httpx.get(url, params={"q": search_q, "format": "json", "countrycodes": "vn", "limit": 1}, headers=headers, timeout=5.0)
         data = response.json() if response.status_code == 200 else []
@@ -208,6 +214,8 @@ def find_nearest_node(lat, lng, city=None):
     for node_id, data in G.nodes(data=True):
         if city and data.get("city") != city:
             continue
+        if "lat" not in data or "lng" not in data:
+            continue
         dist = haversine(lat, lng, data["lat"], data["lng"])
         if dist < min_dist:
             min_dist = dist
@@ -226,7 +234,7 @@ def find_route(start_query: str, end_query: str, city: str = None) -> Dict[str, 
     for node_id, data in G.nodes(data=True):
         if city and data.get("city") != city:
             continue
-        name_lower = data["name"].lower()
+        name_lower = data.get("name", str(node_id)).lower()
         if not start_node and (start_q_lower in name_lower or name_lower in start_q_lower):
             start_node = node_id
         if not end_node and (end_q_lower in name_lower or name_lower in end_q_lower):
@@ -266,7 +274,7 @@ def find_route(start_query: str, end_query: str, city: str = None) -> Dict[str, 
                     "type": "walk",
                     "line": "Đi bộ",
                     "from": start_geo["name"].split(',')[0],
-                    "to": G.nodes[start_node]["name"],
+                    "to": G.nodes[start_node].get("name", str(start_node)),
                     "from_lat": start_geo["lat"],
                     "from_lng": start_geo["lng"],
                     "to_lat": s_lat,
@@ -289,8 +297,8 @@ def find_route(start_query: str, end_query: str, city: str = None) -> Dict[str, 
                 "step": len(steps) + 1,
                 "type": edge_data["mode"],
                 "line": edge_data["line"],
-                "from": G.nodes[u]["name"],
-                "to": G.nodes[v]["name"],
+                "from": G.nodes[u].get("name", str(u)),
+                "to": G.nodes[v].get("name", str(v)),
                 "from_lat": u_lat,
                 "from_lng": u_lng,
                 "to_lat": v_lat,
@@ -312,7 +320,7 @@ def find_route(start_query: str, end_query: str, city: str = None) -> Dict[str, 
                     "step": len(steps) + 1,
                     "type": "walk",
                     "line": "Đi bộ",
-                    "from": G.nodes[end_node]["name"],
+                    "from": G.nodes[end_node].get("name", str(end_node)),
                     "to": end_geo["name"].split(',')[0],
                     "from_lat": e_lat,
                     "from_lng": e_lng,
@@ -323,11 +331,11 @@ def find_route(start_query: str, end_query: str, city: str = None) -> Dict[str, 
                 })
                 total_time += duration_mins
             
-        origin_name = start_geo["name"].split(',')[0] if start_geo else G.nodes[start_node]["name"]
+        origin_name = start_geo["name"].split(',')[0] if start_geo else G.nodes[start_node].get("name", str(start_node))
         origin_lat = start_geo["lat"] if start_geo else G.nodes[start_node]["lat"]
         origin_lng = start_geo["lng"] if start_geo else G.nodes[start_node]["lng"]
         
-        dest_name = end_geo["name"].split(',')[0] if end_geo else G.nodes[end_node]["name"]
+        dest_name = end_geo["name"].split(',')[0] if end_geo else G.nodes[end_node].get("name", str(end_node))
         dest_lat = end_geo["lat"] if end_geo else G.nodes[end_node]["lat"]
         dest_lng = end_geo["lng"] if end_geo else G.nodes[end_node]["lng"]
             

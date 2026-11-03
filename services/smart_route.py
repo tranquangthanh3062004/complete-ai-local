@@ -2,23 +2,84 @@ import networkx as nx
 from typing import Dict, Any, List
 from services.route_planner import G, haversine, geocode_address, find_nearest_node, fetch_osrm_geometry
 
-def find_multiple_routes(start_query: str, end_query: str, city: str = None) -> List[Dict[str, Any]]:
-    """Tìm nhiều lộ trình với các tiêu chí khác nhau (Nhanh nhất, Rẻ nhất, Ít chuyển tuyến)."""
-    start_node = None
-    end_node = None
+import unicodedata
+
+def _strip_accents(s: str) -> str:
+    if not s: return ""
+    s = unicodedata.normalize('NFD', s)
+    s = ''.join(c for c in s if unicodedata.category(c) != 'MN')
+    return s.replace('đ', 'd').replace('Đ', 'D').lower().strip()
+
+# Known alias map for fuzzy matching queries to graph nodes
+NODE_ALIASES = {
+    "bưu điện hà đông": "HA_DONG",
+    "bưu điện hđ": "HA_DONG",
+    "hà đông": "HA_DONG",
+    "tư ha đông": "HA_DONG",
+    "tư hà đông": "HA_DONG",
+    "bến xe mỹ đình": "MY_DINH",
+    "mỹ đình": "MY_DINH",
+    "bến xe giáp bát": "GIAP_BAT",
+    "giáp bát": "GIAP_BAT",
+    "bến xe kim mã": "KIM_MA",
+    "kim mã": "KIM_MA",
+    "bến xe nước ngầm": "NUOC_NGAM",
+    "nước ngầm": "NUOC_NGAM",
+    "bến xe yên nghĩa": "YEN_NGHIA",
+    "yên nghĩa": "YEN_NGHIA",
+    "ga cát linh": "CAT_LINH",
+    "cát linh": "CAT_LINH",
+    "ga hà nội": "GA_HA_NOI",
+    "sân bay nội bài": "HAN",
+    "sân bay": "HAN",
+    "nội bài": "HAN",
+    "đại học bách khoa": "BACH_KHOA",
+    "bách khoa": "BACH_KHOA",
+    "hồ hoàn kiếm": "HOAN_KIEM",
+    "hồ gươm": "HOAN_KIEM",
+    "bờ hồ": "HOAN_KIEM",
+    "hoàn kiếm": "HOAN_KIEM",
+    "quảng trường ba đình": "BA_DINH",
+    "ba đình": "BA_DINH",
+    "cầu giấy": "CAU_GIAY",
+    "nhổn": "NHON",
+    "hoàng mai": "HOANG_MAI",
+    "hoàn mai": "HOANG_MAI",
+    "tây hồ": "TAY_HO",
+    "đống đa": "DONG_DA",
+    "thanh xuân": "THANH_XUAN",
+    "bến xe long biên": "LONG_BIEN",
+    "long biên": "LONG_BIEN",
+}
+
+def _resolve_node_id(query: str, city: str = None) -> str:
+    """Resolve a query string to a node ID in G using aliases or accent-insensitive substring match."""
+    if not query: return None
+    q_clean = query.lower().strip()
+    q_stripped = _strip_accents(q_clean)
     
-    start_q_lower = start_query.lower()
-    end_q_lower = end_query.lower()
-    
+    # 1. Alias exact/substring check
+    for alias, nid in NODE_ALIASES.items():
+        alias_stripped = _strip_accents(alias)
+        if alias in q_clean or q_clean in alias or alias_stripped in q_stripped or q_stripped in alias_stripped:
+            if nid in G:
+                return nid
+                
+    # 2. Node name check (with and without accents)
     for node_id, data in G.nodes(data=True):
         if city and data.get("city") != city:
             continue
         name_lower = data["name"].lower()
-        if not start_node and (start_q_lower in name_lower or name_lower in start_q_lower):
-            start_node = node_id
-        if not end_node and (end_q_lower in name_lower or name_lower in end_q_lower):
-            end_node = node_id
-            
+        name_stripped = _strip_accents(name_lower)
+        if q_clean in name_lower or name_lower in q_clean or q_stripped in name_stripped or name_stripped in q_stripped:
+            return node_id
+    return None
+
+def find_multiple_routes(start_query: str, end_query: str, city: str = None) -> List[Dict[str, Any]]:
+    """Tìm nhiều lộ trình với các tiêu chí khác nhau (Nhanh nhất, Rẻ nhất, Ít chuyển tuyến)."""
+    start_node = _resolve_node_id(start_query, city)
+    end_node = _resolve_node_id(end_query, city)
+    
     start_geo = None
     end_geo = None
     
@@ -32,11 +93,11 @@ def find_multiple_routes(start_query: str, end_query: str, city: str = None) -> 
         if end_geo:
             end_node, _ = find_nearest_node(end_geo["lat"], end_geo["lng"], city)
             
-    if not start_node or not end_node:
+    if not start_node or not end_node or start_node == end_node:
         return build_osrm_fallback_options(start_query, end_query, start_geo, end_geo)
         
     try:
-        # Lấy 3 đường đi ngắn nhất (ít node nhất hoặc thời gian gần nhau)
+        # Lấy 3 đường đi ngắn nhất
         paths = list(nx.shortest_simple_paths(G, start_node, end_node, weight='weight'))[:3]
         options = []
         
@@ -132,13 +193,8 @@ def build_osrm_fallback_options(start_query: str, end_query: str, start_geo: dic
     start_name = start_geo.get("name", start_query).split(',')[0]
     end_name = end_geo.get("name", end_query).split(',')[0]
     
-    suggested_line = "Xe buýt 01 / 02 / 21A / 26 / 31"
-    s_low = start_query.lower()
-    e_low = end_query.lower()
-    if "nội bài" in s_low or "nội bài" in e_low:
-        suggested_line = "Xe buýt 86 / 68 / 07 / 90"
-    elif "cát linh" in s_low or "hà đông" in s_low:
-        suggested_line = "Metro 2A (Cát Linh - Hà Đông) kết hợp Xe buýt"
+    # DO NOT hardcode fake bus numbers. State clearly that exact bus line numbers require schedule lookup.
+    suggested_line = "Xe buýt GTCC (Vui lòng tra cứu số hiệu tuyến chi tiết trên BusMap)"
 
     step_bus = {
         "step": 1,
@@ -160,7 +216,7 @@ def build_osrm_fallback_options(start_query: str, end_query: str, start_geo: dic
         "step": 1,
         "mode": "bike",
         "type": "bike",
-        "line": "Xe đạp TNGO",
+        "line": "Xe đạp TNGO / Đi bộ",
         "from": start_name,
         "to": end_name,
         "from_lat": lat1,
@@ -174,7 +230,7 @@ def build_osrm_fallback_options(start_query: str, end_query: str, start_geo: dic
     
     return [
         {
-            "option_name": "Nhanh nhất (Buýt / OSRM)",
+            "option_name": "Đường bộ thực tế (OSRM)",
             "origin": start_name,
             "destination": end_name,
             "origin_lat": lat1,
@@ -189,22 +245,7 @@ def build_osrm_fallback_options(start_query: str, end_query: str, start_geo: dic
             "steps": [step_bus]
         },
         {
-            "option_name": "Rẻ nhất (Buýt kết hợp đi bộ)",
-            "origin": start_name,
-            "destination": end_name,
-            "origin_lat": lat1,
-            "origin_lng": lon1,
-            "dest_lat": lat2,
-            "dest_lng": lon2,
-            "total_time": dur_mins + 8,
-            "total_cost": 7000,
-            "transfers": 0,
-            "walk_km": 0.5,
-            "co2_kg": round(dur_mins * 0.08, 2),
-            "steps": [step_bus]
-        },
-        {
-            "option_name": "Xanh nhất (Xe đạp TNGO)",
+            "option_name": "Xanh nhất (Xe đạp TNGO / Đi bộ)",
             "origin": start_name,
             "destination": end_name,
             "origin_lat": lat1,
@@ -219,3 +260,4 @@ def build_osrm_fallback_options(start_query: str, end_query: str, start_geo: dic
             "steps": [step_eco]
         }
     ]
+
