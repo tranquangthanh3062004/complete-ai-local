@@ -6,16 +6,24 @@ venv/
 __pycache__/
 *.py[cod]
 *$py.class
+.pytest_cache/
+.ruff_cache/
 
-# Database
+# Database & Runtime
 completeai.db
+test.db
 chroma_db/
+logs/
+*.log
 
 # Uploads & Data
 data/uploads/
 uploads/
 *.pdf
 *.docx
+
+# Video & Large Media
+*.mp4
 
 # OS specific
 .DS_Store
