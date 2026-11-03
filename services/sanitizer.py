@@ -46,6 +46,18 @@ INJECTION_PATTERNS = [
     r"\[SYSTEM_PROMPT\]",
     r"\[INSTRUCTION\]",
 
+    # Advanced Roleplay & Hypothetical Scenarios
+    r"hãy\s+tưởng\s+tượng\s+(?:bạn\s+là|mình\s+là)",
+    r"không\s+bị\s+giới\s+hạn\s+bởi\s+(?:bất\s+kỳ\s+)?(?:quy\s+tắc|luật|chỉ\s+dẫn)",
+    r"đóng\s+vai\s+(?:là\s+)?(?:một\s+)?(?:chuyên\s+gia|hacker|ai|bot|nhân\s+vật)",
+
+    # Advanced System Prompt Leaks & Extraction
+    r"in\s+(?:ra\s+)?(?:toàn\s+bộ\s+)?(?:nội\s+dung\s+)?(?:system\s+)?(?:prompt|chỉ\s+dẫn|lời\s+nhắc)",
+    r"lặp\s+lại\s+(?:chính\s+xác\s+)?(?:các\s+)?(?:từ|lời)\s+(?:ở\s+)?trên",
+    r"what\s+are\s+(?:the\s+)?(?:instructions?|prompts?)\s+above",
+    r"show\s+(?:me\s+)?(?:all\s+)?(?:the\s+)?instructions?",
+    r"repeat\s+(?:all\s+)?(?:the\s+)?words?\s+(?:above|before)",
+
     # Role manipulation
     r"from\s+now\s+on(?:\s+you\s+(?:are|will\s+be))?",
     r"you\s+will\s+(?:no\s+longer|not)\s+(?:act\s+as|be)",
@@ -60,12 +72,11 @@ INJECTION_PATTERNS = [
 # Biên dịch trước để nhanh
 _compiled = [re.compile(p, re.IGNORECASE) for p in INJECTION_PATTERNS]
 
-# Giới hạn độ dài
-MAX_QUERY_LENGTH = 2000
-MIN_QUERY_LENGTH = 2
+from core.constants import MAX_QUERY_LENGTH, MIN_QUERY_LENGTH
 
 # Từ khóa ngoài phạm vi GTCC (tùy chỉnh)
 OUT_OF_SCOPE_KEYWORDS = [
+    "hack mật khẩu", "hack wifi", "cách hack", "bẻ khóa", "tấn công ddos",
     "chế tạo bom", "vũ khí", "hướng dẫn hack",
     "make bomb", "how to hack", "bypass security",
 ]
