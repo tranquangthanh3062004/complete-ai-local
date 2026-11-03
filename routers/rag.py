@@ -35,12 +35,7 @@ logger = get_logger("rag")
 from services.ai_topic import detect_topic, TOPIC_DISPLAY, _get_gtcc_suggestions
 from services.ai_rag import get_vector_store, format_docs
 
-# ── Supported file types ──────────────────────────────────────────────────────
-SUPPORTED_TYPES = {".pdf", ".txt", ".docx", ".csv", ".xlsx"}
-
-
-
-
+from core.constants import SUPPORTED_UPLOAD_TYPES, RAG_PROMPT_TEMPLATE
 # ── Schemas ───────────────────────────────────────────────────────────────────
 class ChatRequest(BaseModel):
     query     : str
@@ -59,24 +54,7 @@ class ChatResponse(BaseModel):
 
 
 # ── RAG Prompt - Chuyên về GTCC (v3.0 - Tối ưu độ chính xác) ─────────────────
-RAG_PROMPT = ChatPromptTemplate.from_template("""Bạn là Trợ lý GTCC (Giao Thông Công Cộng) chuyên nghiệp Việt Nam.
-
-TÀI LIỆU THAM KHẢO:
-{context}
-
-CÂU HỎI: {question}
-
-HƯỚNG DẪN TRẢ LỜI:
-- Trả lời HOÀN TOÀN bằng Tiếng Việt, rõ ràng, có cấu trúc
-- Dùng thông tin từ tài liệu ở trên (ưu tiên cao nhất)
-- Với lộ trình/tuyến: ghi rõ số tuyến, điểm đầu-cuối, giờ chạy, giá vé
-- Với giá vé: ghi rõ đơn vị đồng/VNĐ, phân loại (lượt/ngày/tháng/SV)
-- Dùng emoji phù hợp: 🚌 xe buýt, 🚇 metro, 🎫 vé, 📍 địa điểm, ⏰ giờ
-- Nếu không tìm thấy thông tin: nói rõ và gợi ý dùng BusMap/Go!Bus/Tìm Buýt
-
-TRẢ LỜI:""")
-
-
+RAG_PROMPT = ChatPromptTemplate.from_template(RAG_PROMPT_TEMPLATE)
 
 # ── Upload PDF / DOCX / TXT ───────────────────────────────────────────────────
 @router.post("/upload/")
@@ -86,10 +64,10 @@ async def upload_document(
     current_user: Optional[User] = Depends(get_current_user),
 ):
     ext = os.path.splitext(file.filename.lower())[1]
-    if ext not in SUPPORTED_TYPES:
+    if ext not in SUPPORTED_UPLOAD_TYPES:
         raise HTTPException(
             status_code=400,
-            detail=f"Chỉ hỗ trợ: {', '.join(SUPPORTED_TYPES)}. File của bạn: {ext}"
+            detail=f"Chỉ hỗ trợ: {', '.join(SUPPORTED_UPLOAD_TYPES)}. File của bạn: {ext}"
         )
 
     # Kiểm tra kích thước

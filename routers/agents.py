@@ -15,7 +15,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.responses import StreamingResponse
 import asyncio
 
-from llm_factory import get_llm, GTCC_SYSTEM_PROMPT
+from llm_factory import get_llm
+from core.constants import GTCC_BASE_PROMPT
 from routers.auth import get_current_user
 from models import User, LearningEvent
 from database import get_db
@@ -30,11 +31,11 @@ from services.lang_detect import build_multilingual_query
 router = APIRouter(prefix="/agents", tags=["agents"])
 logger = get_logger("agents")
 
-# ── System Prompt được import từ llm_factory ──────────────────────────────────
-# GTCC_SYSTEM_PROMPT được quản lý tập trung tại llm_factory.py để đồng nhất.
+# ── System Prompt được import từ core.constants ───────────────────────────────
+# GTCC_BASE_PROMPT được quản lý tập trung tại core/constants.py để đồng nhất.
 
 CHAT_PROMPT = PromptTemplate.from_template(
-    GTCC_SYSTEM_PROMPT +
+    GTCC_BASE_PROMPT +
     "{context}\n"
     "Lịch sử trò chuyện:\n"
     "{history}\n"
@@ -73,43 +74,7 @@ async def _save_chat_event(db, current_user, request, answer: str, elapsed_ms: f
     return event
 
 
-# ── Fallback thông minh theo topic ────────────────────────────────────────────
-QUICK_FALLBACK = {
-    "xe_buyt": (
-        "🚌 **Xe Buýt:** Hà Nội có hơn 120 tuyến (giá vé 7.000-9.000đ/lượt).\n"
-        "📱 Tra tuyến: App **BusMap** hoặc **Tìm Buýt**.\n"
-        "🎫 Sinh viên mua vé tháng 100.000đ | Người cao tuổi: miễn phí."
-    ),
-    "metro_tau_dien": (
-        "🚇 **Metro Hà Nội 2A** (Cát Linh - Hà Đông): 12 ga, 5:30-22:30, 8.000-15.000đ/lượt.\n"
-        "🚇 **Metro Nhổn - Ga Hà Nội** (Đoạn trên cao): 8.000-12.000đ/lượt.\n"
-        "📱 Mua vé: Tại nhà ga hoặc dùng vé tháng 200.000đ."
-    ),
-    "ve_gia_cuoc": (
-        "🎫 **Giá vé:** Xe buýt HN 7.000-9.000đ | Metro HN 8.000-15.000đ.\n"
-        "💳 Vé tháng: Xe buýt liên tuyến 200.000đ (sv: 100.000đ) | Metro 200.000đ (sv: 100.000đ).\n"
-        "✅ Người cao tuổi, người có công: miễn phí."
-    ),
-    "san_bay_ga_tau": (
-        "✈️ **Sân bay Nội Bài → HN:**\n"
-        "- Tuyến 86 (Ga Hà Nội - Nội Bài): 45.000đ\n"
-        "- Tuyến 68 (Hà Đông/Cầu Giấy - Nội Bài): 50.000đ\n"
-        "- Tuyến 07, 17, 90 (Xe buýt thường): 9.000đ."
-    ),
-    "luat_quy_dinh": (
-        "📋 **Mức phạt chính (NĐ 100/2019):**\n"
-        "• Vượt đèn đỏ: 4-6 triệu (xe máy), 6-8 triệu (ô tô)\n"
-        "• Nồng độ cồn mức cao: 30-40 triệu + tước GPLX\n"
-        "• Không mũ BH: 200.000-400.000đ"
-    ),
-}
-
-DEFAULT_FALLBACK = (
-    "🚦 Tôi có thể giúp bạn về GTCC Việt Nam:\n\n"
-    "🚌 Xe buýt | 🚇 Metro | 🎫 Vé & giá cước | 📋 Luật GT | ✈️ Sân bay\n\n"
-    "📱 Tra cứu nhanh: **BusMap** hoặc **Google Maps**."
-)
-
+from core.constants import QUICK_FALLBACK, DEFAULT_FALLBACK
 
 # ── Endpoint chính ────────────────────────────────────────────────────────────
 @router.post("/direct")
@@ -201,38 +166,39 @@ async def direct_chat(
         logger.error(f"[Direct Chat] LLM Error: {err}")
         
         # Nếu là câu hỏi lộ trình, ưu tiên dùng dữ liệu định tuyến thực tế thay vì menu tĩnh
-        from services.langgraph_agent import extract_locations_and_intent
-        req_map, _, orig, dest = extract_locations_and_intent(clean_query)
-        if req_map and dest:
-            from services.google_maps import gmaps_service
-            orig_str = orig if orig else "Vị trí hiện tại"
-            fallback = gmaps_service.get_directions(orig_str, dest)
-        else:
-            fallback = QUICK_FALLBACK.get(topic, DEFAULT_FALLBACK)
-            if "api_key" in err.lower() or "401" in err.lower() or "authentication" in err.lower():
-                fallback += "\n\n⚠️ *AI đang offline (Thiếu hoặc sai API Key) — đang hiển thị thông tin cơ bản.*"
-            else:
-                fallback += "\n\n⚠️ *AI đang offline hoặc bị lỗi kết nối — đang hiển thị thông tin cơ bản.*"
-
         try:
-            event = await _save_chat_event(db, current_user, payload, fallback, 0)
-            return {
-                "result"      : fallback,
-                "event_id"    : event.id,
-                "response_ms" : 0,
-                "model"       : "offline-fallback",
-                "topic"       : TOPIC_DISPLAY.get(topic, topic),
-                "suggestions" : _get_gtcc_suggestions(topic),
-            }
+            from services.langgraph_agent import extract_locations_and_intent_regex
+            req_map, _, orig, dest, _ = extract_locations_and_intent_regex(clean_query)
+            if req_map and dest:
+                from services.maps import gmaps_service
+                orig_str = orig if orig else "Vị trí hiện tại"
+                fallback = gmaps_service.get_directions(orig_str, dest)
+            else:
+                fallback = QUICK_FALLBACK.get(topic, DEFAULT_FALLBACK)
         except Exception:
-            pass
+            fallback = QUICK_FALLBACK.get(topic, DEFAULT_FALLBACK)
 
-        if "connection" in err.lower() or "refused" in err.lower():
-            logger.error("Ollama connection failed. Returning fallback.")
-            raise HTTPException(status_code=503, detail="Ollama chưa chạy. Gõ: ollama serve")
-        
-        logger.error(f"Error in direct_chat: {err}", exc_info=True)
-        raise HTTPException(status_code=500, detail=err)
+        if "api_key" in err.lower() or "401" in err.lower() or "authentication" in err.lower():
+            fallback += "\n\n⚠️ *AI đang ở chế độ ngoại tuyến (Thiếu hoặc sai API Key) — đang hiển thị thông tin cơ bản.*"
+        else:
+            fallback += "\n\n⚠️ *Hệ thống đang phục vụ ở chế độ Ngoại tuyến — đang hiển thị thông tin tra cứu cơ bản.*"
+
+        event_id = -1
+        try:
+            event = await _save_chat_event(db, current_user, payload, fallback, 0, clean_query)
+            if event:
+                event_id = event.id
+        except Exception as save_err:
+            logger.warning(f"Could not save chat event: {save_err}")
+
+        return {
+            "result"      : fallback,
+            "event_id"    : event_id,
+            "response_ms" : round((time.time() - start) * 1000, 1),
+            "model"       : "offline-fallback",
+            "topic"       : TOPIC_DISPLAY.get(topic, topic),
+            "suggestions" : _get_gtcc_suggestions(topic) if payload.suggest else [],
+        }
 
 
 @router.post("/stream")

@@ -2,6 +2,9 @@ from fastapi import APIRouter, HTTPException, Depends
 from typing import List, Dict, Any
 from pydantic import BaseModel
 import time
+from sqlalchemy.orm import Session
+from database import get_db
+from models import TelemetryEvent
 
 router = APIRouter(
     prefix="/sync",
@@ -50,13 +53,19 @@ async def get_sync_routes():
     }
 
 @router.post("/telemetry")
-async def post_telemetry(payload: TelemetryPayload):
+async def post_telemetry(payload: TelemetryPayload, db: Session = Depends(get_db)):
     """
     Endpoint to receive cached events from Edge devices when they reconnect to the internet.
     """
-    # In a real app, save these to the database for analytics.
     print(f"[SYNC] Received {len(payload.events)} telemetry events from edge device.")
     for event in payload.events:
-        print(f"  - Event ID: {event.id} | Type: {event.type} | Time: {event.timestamp}")
+        db_event = TelemetryEvent(
+            client_id="edge_device_1", # Hardcode for now, should extract from auth
+            event_type=event.type,
+            payload=event.payload,
+            timestamp=event.timestamp
+        )
+        db.add(db_event)
         
+    db.commit()
     return {"status": "success", "processed": len(payload.events)}
