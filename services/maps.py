@@ -151,13 +151,16 @@ class GoogleMapsService:
                             carbon = self._calculate_carbon(f"{dist_km} km", mode)
                             
                             steps = []
-                            for s in route.get("legs", [{}])[0].get("steps", [])[:5]:
-                                name = s.get("name") or "Đoạn đường tiếp theo"
-                                s_dist = round(s.get("distance", 0))
-                                if s_dist > 50:
-                                    steps.append(f"- Đi theo {name} ({s_dist}m)")
+                            for s in route.get("legs", [{}])[0].get("steps", []):
+                                name = s.get("name") or ""
+                                if name and not name.lower().startswith("ngõ") and not name.lower().startswith("ngách"):
+                                    s_dist = round(s.get("distance", 0))
+                                    if s_dist > 100:
+                                        steps.append(f"- Di chuyển theo đường {name} ({s_dist}m)")
+                                        if len(steps) >= 3:
+                                            break
                             
-                            steps_str = "\n".join(steps) if steps else "- Di chuyển dọc theo tuyến đường chính"
+                            steps_str = "\n".join(steps) if steps else "- Di chuyển dọc theo trục đường chính"
                             
                             return (
                                 f"🗺️ **Lộ trình thực tế (OpenStreetMap / OSRM):**\n"
@@ -167,7 +170,7 @@ class GoogleMapsService:
                                 f"⏱️ **Thời gian ước tính:** ~{dur_mins} phút\n"
                                 f"🌱 **Phát thải CO2:** {carbon}\n\n"
                                 f"**Chi tiết di chuyển:**\n{steps_str}\n\n"
-                                f"💡 *Gợi ý:* Bạn có thể đón xe buýt kết hợp đi bộ 5-10 phút để tối ưu chi phí."
+                                f"💡 *Gợi ý:* Khuyên dùng phương tiện công cộng (Xe buýt / Metro) kết hợp đi bộ."
                             )
         except Exception as e:
             logger.error(f"[OSM Fallback Error]: {e}")
@@ -176,7 +179,7 @@ class GoogleMapsService:
             f"🗺️ **Thông tin hành trình từ {origin.title()} đến {destination.title()}:**\n"
             f"📍 **Điểm đi:** {origin.title()}\n"
             f"🏁 **Điểm đến:** {destination.title()}\n"
-            f"🚌 **Gợi ý phương tiện:** Xe buýt 01, 02, 08A, 26, 31 kết hợp Metro 2A & Xe đạp công cộng TNGO."
+            f"🚌 **Gợi ý phương tiện:** Phương tiện công cộng (Xe buýt / Metro / Xe đạp chia sẻ). Vui lòng tra cứu số hiệu tuyến chi tiết qua ứng dụng BusMap."
         )
 
 gmaps_service = GoogleMapsService()
