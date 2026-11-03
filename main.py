@@ -1,5 +1,5 @@
 """
-Main FastAPI application entry point — COMPLETE AI v5.1
+Main FastAPI application entry point — COMPLETE AI
 Chatbot hoi dap ve Giao Thong Cong Cong Viet Nam.
 """
 from contextlib import asynccontextmanager
@@ -13,8 +13,9 @@ import time
 import uuid
 
 from database import create_tables, seed_superuser
-from routers import auth, rag, agents, maps, learning, sync
-from logger import get_logger
+from routers import auth, rag, chat, maps, learning, sync, agents
+from logger import get_logger, request_id_var
+from core.constants import APP_NAME, APP_VERSION, APP_DESCRIPTION
 
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
@@ -25,7 +26,7 @@ logger = get_logger("main")
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Khoi dong app: tao bang DB, seed admin, kiem tra Ollama."""
-    logger.info("🚌 Dang khoi dong COMPLETE AI v5.1...")
+    logger.info(f"🚌 Dang khoi dong {APP_NAME} v{APP_VERSION}...")
     await create_tables()
     await seed_superuser()
 
@@ -33,20 +34,20 @@ async def lifespan(app: FastAPI):
     health = check_health()
     engine = health.get("engine", "Ollama")
     if health["online"]:
-        logger.info(f"✅ {engine} Engine online")
+        logger.info(f"[OK] {engine} Engine online")
     else:
-        logger.warning(f"⚠️  {engine} offline / Lỗi API: {health['error']}")
+        logger.warning(f"[WARN] {engine} offline / Lỗi API: {health['error']}")
         logger.warning("   Bot van hoat dong voi fallback GTCC co ban.")
 
-    logger.info("✅ COMPLETE AI san sang phuc vu!")
+    logger.info("[OK] COMPLETE AI san sang phuc vu!")
     yield
-    logger.info("👋 Dang tat COMPLETE AI...")
+    logger.info("Dang tat COMPLETE AI...")
 
 
 app = FastAPI(
-    title       = "COMPLETE AI - Hệ thống Trợ lý Giao thông Toàn diện",
-    description = "Hệ thống AI Trợ lý Giao Thông Công Cộng Việt Nam — Xe Buýt, Metro, Xe Đạp Công Cộng, Luật Giao Thông.",
-    version     = "5.10.0",
+    title       = APP_NAME,
+    description = APP_DESCRIPTION,
+    version     = APP_VERSION,
     lifespan    = lifespan,
     docs_url    = "/docs",
     redoc_url   = "/redoc",
@@ -73,6 +74,7 @@ app.add_middleware(GZipMiddleware, minimum_size=1000)
 @app.middleware("http")
 async def add_request_metadata(request: Request, call_next):
     request_id = str(uuid.uuid4())[:8]
+    token = request_id_var.set(request_id)
     start_time = time.time()
     
     # Log incoming request
@@ -86,15 +88,17 @@ async def add_request_metadata(request: Request, call_next):
     
     # Log completed request
     logger.info(f"Completed request: {request.method} {request.url.path} - Status: {response.status_code} - Time: {process_time}ms (ID: {request_id})")
+    request_id_var.reset(token)
     return response
 
 
 app.include_router(auth.router, prefix="/api")
 app.include_router(rag.router, prefix="/api")
-app.include_router(agents.router, prefix="/api")
+app.include_router(chat.router, prefix="/api")
 app.include_router(maps.router, prefix="/api")
 app.include_router(learning.router, prefix="/api")
 app.include_router(sync.router, prefix="/api")
+app.include_router(agents.router, prefix="/api")
 
 
 
@@ -108,8 +112,8 @@ async def health():
     h = check_health()
     return {
         "status"        : "healthy",
-        "version"       : "5.1.0",
-        "app_name"      : "COMPLETE AI v5.1 — Giao Thong Cong Cong",
+        "version"       : APP_VERSION,
+        "app_name"      : APP_NAME,
         "engine"        : h.get("engine", "Ollama"),
         "llm_online"    : h["online"],
         "ollama_online" : h["online"],   # backward compat
@@ -146,6 +150,7 @@ if os.path.exists(frontend_dist):
     app.mount("/assets", StaticFiles(directory=os.path.join(frontend_dist, "assets")), name="assets")
     
     @app.get("/{full_path:path}")
+    @app.head("/{full_path:path}")
     async def serve_react_app(full_path: str):
         if full_path.startswith("api/"):
             return {"error": "Not found"}

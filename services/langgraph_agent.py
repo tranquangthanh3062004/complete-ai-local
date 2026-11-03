@@ -1,8 +1,9 @@
 from typing import Annotated, TypedDict, List
 from langgraph.graph import StateGraph, START, END
 from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage
-from llm_factory import get_llm, GTCC_SYSTEM_PROMPT
-from services.google_maps import gmaps_service
+from llm_factory import get_llm
+from core.constants import GTCC_BASE_PROMPT
+from services.maps import gmaps_service
 from services.bike_service import bike_service
 from services.ai_rag import get_vector_store, format_docs
 from logger import get_logger
@@ -231,7 +232,7 @@ async def generate_response(state: AgentState):
     llm = get_llm(state.get("model_name"), state.get("temperature", 0.1))
     
     # Xây dựng hệ thống prompt
-    sys_prompt = GTCC_SYSTEM_PROMPT
+    sys_prompt = GTCC_BASE_PROMPT
     if context:
         sys_prompt += f"""\n\n<system_context>\n{context}\n</system_context>
 <instructions>

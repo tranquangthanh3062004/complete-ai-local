@@ -88,6 +88,16 @@ class RouteQuery(Base):
     result      = Column(JSON, nullable=True)
     created_at  = Column(DateTime, default=datetime.utcnow)
 
+class TelemetryEvent(Base):
+    """Lưu trữ sự kiện telemetry từ Edge Device."""
+    __tablename__ = "telemetry_events"
+
+    id         = Column(Integer, primary_key=True, index=True)
+    client_id  = Column(String, index=True, nullable=False)
+    event_type = Column(String, nullable=False)
+    payload    = Column(JSON, nullable=True)
+    timestamp  = Column(Integer, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
 # ─────────────────────────────────────────────
 #  Learning / Personalization Models
