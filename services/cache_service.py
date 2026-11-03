@@ -10,6 +10,7 @@ from threading import Lock
 from logger import get_logger
 import os
 import json
+import unicodedata
 
 logger = get_logger("cache_service")
 REDIS_URL = os.environ.get("REDIS_URL", None)
@@ -38,7 +39,8 @@ class TTLCache:
         self.misses = 0
 
     def _make_key(self, text: str) -> str:
-        return hashlib.sha256(text.strip().lower().encode("utf-8")).hexdigest()[:16]
+        normalized = unicodedata.normalize("NFC", text.strip().lower())
+        return hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
 
     def get(self, key: str) -> str | None:
         hk = self._make_key(key)

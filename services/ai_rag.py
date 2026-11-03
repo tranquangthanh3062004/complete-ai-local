@@ -17,8 +17,8 @@ def get_embeddings(engine: str = None):
     if engine_type == "huggingface" or not settings.gemini_api_key:
         try:
             from langchain_community.embeddings import HuggingFaceEmbeddings
-            logger.info("Loading Local HuggingFace Embeddings (all-MiniLM-L6-v2)...")
-            emb = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+            logger.info("Loading Local HuggingFace Embeddings (intfloat/multilingual-e5-small)...")
+            emb = HuggingFaceEmbeddings(model_name="intfloat/multilingual-e5-small")
             _embeddings_cache[engine_type] = emb
             return emb
         except Exception as e:
@@ -38,7 +38,7 @@ def get_embeddings(engine: str = None):
             logger.warning(f"Gemini embeddings error: {e}")
             
     from langchain_community.embeddings import HuggingFaceEmbeddings
-    emb = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    emb = HuggingFaceEmbeddings(model_name="intfloat/multilingual-e5-small")
     _embeddings_cache[engine_type] = emb
     return emb
 

@@ -8,6 +8,16 @@ import os
 import sys
 from config import settings
 
+import contextvars
+
+# Context variables for tracking requests
+request_id_var = contextvars.ContextVar("request_id", default="-")
+
+class RequestIdFilter(logging.Filter):
+    def filter(self, record):
+        record.request_id = request_id_var.get()
+        return True
+
 def _setup_logger() -> logging.Logger:
     log = logging.getLogger("gtcc_bot")
     log.setLevel(logging.INFO if not settings.debug else logging.DEBUG)
@@ -16,13 +26,23 @@ def _setup_logger() -> logging.Logger:
         return log
 
     fmt = logging.Formatter(
-        fmt="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
-        datefmt="%H:%M:%S"
+        fmt="%(asctime)s | %(levelname)-8s | [%(request_id)s] | %(name)s | %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S"
     )
+
+    req_filter = RequestIdFilter()
+
+    # Ensure stdout handles UTF-8 safely without crashing on Windows
+    if hasattr(sys.stdout, "reconfigure"):
+        try:
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
 
     # Always add stdout handler (works on Vercel)
     stream_handler = logging.StreamHandler(sys.stdout)
     stream_handler.setFormatter(fmt)
+    stream_handler.addFilter(req_filter)
     log.addHandler(stream_handler)
 
     # Try file handler only when filesystem is writable (local dev)
@@ -38,6 +58,7 @@ def _setup_logger() -> logging.Logger:
             log_file, maxBytes=5 * 1024 * 1024, backupCount=3, encoding="utf-8"
         )
         file_handler.setFormatter(fmt)
+        file_handler.addFilter(req_filter)
         log.addHandler(file_handler)
     except OSError:
         # Vercel / read-only FS → skip file logging silently
