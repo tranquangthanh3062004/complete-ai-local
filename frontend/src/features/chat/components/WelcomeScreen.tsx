@@ -5,7 +5,7 @@ export const HANOI_SUGGESTIONS = [
   { label: "Từ Mỹ Đình lên Hồ Gươm", icon: <Bus size={13}/> },
   { label: "Giá vé Metro Cát Linh - Hà Đông", icon: <Train size={13}/> },
   { label: "Xe buýt đi sân bay Nội Bài", icon: <MapPin size={13}/> },
-  { label: "Mức phạt vượt đèn đỏ 2024", icon: <FileText size={13}/> },
+  { label: "Mức phạt vượt đèn đỏ mới nhất", icon: <FileText size={13}/> },
   { label: "Vé tháng sinh viên giá bao nhiêu?", icon: <Star size={13}/> },
 ];
 
@@ -26,10 +26,10 @@ export function WelcomeScreen({ onSuggestionClick }: { onSuggestionClick: (label
       </div>
 
       <div className="space-y-1.5">
-        <h1 className="text-2xl font-bold tracking-tight">HNTransit AI</h1>
+        <h1 className="text-2xl font-bold tracking-tight">COMPLETE AI</h1>
         <p className="text-muted-foreground text-sm max-w-xs">
-          Trợ lý thông minh về giao thông công cộng Hà Nội —<br />
-          xe buýt, metro, lộ trình, luật giao thông
+          Hệ thống Trợ lý Giao thông Công cộng & Đa phương thức Thông minh —<br />
+          xe buýt, metro, lộ trình tối ưu, luật giao thông
         </p>
       </div>
 
@@ -47,11 +47,11 @@ export function WelcomeScreen({ onSuggestionClick }: { onSuggestionClick: (label
       </div>
 
       <div className="flex gap-3 text-xs text-muted-foreground">
-        <span className="flex items-center gap-1">🚌 120+ tuyến buýt</span>
+        <span className="flex items-center gap-1">🚌 Tuyến buýt thông minh</span>
         <span className="text-border">·</span>
-        <span className="flex items-center gap-1">🚇 Metro Hà Nội</span>
+        <span className="flex items-center gap-1">🚇 Mạng lưới Metro</span>
         <span className="text-border">·</span>
-        <span className="flex items-center gap-1">⚖️ Luật giao thông</span>
+        <span className="flex items-center gap-1">⚖️ Tra cứu luật</span>
       </div>
     </motion.div>
   );

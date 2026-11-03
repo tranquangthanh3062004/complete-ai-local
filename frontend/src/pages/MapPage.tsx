@@ -88,7 +88,7 @@ export default function MapPage() {
   // Mini Chat Widget state
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState<Array<{ sender: 'user' | 'bot'; text: string }>>([
-    { sender: 'bot', text: 'Xin chào! Tôi là Trợ lý AI Giao thông Hà Nội. Bạn muốn tra cứu tuyến buýt, metro hay tìm đường đi nào?' }
+    { sender: 'bot', text: 'Xin chào! Tôi là Trợ lý COMPLETE AI Giao thông Công cộng. Bạn muốn tra cứu tuyến buýt, metro hay tìm đường đi nào?' }
   ]);
   const [chatInput, setChatInput] = useState('');
   const [isChatLoading, setIsChatLoading] = useState(false);
@@ -133,6 +133,11 @@ export default function MapPage() {
     else if (lower.includes('giáp bát')) detectedDest = 'Bến xe Giáp Bát';
     else if (lower.includes('nội bài')) detectedDest = 'Sân bay Nội Bài';
     else if (lower.includes('cát linh')) detectedDest = 'Ga Cát Linh';
+    else if (lower.includes('hồ gươm') || lower.includes('hoàn kiếm')) detectedDest = 'Hồ Gươm';
+    else if (lower.includes('chợ bến thành') || lower.includes('bến thành')) detectedDest = 'Chợ Bến Thành';
+    else if (lower.includes('suối tiên')) detectedDest = 'Khu Du Lịch Suối Tiên';
+    else if (lower.includes('chợ rẫy')) detectedDest = 'Bệnh viện Chợ Rẫy';
+    else if (lower.includes('miền đông')) detectedDest = 'Bến xe Miền Đông';
 
     if (detectedDest) {
       setDestination(detectedDest);
@@ -140,14 +145,14 @@ export default function MapPage() {
     }
 
     try {
-      const res = await api.post('/chat', { message: userText });
-      let reply = res.data.reply || res.data.response || 'Đã nhận yêu cầu của bạn.';
+      const res = await api.post('/agents/direct', { query: userText, suggest: true });
+      let reply = res.data.result || res.data.reply || res.data.response || 'Đã nhận yêu cầu của bạn.';
       if (detectedDest) {
         reply = `🤖 Tôi đã tự động tìm kiếm lộ trình và đánh dấu điểm đến "${detectedDest}" trên bản đồ cho bạn!\n\n${reply}`;
       }
       setChatMessages((prev) => [...prev, { sender: 'bot', text: reply }]);
     } catch {
-      setChatMessages((prev) => [...prev, { sender: 'bot', text: 'Xin lỗi, không thể kết nối với chatbot lúc me. Vui lòng thử lại sau.' }]);
+      setChatMessages((prev) => [...prev, { sender: 'bot', text: 'Xin lỗi, không thể kết nối với chatbot lúc này. Vui lòng thử lại sau.' }]);
     } finally {
       setIsChatLoading(false);
     }

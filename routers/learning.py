@@ -183,6 +183,8 @@ async def get_learning_profile(
 async def global_stats(db: AsyncSession = Depends(get_db)):
     """Thống kê toàn hệ thống."""
     total_q = (await db.execute(select(func.count(LearningEvent.id)))).scalar() or 0
+    total_users = (await db.execute(select(func.count(User.id)))).scalar() or 0
+    avg_latency = (await db.execute(select(func.avg(LearningEvent.response_time_ms)))).scalar() or 0.0
     total_pos = (await db.execute(
         select(func.count(LearningEvent.id)).where(LearningEvent.feedback == 1)
     )).scalar() or 0
@@ -213,6 +215,8 @@ async def global_stats(db: AsyncSession = Depends(get_db)):
 
     return {
         "total_questions" : total_q,
+        "total_users"      : total_users,
+        "avg_latency_ms"   : round(float(avg_latency), 1),
         "positive_feedback": total_pos,
         "negative_feedback": total_neg,
         "satisfaction_rate": f"{satisfaction}%",

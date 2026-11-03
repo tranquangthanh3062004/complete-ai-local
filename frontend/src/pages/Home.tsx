@@ -77,10 +77,6 @@ export default function Home() {
     }
     if (isRecording) {
       stopListening();
-      if (input.trim()) {
-        setWasVoiceInput(true);
-        handleSubmit();
-      }
     } else {
       setInput('');
       setTranscript('');
@@ -102,7 +98,7 @@ export default function Home() {
   const exportPDF = () => {
     const element = document.getElementById('chat-container');
     if (element) {
-      html2pdf().from(element).save('HNTransit-Chat.pdf');
+      html2pdf().from(element).save('COMPLETE-AI-Chat.pdf');
     }
   };
 

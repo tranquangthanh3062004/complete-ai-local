@@ -2,14 +2,17 @@ import { Routes, Route, BrowserRouter, NavLink } from 'react-router-dom';
 import Home from '@/pages/Home';
 import MapPage from '@/pages/MapPage';
 import AdminDashboard from '@/pages/AdminDashboard';
+import AuthPage from '@/pages/AuthPage';
 import { Toaster } from '@/components/ui/toaster';
-import { Bot, Map, LayoutDashboard, Train, Wifi, WifiOff } from 'lucide-react';
+import { Bot, Map, LayoutDashboard, Train, Wifi, WifiOff, LogIn, LogOut } from 'lucide-react';
 
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { useNetworkStatus } from '@/hooks/useNetworkStatus';
+import { useAuthStore } from '@/store/authStore';
 
 function App() {
   const isOnline = useNetworkStatus();
+  const { user, logout } = useAuthStore();
 
   return (
     <BrowserRouter>
@@ -30,7 +33,7 @@ function App() {
                 <Train size={16} className="text-white" />
               </div>
               <span className="font-bold text-sm tracking-tight hidden sm:block">
-                HN<span className="text-primary">Transit</span> AI
+                COMPLETE <span className="text-primary">AI</span>
               </span>
             </a>
 
@@ -74,7 +77,7 @@ function App() {
               </NavLink>
             </nav>
 
-            {/* Status badge & Theme Toggle */}
+            {/* Status badge, Auth & Theme Toggle */}
             <div className="ml-auto flex items-center gap-3">
               <div className={`flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full ${isOnline ? 'bg-emerald-500/10 text-emerald-500' : 'bg-destructive/10 text-destructive'}`}>
                 {isOnline ? (
@@ -89,6 +92,36 @@ function App() {
                   </>
                 )}
               </div>
+
+              {user ? (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-medium text-muted-foreground hidden md:inline-block">
+                    {user.display_name || user.email}
+                  </span>
+                  <button
+                    onClick={logout}
+                    title="Đăng xuất"
+                    className="p-1.5 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
+                  >
+                    <LogOut size={16} />
+                  </button>
+                </div>
+              ) : (
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) =>
+                    `flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
+                      isActive
+                        ? 'bg-primary text-primary-foreground'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted border border-border/50'
+                    }`
+                  }
+                >
+                  <LogIn size={13} />
+                  <span>Đăng nhập</span>
+                </NavLink>
+              )}
+
               <ThemeToggle />
             </div>
           </div>
@@ -99,6 +132,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/map" element={<MapPage />} />
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/login" element={<AuthPage />} />
           </Routes>
         </main>
       </div>

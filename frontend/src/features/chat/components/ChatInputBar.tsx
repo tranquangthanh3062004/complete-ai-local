@@ -94,7 +94,7 @@ export function ChatInputBar({
       </form>
 
       <p className="text-center text-[10px] text-muted-foreground/50 mt-2">
-        HNTransit AI · Thông tin mang tính tham khảo
+        COMPLETE AI · Hệ thống Trợ lý Giao thông Công cộng Thông minh
       </p>
     </div>
   );

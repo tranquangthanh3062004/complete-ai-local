@@ -12,6 +12,7 @@ interface AuthState {
   user: User | null;
   token: string | null;
   login: (user: User, token: string) => void;
+  setAuth: (token: string, user: User) => void;
   logout: () => void;
   isInitialized: boolean;
   setInitialized: (val: boolean) => void;
@@ -22,6 +23,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   token: localStorage.getItem('token'),
   isInitialized: false,
   login: (user, token) => {
+    localStorage.setItem('token', token);
+    set({ user, token });
+  },
+  setAuth: (token, user) => {
     localStorage.setItem('token', token);
     set({ user, token });
   },

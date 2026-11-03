@@ -6,6 +6,8 @@ import axios from 'axios';
 
 interface Stats {
   total_questions: number;
+  total_users?: number;
+  avg_latency_ms?: number;
   positive_feedback: number;
   negative_feedback: number;
   satisfaction_rate: string;
@@ -45,19 +47,21 @@ export default function AdminDashboard() {
   return (
     <div className="p-6 md:p-8 max-w-7xl mx-auto w-full space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Admin Dashboard</h1>
-        <p className="text-muted-foreground">Theo dõi tốc độ và chất lượng sản phẩm</p>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">COMPLETE AI Dashboard</h1>
+          <p className="text-muted-foreground">Giám sát hiệu năng và telemetry hệ thống thực tế</p>
+        </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Tổng số câu hỏi</CardTitle>
+            <CardTitle className="text-sm font-medium">Tổng số truy vấn</CardTitle>
             <MessageSquare className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.total_questions}</div>
-            <p className="text-xs text-muted-foreground">+12% so với hôm qua</p>
+            <p className="text-xs text-muted-foreground">Ghi nhận từ database</p>
           </CardContent>
         </Card>
         
@@ -68,18 +72,18 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.satisfaction_rate}</div>
-            <p className="text-xs text-muted-foreground">Mục tiêu: {'>'}95%</p>
+            <p className="text-xs text-muted-foreground">Dựa trên phản hồi người dùng</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Người dùng mới</CardTitle>
+            <CardTitle className="text-sm font-medium">Người dùng đăng ký</CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">142</div>
-            <p className="text-xs text-muted-foreground">Trong 7 ngày qua</p>
+            <div className="text-2xl font-bold">{stats.total_users ?? 0}</div>
+            <p className="text-xs text-muted-foreground">Tài khoản người dùng</p>
           </CardContent>
         </Card>
 
@@ -89,8 +93,12 @@ export default function AdminDashboard() {
             <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">1.2s</div>
-            <p className="text-xs text-muted-foreground">Thời gian phản hồi AI</p>
+            <div className="text-2xl font-bold">
+              {stats.avg_latency_ms && stats.avg_latency_ms > 0
+                ? `${(stats.avg_latency_ms / 1000).toFixed(2)}s`
+                : 'Đang đo'}
+            </div>
+            <p className="text-xs text-muted-foreground">Thời gian phản hồi AI thực tế</p>
           </CardContent>
         </Card>
       </div>
